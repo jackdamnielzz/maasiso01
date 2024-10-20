@@ -1,0 +1,113 @@
+/* Component Responsive Styles */
+
+@media (max-width: 767px) {
+    .cta-button {
+        padding: 12px 24px;
+        font-size: 16px;
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
+    .dienst,
+    .voordeel,
+    .testimonial,
+    .benefit-item,
+    .why-maasiso-item,
+    .missie-visie-item,
+    .aanpak-item,
+    .impact-item,
+    .waarde-item {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .dienst-icon,
+    .impact-item i,
+    .waarde-item i {
+        font-size: 36px;
+        margin-bottom: 15px;
+    }
+
+    .testimonial {
+        background-color: #f9f9f9;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .timeline::after {
+        left: 31px;
+    }
+
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+
+    .timeline-item::after {
+        left: 21px;
+    }
+
+    .timeline-item:nth-child(even) {
+        left: 0;
+    }
+}
+
+@media (min-width: 1024px) {
+    .process-step {
+        flex-basis: calc(33.333% - 20px);
+    }
+
+    .process-step:nth-child(3n+2)::after {
+        display: none;
+    }
+
+    .process-flow::before {
+        display: none;
+    }
+}
+
+/* Shared styles for both tablet and desktop */
+@media (min-width: 768px) {
+    .process-step::after {
+        bottom: auto;
+        top: 50%;
+        left: 100%;
+        transform: translateY(-50%);
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+        border-left: 20px solid #4A9B8F;
+        border-right: none;
+    }
+
+    .process-flow::before {
+        left: auto;
+        right: 50%;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        height: auto;
+        transform: translateX(50%);
+    }
+
+    .process-step:nth-child(even)::after {
+        left: auto;
+        right: 100%;
+        border-left: none;
+        border-right: 20px solid #4A9B8F;
+    }
+}
+
+/* Additional spacing for better visual separation */
+section {
+    margin-bottom: 40px;
+}
+
+.cta-button {
+    margin-top: 20px;
+}
+
+.lees-meer {
+    display: inline-block;
+    margin-top: 10px;
+}

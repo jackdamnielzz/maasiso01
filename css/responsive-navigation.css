@@ -1,0 +1,53 @@
+/* Navigation Responsive Styles */
+
+@media (max-width: 767px) {
+    .nav-links {
+        display: none;
+    }
+
+    .nav-links.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background-color: #1C3D5A;
+        padding: 20px;
+    }
+
+    .nav-links.active li {
+        margin: 15px 0;
+    }
+
+    .nav-links.active a {
+        font-size: 24px;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+    }
+}
+
+@media (min-width: 768px) {
+    .nav-links {
+        display: flex;
+        position: static;
+        padding: 0;
+    }
+
+    .nav-links li {
+        margin-left: 20px;
+        margin-bottom: 0;
+    }
+
+    .mobile-menu-toggle {
+        display: none;
+    }
+}
+
+@media (min-width: 1024px) {
+    .nav-links li {
+        margin-left: 30px;
+    }
+}

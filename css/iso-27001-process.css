@@ -1,0 +1,268 @@
+/* ISO 27001 Process Styles */
+
+/* Fade-in animation */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#hero.iso-27001-hero {
+    background-image: url('../images/iso-27001-hero-bg.jpg');
+    background-color: #1C3D5A; /* Fallback color */
+    background-size: cover;
+    background-position: center;
+    color: #ffffff;
+    padding: 120px 0;
+    text-align: center;
+}
+
+#hero.iso-27001-hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#hero.iso-27001-hero p {
+    font-size: 24px;
+    max-width: 800px;
+    margin: 0 auto 30px;
+    line-height: 1.6;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#iso-27001-intro,
+#iso-27001-benefits,
+#iso-27001-process,
+#testimonials,
+#cta {
+    padding: 80px 0;
+}
+
+#iso-27001-intro {
+    background-color: #f8f8f8;
+}
+
+#iso-27001-intro ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#iso-27001-intro li {
+    margin-bottom: 15px;
+    padding-left: 30px;
+    position: relative;
+}
+
+#iso-27001-intro li i {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    color: #1C3D5A;
+}
+
+.voordelen-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.voordeel {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.voordeel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.voordeel-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #1C3D5A;
+}
+
+.voordeel h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #1C3D5A;
+    font-weight: 600;
+}
+
+.voordeel p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333333;
+}
+
+.process-steps {
+    counter-reset: step;
+    list-style-type: none;
+    padding: 0;
+    margin-top: 60px;
+}
+
+.process-steps li {
+    position: relative;
+    margin-bottom: 40px;
+    padding-left: 80px;
+    counter-increment: step;
+}
+
+.process-steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 60px;
+    height: 60px;
+    background-color: #1C3D5A;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.process-steps h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #1C3D5A;
+    font-weight: 600;
+}
+
+.process-steps p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333333;
+}
+
+#testimonials {
+    background-color: #f8f8f8;
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.testimonial {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.testimonial p {
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+.testimonial .klant {
+    font-weight: bold;
+    color: #1C3D5A;
+}
+
+#cta {
+    background-color: #1C3D5A;
+    color: #ffffff;
+    text-align: center;
+}
+
+#cta h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+#cta p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#cta .cta-button {
+    background-color: #ffffff;
+    color: #1C3D5A;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#cta .cta-button:hover {
+    background-color: #f0f0f0;
+    color: #15304D;
+}
+
+@media (max-width: 768px) {
+    #hero.iso-27001-hero {
+        padding: 100px 0 60px;
+    }
+
+    #hero.iso-27001-hero h1 {
+        font-size: 36px;
+    }
+
+    #hero.iso-27001-hero p {
+        font-size: 18px;
+    }
+
+    #iso-27001-intro,
+    #iso-27001-benefits,
+    #iso-27001-process,
+    #testimonials,
+    #cta {
+        padding: 60px 0;
+    }
+
+    .voordeel {
+        padding: 20px;
+    }
+
+    .process-steps li {
+        padding-left: 60px;
+    }
+
+    .process-steps li::before {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+    .process-steps h3 {
+        font-size: 20px;
+    }
+
+    .process-steps p,
+    .voordeel p {
+        font-size: 14px;
+    }
+
+    #cta h2 {
+        font-size: 28px;
+    }
+
+    #cta p {
+        font-size: 16px;
+    }
+}

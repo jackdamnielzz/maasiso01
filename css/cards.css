@@ -1,0 +1,125 @@
+/* Card Styles */
+
+.benefit-item {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.benefit-item:hover {
+    transform: translateY(-5px);
+}
+
+.benefit-item h3 {
+    color: #4A9B8F;
+    margin-bottom: 15px;
+}
+
+.why-maasiso-item {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.why-maasiso-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.why-maasiso-item .icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.why-maasiso-item h3 {
+    color: #1C3D5A;
+    margin-bottom: 10px;
+}
+
+.why-maasiso-item p {
+    color: #555555;
+}
+
+.missie-visie-item {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.impact-item {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.impact-item i {
+    font-size: 48px;
+    color: #4A9B8F;
+    margin-bottom: 20px;
+}
+
+.impact-item h3 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.aanpak-item {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.waarde-item {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.waarde-item i {
+    font-size: 48px;
+    color: #4A9B8F;
+    margin-bottom: 20px;
+}
+
+/* Updated styles for voordeel cards */
+.voordeel.card {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 40px; /* Increased padding */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.voordeel.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.voordeel-icon {
+    font-size: 64px; /* Increased icon size */
+    color: #4A9B8F;
+    margin-bottom: 25px; /* Increased margin */
+}
+
+.voordeel.card h3 {
+    color: #1C3D5A;
+    margin-bottom: 15px; /* Increased margin */
+    font-size: 1.5em; /* Increased font size */
+}
+
+.voordeel.card p {
+    color: #555555;
+    font-size: 1.1em; /* Increased font size */
+}

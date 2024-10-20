@@ -1,0 +1,97 @@
+/* Base Styles */
+:root {
+    --primary-color: #1c3d5a;
+    --secondary-color: #4A9B8F;
+    --accent-color: #D4AF37;
+    --background-color: #F4F4F4;
+    --text-color: #333333;
+    --text-color-light: #FFFFFF;
+    --hero-background: #1c3d5a;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Typography */
+h1, h2, h3 {
+    font-family: 'Roboto Slab', serif;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 42px;
+}
+
+h2 {
+    font-size: 32px;
+}
+
+h3 {
+    font-size: 24px;
+    color: var(--secondary-color);
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+.lead {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.4;
+}
+
+/* Utility Classes */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-in.fade-in-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.bg-primary {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+}
+
+.bg-secondary {
+    background-color: var(--secondary-color);
+    color: var(--text-color-light);
+}
+
+.bg-accent {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+}

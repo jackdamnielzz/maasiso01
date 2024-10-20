@@ -1,0 +1,66 @@
+/* Global Responsive Styles */
+
+@media (max-width: 767px) {
+    body {
+        font-size: 16px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    h3 {
+        font-size: 24px;
+    }
+
+    #hero, #iso-9001-hero, #over-ons-hero, #contact-hero {
+        padding: 60px 0 30px;
+    }
+
+    #hero h1, #iso-9001-hero h1, #over-ons-hero h1, #contact-hero h1 {
+        font-size: 36px;
+        margin-bottom: 15px;
+    }
+
+    #hero p, #iso-9001-hero .lead, #over-ons-hero .lead, #contact-hero p {
+        font-size: 18px;
+        margin-bottom: 25px;
+    }
+
+    section {
+        padding: 30px 0;
+        margin-bottom: 30px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .container {
+        padding: 0 40px;
+    }
+
+    #hero h1, #iso-9001-hero h1, #over-ons-hero h1, #contact-hero h1 {
+        font-size: 48px;
+    }
+
+    #hero p, #iso-9001-hero .lead, #over-ons-hero .lead, #contact-hero p {
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        padding: 0 60px;
+    }
+
+    #hero h1, #iso-9001-hero h1, #over-ons-hero h1, #contact-hero h1 {
+        font-size: 56px;
+    }
+
+    #hero p, #iso-9001-hero .lead, #over-ons-hero .lead, #contact-hero p {
+        font-size: 24px;
+    }
+}

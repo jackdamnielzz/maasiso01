@@ -1,0 +1,24 @@
+/* Hero Section Styles */
+#hero {
+    text-align: center;
+    padding: 140px 0 80px;
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+}
+
+#hero h1 {
+    margin-bottom: 20px;
+    font-size: 48px;
+    color: #FFFFFF;
+}
+
+#hero p {
+    margin-bottom: 30px;
+    font-size: 22px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #FFFFFF;
+}
+
+/* Rest of the hero styles remain unchanged */
