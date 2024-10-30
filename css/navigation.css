@@ -6,24 +6,76 @@ header {
     top: 0;
     left: 0;
     z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+/* Skip Link for Keyboard Users */
+.skip-link {
+    background: var(--primary-color);
+    color: var(--text-color-light);
+    left: 50%;
+    padding: var(--spacing-sm);
+    position: absolute;
+    transform: translateY(-100%) translateX(-50%);
+    transition: transform var(--transition-normal);
+    z-index: 1001;
+}
+
+.skip-link:focus {
+    transform: translateY(0) translateX(-50%);
 }
 
 .main-nav {
-    padding: 15px 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .main-nav .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 100%;
+    padding: 0 1.5rem;
 }
 
 .logo {
-    color: #FFFFFF;
     font-family: 'Roboto Slab', serif;
     font-size: 24px;
     font-weight: 700;
     text-decoration: none;
+    padding: var(--spacing-xs);
+    background: linear-gradient(90deg, 
+        var(--text-color-light) 0%,
+        #FFE5CC 20%,
+        #FFCC99 40%,
+        #FFB366 60%,
+        var(--accent-color) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    transition: background 1s ease;
+}
+
+.logo:hover {
+    background: linear-gradient(90deg, 
+        var(--accent-color) 0%,
+        #FFB366 40%,
+        #FFCC99 60%,
+        #FFE5CC 80%,
+        var(--text-color-light) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
 }
 
 .nav-links {
@@ -31,21 +83,45 @@ header {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    height: 100%;
+    align-items: center;
+    margin-left: auto; /* Push to the right */
+    margin-right: 0; /* Ensure no right margin */
+    gap: 0.5rem; /* Reduced spacing between all links */
 }
 
 .nav-links li {
-    margin-left: 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin: 0;
 }
 
 .nav-links a {
-    color: #FFFFFF;
+    color: var(--text-color-light);
     text-decoration: none;
-    transition: color 0.3s ease;
     font-size: 18px;
+    padding: var(--spacing-xs);
+    position: relative;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
 }
 
-.nav-links a:hover {
-    color: var(--secondary-color);
+/* Active page indicator */
+.nav-links a[aria-current="page"] {
+    color: var(--accent-color);
+}
+
+.nav-links a[aria-current="page"]::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: var(--spacing-xs);
+    right: var(--spacing-xs);
+    height: 2px;
+    background-color: var(--accent-color);
 }
 
 .mobile-menu-toggle {
@@ -53,35 +129,59 @@ header {
     background: none;
     border: none;
     cursor: pointer;
+    padding: var(--spacing-sm);
+    margin: calc(-1 * var(--spacing-sm));
+    height: 40px;
 }
 
 .mobile-menu-toggle span {
     display: block;
     width: 25px;
     height: 3px;
-    background-color: #FFFFFF;
+    background-color: var(--text-color-light);
     margin: 5px 0;
-    transition: all 0.3s ease;
 }
 
 @media (max-width: 768px) {
+    header {
+        height: 70px;
+    }
+
+    .main-nav .container {
+        padding: 0 1rem;
+    }
+
     .nav-links {
         display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background-color: var(--primary-color);
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        margin-left: 0; /* Reset margin for mobile */
     }
 
     .nav-links.active {
         display: block;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        right: 0;
-        background-color: var(--primary-color);
-        padding: 20px;
+        max-height: 300px;
+        padding: var(--spacing-md);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .nav-links li {
-        margin-bottom: 10px;
-        margin-left: 0;
+        margin: 0;
+        height: auto;
+    }
+
+    .nav-links.active li {
+        margin-bottom: var(--spacing-md);
+    }
+
+    .nav-links li:last-child {
+        margin-bottom: 0;
     }
 
     .mobile-menu-toggle {

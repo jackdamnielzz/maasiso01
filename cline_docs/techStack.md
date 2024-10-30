@@ -1,36 +1,90 @@
-# MaasISO Website Vereenvoudigde Technologie Stack
+# MaasISO Website Technologie Stack
 
-## Frontend
+## Huidige Stack
 - HTML5
 - CSS3 (vanilla CSS, geen preprocessor)
 - JavaScript (ES6+, vanilla JS)
+- Git voor versiebeheer
+- GitHub Pages voor hosting
 
-## Statische Site Generator (Optioneel)
-- Jekyll of Hugo voor eenvoudige statische site generatie
+## Voorgestelde CMS Integratie
 
-## Implementatie en Hosting
-- GitHub Pages voor gratis en eenvoudige hosting van statische sites
+### Primaire Optie: Headless CMS
+- Strapi
+  - Node.js gebaseerd
+  - Open-source
+  - Flexibel content model
+  - RESTful API
+  - GraphQL ondersteuning
+  - Zelf te hosten
+
+Voordelen:
+- Gebruiksvriendelijke admin interface
+- Aanpasbare content types
+- Uitgebreide API mogelijkheden
+- Sterke beveiliging
+- Active community
+
+### Alternatieve Opties
+1. WordPress (headless mode)
+   - Bekend admin interface
+   - Groot ecosysteem
+   - WordPress REST API
+
+2. NetlifyCMS
+   - Git-gebaseerd
+   - Markdown files
+   - Eenvoudige setup
+
+## Frontend Architectuur
+
+### Bestaand
+- Vanilla HTML/CSS/JS
+- Component-gebaseerde structuur
+- Responsive design
+
+### Nieuwe Features
+- Dynamisch content laden
+- Client-side routing
+- Content caching
+- Lazy loading voor media
+
+## Backend Vereisten
+
+### API Laag
+- RESTful endpoints
+- Content type definities
+- Media handling
+- Authenticatie
+
+### Database
+- Document-based storage
+- Content relaties
+- Media assets beheer
+
+## Content Hub Architectuur
+- Nieuws systeem
+- Blog platform
+- Whitepapers repository
+- Kennisbank
+- Zoekfunctionaliteit
+- Categorisatie systeem
 
 ## Prestaties en SEO
-- Handmatige optimalisatie van HTML meta-tags en inhoudsstructuur
-
-## Versiebeheer
-- Git
-- GitHub voor repository hosting en samenwerking
+- Statische site generatie
+- CDN integratie
+- Cache management
+- Meta tags optimalisatie
 
 ## Ontwikkeltools
-- VS Code als primaire code-editor
+- VS Code als primaire editor
+- Git voor versiebeheer
+- GitHub voor repository hosting
 
-## Analyse
-- Google Analytics voor basis gebruikersgedrag tracking
+## Beveiliging
+- SSL certificaat
+- API authenticatie
+- CSRF bescherming
+- Rate limiting
 
-## Toegankelijkheid
-- Handmatige testen en implementatie van basis toegankelijkheidsfuncties
-
-## Architectuurbeslissingen
-1. Keuze voor een statische site-aanpak voor eenvoud, snelheid en onderhoudsgemak.
-2. Gebruik van vanilla HTML, CSS en JavaScript om complexiteit en afhankelijkheden te minimaliseren.
-3. Gebruik van GitHub Pages voor gratis en eenvoudige hosting.
-4. Focus op handmatige optimalisaties voor prestaties en SEO om volledige controle en begrip van de codebase te behouden.
-
-Deze vereenvoudigde tech stack is gekozen om een lichtgewicht, snelle en gemakkelijk te onderhouden website voor MaasISO te bieden, met focus op essentiële functionaliteit zonder onnodige complexiteit.
+Deze tech stack combineert de bestaande lichtgewicht aanpak met moderne content management mogelijkheden, waarbij de focus ligt op gebruiksgemak voor content beheerders zonder in te leveren op prestaties of beveiliging.

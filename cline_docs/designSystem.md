@@ -1,7 +1,7 @@
 # MaasISO Website Ontwerpsysteem
 
 ## Kleurenpalet
-- Primaire Kleur: Diep Blauw (#08619d)
+- Primaire Kleur: Diep Blauw (#091E42)
 - Secundaire Kleur: Zacht Zeegroen (#4A9B8F)
 - Accent Kleur: Goud (#D4AF37)
 - Achtergrondkleur: Lichtgrijs (#F4F4F4)
@@ -16,7 +16,7 @@
 ### Knoppen
 - Primaire Knop:
   - Achtergrond: Accent Kleur (#D4AF37)
-  - Tekst: Primaire Kleur (#08619d)
+  - Tekst: Primaire Kleur (#091E42)
   - Hover: Secundaire Kleur (#4A9B8F) met witte tekst
 
 - Secundaire Knop:
@@ -25,8 +25,8 @@
   - Hover: Iets lichtere tint van Secundaire Kleur (#5BBCAE)
 
 ### Koppen
-- H1: Roboto Slab, 32px, Wit (#FFFFFF) op donkere achtergronden, Primaire Kleur (#08619d) op lichte achtergronden
-- H2: Roboto Slab, 24px, Wit (#FFFFFF) op donkere achtergronden, Primaire Kleur (#08619d) op lichte achtergronden
+- H1: Roboto Slab, 32px, Wit (#FFFFFF) op donkere achtergronden, Primaire Kleur (#091E42) op lichte achtergronden
+- H2: Roboto Slab, 24px, Wit (#FFFFFF) op donkere achtergronden, Primaire Kleur (#091E42) op lichte achtergronden
 - H3: Roboto Slab, 20px, Secundaire Kleur (#4A9B8F)
 
 ### Paragrafen

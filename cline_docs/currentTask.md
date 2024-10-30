@@ -1,104 +1,121 @@
-# Huidige Taak: Optimalisatie en Consistentie van Website
+# Current Task: Footer Standardization and Spacing
 
-## Voltooide Taken
-- Verwijdering van de aparte landingspagina (landing-new.html)
-- Verwijdering van bijbehorende CSS (landing-new.css) en JavaScript (landing-new.js) bestanden
-- Bijwerking van codebaseSummary.md om de recente wijzigingen te reflecteren
-- Optimalisatie van de hoofdpagina (index.html) voor een betere gebruikerservaring:
-  - Verbeterde toegankelijkheid door toevoeging van ARIA-attributen
-  - Implementatie van lazy loading voor icon-elementen
-  - Bijwerking van de footer met placeholder informatie
-  - Toevoeging van placeholder URL's voor sociale media links
-- Optimalisatie van de dienstenpagina (diensten.html):
-  - Verbeterde toegankelijkheid door toevoeging van ARIA-attributen
-  - Implementatie van lazy loading voor icon-elementen
-  - Bijwerking van de footer met placeholder informatie
-  - Toevoeging van placeholder URL's voor sociale media links
-  - Consistente structuur met index.html
-- Optimalisatie van de waarom-maasiso.html pagina:
-  - Verbeterde toegankelijkheid door toevoeging van ARIA-attributen
-  - Implementatie van lazy loading voor icon-elementen
-  - Bijwerking van de footer met placeholder informatie
-  - Toevoeging van placeholder URL's voor sociale media links
-  - Consistente structuur met index.html en diensten.html
-- Optimalisatie van de over-ons.html pagina:
-  - Verbeterde toegankelijkheid door toevoeging van ARIA-attributen
-  - Implementatie van lazy loading voor icon-elementen
-  - Bijwerking van de footer met placeholder informatie
-  - Toevoeging van placeholder URL's voor sociale media links
-  - Consistente structuur met andere geoptimaliseerde pagina's
-- Optimalisatie van de contact.html pagina:
-  - Verbeterde toegankelijkheid door toevoeging van ARIA-attributen
-  - Implementatie van lazy loading voor icon-elementen
-  - Bijwerking van de footer met placeholder informatie
-  - Toevoeging van placeholder URL's voor sociale media links
-  - Verbetering van formulier toegankelijkheid met aria-required attributen
-  - Consistente structuur met andere geoptimaliseerde pagina's
-- Optimalisatie van de iso-9001.html pagina:
-  - Verbeterde toegankelijkheid door toevoeging van ARIA-attributen
-  - Implementatie van lazy loading voor icon-elementen
-  - Bijwerking van de footer met placeholder informatie
-  - Toevoeging van placeholder URL's voor sociale media links
-  - Consistente structuur met andere geoptimaliseerde pagina's
-- Optimalisatie van de iso-27001.html pagina:
-  - Verbeterde toegankelijkheid door toevoeging van ARIA-attributen
-  - Implementatie van lazy loading voor icon-elementen
-  - Bijwerking van de footer met placeholder informatie
-  - Toevoeging van placeholder URL's voor sociale media links
-  - Consistente structuur met andere geoptimaliseerde pagina's
-- Optimalisatie van de avg-compliance.html pagina:
-  - Verbeterde toegankelijkheid door toevoeging van ARIA-attributen
-  - Implementatie van lazy loading voor icon-elementen
-  - Bijwerking van de footer met placeholder informatie
-  - Toevoeging van placeholder URL's voor sociale media links
-  - Consistente structuur met andere geoptimaliseerde pagina's
+## Objective
+Standardize all website footers to match index.html exactly and ensure proper spacing between sections.
 
-## Huidige Doelstellingen
-- Implementeer lazy loading voor afbeeldingen en andere zware elementen op alle pagina's
-- Pas het huidige kleurenschema consistent toe op alle bestaande pagina's
-- Zorg voor consistentie in ontwerp en gebruikerservaring tussen alle pagina's
-- Optimaliseer de website voor betere prestaties en SEO
-- Verplaats inline styles naar externe CSS bestanden voor alle pagina's
+## Progress So Far
 
-## Volgende Stappen
-1. Lazy Loading:
-   - [ ] Implementeer lazy loading voor afbeeldingen en zware elementen op alle pagina's
+### Footer Updates Completed
+1. waarom-maasiso.html
+   - Removed additional company info and contact details
+   - Added proper spacing between CTA and footer with section-padding class
+   - Added background color to CTA section to match index.html
 
-2. Consistente toepassing van het kleurenschema:
-   - [ ] Controleer alle CSS-bestanden en update ze met het huidige kleurenschema
-   - [ ] Controleer alle pagina's op consistentie in kleurgebruik
+2. avg-compliance.html
+   - Added complete footer structure to match index.html
 
-3. Consistentie in ontwerp:
-   - [ ] Standaardiseer componenten zoals knoppen, formulieren, en secties over de hele website
+3. iso-9001.html
+   - Removed additional company info
+   - Fixed legal links to include proper .html extensions
+   - Updated copyright year to 2024
 
-4. Optimalisatie:
-   - [ ] Evalueer de huidige bestandsstructuur en verwijder onnodige bestanden
-   - [ ] Consolideer CSS en JavaScript bestanden waar mogelijk
-   - [ ] Optimaliseer afbeeldingen voor snelle laadtijden
-   - [ ] Verplaats inline styles naar externe CSS bestanden voor alle pagina's
+4. diensten.html
+   - Removed additional company info and contact details
+   - Updated quick-links structure
 
-5. Responsief ontwerp:
-   - [ ] Test de website op verschillende apparaten en schermformaten
-   - [ ] Pas de lay-out aan waar nodig voor optimale weergave op alle apparaten
+5. iso-27001.html
+   - Removed additional company info
+   - Fixed legal links to include proper .html extensions
+   - Updated contact information structure
 
-6. SEO en prestaties:
-   - [ ] Implementeer geavanceerde SEO-praktijken (structured data, optimalisatie van meta tags)
-   - [ ] Optimaliseer de laadsnelheid van de website verder
+6. over-ons.html
+   - Removed additional company info and contact details
+   - Updated quick-links structure
 
-7. Testen:
-   - [ ] Voer cross-browser tests uit
-   - [ ] Test de website op verschillende apparaten
-   - [ ] Voer toegankelijkheidstests uit
+### Pages Already Matching
+- algemene-voorwaarden.html
+- cookiebeleid.html
+- privacyverklaring.html
 
-8. Documentatie bijwerken:
-   - [ ] Werk de projectRoadmap.md bij met de voltooide taken en nieuwe doelen
-   - [ ] Update techStack.md indien er wijzigingen zijn in de gebruikte technologieën
+### Special Cases
+- ecosystem-index.html intentionally left without footer (specialized visualization page)
 
-## Prioriteiten voor de volgende iteratie:
-1. Begin met het verplaatsen van inline styles naar externe CSS bestanden voor alle pagina's
-2. Start met de optimalisatie van afbeeldingen en andere zware elementen
-3. Implementeer lazy loading voor afbeeldingen en zware elementen op alle pagina's
-4. Controleer en update het kleurenschema voor consistentie
+## Current Status
+- All standard pages now have consistent footer structure
+- CTA section spacing and styling fixed on waarom-maasiso.html
+- All footers now match the index.html implementation exactly
 
-## Verwijzing naar projectRoadmap.md
-Deze taken dragen bij aan de verdere ontwikkeling van de "Homepage", "Visueel Ontwerp" en "Technische Implementatie" secties in de Belangrijkste Functies en Taken van projectRoadmap.md. Ze bevorderen ook de "Ontwerpfase" en "Ontwikkelfase" in de Voortgangstracker.
+## Next Steps
+1. Verify spacing and styling consistency across all pages
+2. Check for any remaining inconsistencies in footer implementation
+3. Test responsive behavior of updated footers
+4. Ensure all links in footers are working correctly
+
+## Footer Structure Reference (from index.html)
+```html
+<footer>
+    <div class="container">
+        <div class="footer-section company-info">
+            <h4>MaasISO</h4>
+        </div>
+        <div class="footer-section contact">
+            <h4>Contact</h4>
+            <p>Email: info@maasiso.nl</p>
+            <p><a href="contact.html">Neem contact op</a></p>
+        </div>
+        <div class="footer-section quick-links">
+            <h4>Snelle Links</h4>
+            <nav aria-label="Snelle navigatie">
+                <a href="index.html">Home</a>
+                <a href="over-ons.html">Over Ons</a>
+                <a href="diensten.html">Diensten</a>
+            </nav>
+        </div>
+        <div class="footer-section services">
+            <h4>Onze Diensten</h4>
+            <nav aria-label="Diensten navigatie">
+                <a href="iso-9001.html">ISO 9001 Consultancy</a>
+                <a href="iso-27001.html">ISO 27001 Consultancy</a>
+                <a href="avg-compliance.html">AVG/GDPR Compliance</a>
+            </nav>
+        </div>
+    </div>
+    <div class="sub-footer">
+        <div class="container">
+            <div class="social-media">
+                <a href="https://www.linkedin.com/company/maasiso" target="_blank" rel="noopener noreferrer" aria-label="MaasISO LinkedIn">
+                    <i class="fab fa-linkedin" aria-hidden="true"></i>
+                </a>
+                <a href="https://twitter.com/maasiso" target="_blank" rel="noopener noreferrer" aria-label="MaasISO Twitter">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div class="legal-links">
+                <a href="privacyverklaring.html">Privacyverklaring</a>
+                <a href="algemene-voorwaarden.html">Algemene Voorwaarden</a>
+                <a href="cookiebeleid.html">Cookiebeleid</a>
+            </div>
+            <p>&copy; 2024 MaasISO. Alle rechten voorbehouden.</p>
+        </div>
+    </div>
+</footer>
+```
+
+## CTA Section Reference (from index.html)
+```html
+<section id="cta" class="section-padding" style="background-color: var(--hero-background);" aria-label="Contact Oproep">
+    <div class="container">
+        <h2 class="section-title" style="color: var(--text-color-light);">Klaar om uw organisatie naar een hoger niveau te tillen?</h2>
+        <p class="section-intro" style="color: var(--text-color-light);">Neem contact met ons op voor een vrijblijvend gesprek over hoe wij u kunnen helpen excelleren in kwaliteit, veiligheid en compliance.</p>
+        <div class="text-center">
+            <a href="contact.html" class="cta-button fade-in">NEEM CONTACT OP</a>
+        </div>
+    </div>
+</section>
+```
+
+## Notes
+- All text colors in CTA sections should use var(--text-color-light) for consistency
+- Section padding is crucial for proper spacing between sections
+- Footer structure must be exactly the same across all pages
+- Social media links should always include proper accessibility attributes

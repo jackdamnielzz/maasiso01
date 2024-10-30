@@ -28,11 +28,15 @@
     <link rel="stylesheet" href="css/responsive-navigation.css">
     <link rel="stylesheet" href="css/responsive-layout.css">
     <link rel="stylesheet" href="css/responsive-components.css">
+    <link rel="stylesheet" href="css/scroll-to-top.css">
     
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <!-- Skip Link for Keyboard Users -->
+    <a href="#main-content" class="skip-link">Direct naar hoofdinhoud</a>
+
     <header>
         <nav class="main-nav" aria-label="Hoofdnavigatie">
             <div class="container">
@@ -53,11 +57,11 @@
         </nav>
     </header>
 
-    <main>
+    <main id="main-content">
         <section id="hero" class="hero" aria-label="Introductie">
             <div class="container">
                 <h1 class="fade-in">Over MaasISO</h1>
-                <p class="lead fade-in">Uw betrouwbare partner voor ISO-certificering en compliance sinds 2010. Ontdek hoe onze expertise en toewijding uw organisatie naar een hoger niveau kunnen tillen.</p>
+                <p class="lead fade-in">Uw betrouwbare partner voor ISO-certificering en compliance sinds 2024. Ontdek hoe onze expertise en toewijding uw organisatie naar een hoger niveau kunnen tillen.</p>
             </div>
         </section>
 
@@ -65,7 +69,7 @@
             <div class="container">
                 <h2 class="section-title fade-in">Wie Wij Zijn</h2>
                 <div class="wie-wij-zijn-content fade-in">
-                    <p>MaasISO is een toonaangevende consultancyorganisatie gespecialiseerd in ISO-certificering en compliance. Met meer dan een decennium aan ervaring staan wij klaar om organisaties van elke omvang te helpen excelleren in kwaliteit, veiligheid en informatiebeveiliging.</p>
+                    <p>MaasISO is een toonaangevende consultancyorganisatie gespecialiseerd in ISO-certificering en compliance. Met onze expertise staan wij klaar om organisaties van elke omvang te helpen excelleren in kwaliteit, veiligheid en informatiebeveiliging.</p>
                     <ul class="expertise-list">
                         <li><i class="fas fa-check" aria-hidden="true" loading="lazy"></i> ISO 9001 Kwaliteitsmanagement</li>
                         <li><i class="fas fa-check" aria-hidden="true" loading="lazy"></i> ISO 27001 Informatiebeveiliging</li>
@@ -80,30 +84,29 @@
             <div class="container">
                 <h2 class="section-title fade-in">Onze Aanpak</h2>
                 <p class="section-intro fade-in">Bij MaasISO geloven we in een pragmatische en klantgerichte aanpak. We luisteren naar uw behoeften, analyseren uw huidige situatie en ontwikkelen oplossingen die passen bij uw organisatie. Onze focus ligt niet alleen op het behalen van certificeringen, maar ook op het creëren van blijvende verbeteringen in uw bedrijfsprocessen.</p>
-                <div class="aanpak-grid">
-                    <div class="aanpak-item fade-in">
-                        <i class="fas fa-check-circle dienst-icon" aria-hidden="true" loading="lazy"></i>
+                <div class="services-grid">
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-check-circle" aria-hidden="true" loading="lazy"></i>
+                        </div>
                         <h3>ISO 9001</h3>
                         <p>We helpen u een robuust kwaliteitsmanagementsysteem op te zetten dat uw bedrijfsprocessen optimaliseert en klanttevredenheid verhoogt.</p>
                     </div>
-                    <div class="aanpak-item fade-in">
-                        <i class="fas fa-shield-alt dienst-icon" aria-hidden="true" loading="lazy"></i>
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-shield-alt" aria-hidden="true" loading="lazy"></i>
+                        </div>
                         <h3>ISO 27001</h3>
                         <p>Onze experts begeleiden u bij het implementeren van een effectief informatiebeveiligingssysteem dat uw waardevolle gegevens beschermt.</p>
                     </div>
-                    <div class="aanpak-item fade-in">
-                        <i class="fas fa-lock dienst-icon" aria-hidden="true" loading="lazy"></i>
+                    <div class="service-card fade-in">
+                        <div class="service-icon">
+                            <i class="fas fa-lock" aria-hidden="true" loading="lazy"></i>
+                        </div>
                         <h3>AVG Compliance</h3>
                         <p>We zorgen ervoor dat uw organisatie voldoet aan de Algemene Verordening Gegevensbescherming en helpen u bij het opzetten van een privacyvriendelijke bedrijfscultuur.</p>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section id="ons-team" class="section-padding" aria-label="Ons team">
-            <div class="container">
-                <h2 class="section-title fade-in">Ons Team</h2>
-                <p class="section-intro fade-in">Ons team bestaat uit gecertificeerde professionals met diverse achtergronden in kwaliteitsmanagement, informatiebeveiliging, en privacywetgeving. Elk teamlid brengt unieke expertise en praktijkervaring mee, waardoor we een brede kennis kunnen bieden aan onze klanten.</p>
             </div>
         </section>
 
@@ -139,7 +142,7 @@
             <div class="container">
                 <h2 class="section-title fade-in">Klaar om uw organisatie naar een hoger niveau te tillen?</h2>
                 <p class="fade-in">Neem contact met ons op voor een vrijblijvend gesprek over hoe wij u kunnen helpen excelleren in kwaliteit, veiligheid en compliance.</p>
-                <a href="contact.html" class="cta-button fade-in">Neem Contact Op</a>
+                <a href="contact.html" class="cta-button fade-in">NEEM CONTACT OP</a>
             </div>
         </section>
     </main>
@@ -148,15 +151,11 @@
         <div class="container">
             <div class="footer-section company-info">
                 <h4>MaasISO</h4>
-                <p>KvK-nummer: 12345678</p>
-                <p>BTW-nummer: NL123456789B01</p>
-                <p>Adres: Voorbeeldstraat 123, 1234 AB Amsterdam</p>
             </div>
             <div class="footer-section contact">
                 <h4>Contact</h4>
-                <p>Tel: +31 (0)20 123 4567</p>
                 <p>Email: info@maasiso.nl</p>
-                <a href="contact.html" class="btn btn-secondary">Contact Formulier</a>
+                <p><a href="contact.html">Neem contact op</a></p>
             </div>
             <div class="footer-section quick-links">
                 <h4>Snelle Links</h4>
@@ -164,7 +163,6 @@
                     <a href="index.html">Home</a>
                     <a href="over-ons.html">Over Ons</a>
                     <a href="diensten.html">Diensten</a>
-                    <a href="contact.html">Contact</a>
                 </nav>
             </div>
             <div class="footer-section services">
@@ -179,19 +177,24 @@
         <div class="sub-footer">
             <div class="container">
                 <div class="social-media">
-                    <a href="https://www.linkedin.com/company/maasiso" target="_blank" rel="noopener noreferrer" aria-label="MaasISO LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
-                    <a href="https://twitter.com/maasiso" target="_blank" rel="noopener noreferrer" aria-label="MaasISO Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                    <a href="https://www.linkedin.com/company/maasiso" target="_blank" rel="noopener noreferrer" aria-label="MaasISO LinkedIn">
+                        <i class="fab fa-linkedin" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://twitter.com/maasiso" target="_blank" rel="noopener noreferrer" aria-label="MaasISO Twitter">
+                        <i class="fab fa-twitter" aria-hidden="true"></i>
+                    </a>
                 </div>
                 <div class="legal-links">
-                    <a href="#">Privacyverklaring</a>
-                    <a href="#">Algemene Voorwaarden</a>
-                    <a href="#">Cookiebeleid</a>
+                    <a href="privacyverklaring.html">Privacyverklaring</a>
+                    <a href="algemene-voorwaarden.html">Algemene Voorwaarden</a>
+                    <a href="cookiebeleid.html">Cookiebeleid</a>
                 </div>
-                <p>&copy; 2023 MaasISO. Alle rechten voorbehouden.</p>
+                <p>&copy; 2024 MaasISO. Alle rechten voorbehouden.</p>
             </div>
         </div>
     </footer>
 
-    <script src="js/main.js"></script>
+    <!-- Scripts -->
+    <script src="js/scroll-to-top.js"></script>
 </body>
 </html>

@@ -27,6 +27,18 @@
     }
 }
 
+/* Hero fade-in animation */
+@keyframes heroFadeIn {
+    from {
+        opacity: 0.9;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Temporarily disable fade-in effect */
 .fade-in {
     opacity: 1;

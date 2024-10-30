@@ -2,9 +2,10 @@
 
 .benefits-grid,
 .why-maasiso-grid,
-.industries-grid {
+.industries-grid,
+.services-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 30px;
     margin-top: 40px;
 }
@@ -12,9 +13,9 @@
 .voordelen-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, auto);
     gap: 30px;
-    margin-top: 40px;
+    margin: 40px auto;
+    max-width: 1200px;
 }
 
 .missie-visie-grid {
@@ -33,7 +34,7 @@
 
 .aanpak-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 30px;
     margin-top: 40px;
 }
@@ -74,7 +75,15 @@
 }
 
 /* Responsive grid adjustments */
-@media (min-width: 768px) {
+@media (max-width: 1200px) {
+    .voordelen-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 768px) {
     .diensten-grid,
     .testimonial-grid,
     .benefits-grid,
@@ -82,31 +91,15 @@
     .missie-visie-grid,
     .aanpak-grid,
     .contact-grid,
-    .industries-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (min-width: 1024px) {
-    .diensten-grid,
-    .benefits-grid,
-    .why-maasiso-grid,
-    .impact-grid,
-    .waarden-grid,
     .industries-grid,
-    .aanpak-grid {
-        grid-template-columns: repeat(3, 1fr);
+    .services-grid {
+        grid-template-columns: 1fr;
     }
-}
 
-/* Ensure voordelen-grid always maintains 3x2 layout */
-@media (max-width: 767px) {
     .voordelen-grid {
-        grid-template-columns: repeat(3, 1fr);
-        font-size: 14px; /* Slightly reduce font size for better fit on small screens */
-    }
-    
-    .voordeel {
-        padding: 10px; /* Reduce padding for better fit on small screens */
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 20px;
+        max-width: 500px;
     }
 }

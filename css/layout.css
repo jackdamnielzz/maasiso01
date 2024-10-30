@@ -1,29 +1,54 @@
 /* Layout Styles */
+.container {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    box-sizing: border-box;
+}
+
 section {
-    padding: 80px 0;
+    width: 100%;
+    padding: 5rem 0;
+    overflow: hidden;
 }
 
 section:nth-child(even) {
     background-color: #F9F9F9;
 }
 
-/* Grid Layouts */
-.grid-layout {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
-}
-
 /* Responsive adjustments */
-@media (max-width: 768px) {
-    section {
-        padding: 60px 0;
-    }
-
-    .grid-layout {
-        grid-template-columns: 1fr;
+@media (max-width: 1200px) {
+    .container {
+        max-width: 960px;
     }
 }
 
-/* Note: Timeline styles have been removed. If they are needed, please add them back. */
+@media (max-width: 992px) {
+    .container {
+        max-width: 720px;
+    }
+    
+    section {
+        padding: 4rem 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 540px;
+    }
+    
+    section {
+        padding: 3rem 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        width: 100%;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}

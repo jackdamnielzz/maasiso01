@@ -1,0 +1,44 @@
+/* Shared button styles to ensure consistency */
+.cta-button {
+    display: inline-block;
+    width: 280px; /* Fixed width for both buttons */
+    padding: 16px 32px; /* Fixed padding for both buttons */
+    background-color: var(--button-primary-bg);
+    color: var(--button-primary-text);
+    text-decoration: none;
+    border-radius: var(--border-radius-md);
+    transition: all var(--transition-normal);
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 16px; /* Fixed font size */
+    line-height: 1.5; /* Fixed line height */
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cta-button:hover {
+    background-color: var(--button-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cta-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure consistent spacing around buttons */
+.text-center {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .cta-button {
+        width: 100%;
+        max-width: 280px;
+    }
+}

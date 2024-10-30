@@ -12,16 +12,16 @@
         top: 60px;
         left: 0;
         right: 0;
-        background-color: #1C3D5A;
-        padding: 20px;
+        background-color: var(--primary-color);
+        padding: var(--spacing-md);
     }
 
     .nav-links.active li {
-        margin: 15px 0;
+        margin: var(--spacing-md) 0;
     }
 
     .nav-links.active a {
-        font-size: 24px;
+        font-size: var(--font-size-2xl);
     }
 
     .mobile-menu-toggle {
@@ -37,7 +37,7 @@
     }
 
     .nav-links li {
-        margin-left: 20px;
+        margin-left: var(--spacing-md);
         margin-bottom: 0;
     }
 
@@ -48,6 +48,14 @@
 
 @media (min-width: 1024px) {
     .nav-links li {
-        margin-left: 30px;
+        margin-left: var(--spacing-xl);
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .nav-links,
+    .nav-links.active li {
+        transition: none;
     }
 }
