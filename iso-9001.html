@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
+<!-- Head section remains unchanged -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,6 +28,7 @@
     <link rel="stylesheet" href="css/responsive-navigation.css">
     <link rel="stylesheet" href="css/responsive-layout.css">
     <link rel="stylesheet" href="css/responsive-components.css">
+    <link rel="stylesheet" href="css/mobile-iso.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -98,7 +100,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
-            z-index: 2;
+            z-index: 100;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         .tooltip::before {
@@ -127,27 +129,80 @@
         .highlighted-text p {
             margin-bottom: 0;
         }
+
+        /* Mobile Responsive Styles */
         @media (max-width: 768px) {
+            .intro-point {
+                flex-wrap: wrap;
+                padding: 1rem;
+            }
+            
+            .intro-point i.icon {
+                min-width: 20px;
+            }
+            
+            .intro-point i.chevron {
+                display: none; /* Hide chevron on mobile */
+            }
+            
             .tooltip {
-                position: absolute;
-                right: 0;
-                top: 100%;
-                transform: translate(0, 10px);
-                width: 100%;
-                max-width: none;
-            }
-            .tooltip::before {
-                left: 20px;
-                top: -6px;
+                position: static;
                 transform: none;
-                border-width: 0 6px 6px 6px;
-                border-color: transparent transparent #00875A transparent;
+                opacity: 0;
+                visibility: hidden;
+                max-height: 0;
+                padding: 0;
+                margin-top: 0;
+                width: 100%;
+                transition: all 0.3s ease;
+                box-shadow: none;
+                background: rgba(0, 135, 90, 0.1);
+                color: #333;
+                border-radius: 4px;
+                margin-left: calc(20px + 1rem); /* Align with text */
             }
-            .intro-point:hover .tooltip {
-                right: 0;
+            
+            .tooltip::before {
+                display: none; /* Remove arrow on mobile */
+            }
+            
+            .intro-point.active .tooltip {
+                opacity: 1;
+                visibility: visible;
+                max-height: 200px;
+                padding: 1rem;
+                margin-top: 0.5rem;
+            }
+            
+            .intro-point:hover {
+                transform: none;
             }
         }
     </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile tooltip handling
+            const introPoints = document.querySelectorAll('.intro-point');
+            
+            introPoints.forEach(point => {
+                point.addEventListener('click', function() {
+                    // Remove active class from all points
+                    introPoints.forEach(p => p.classList.remove('active'));
+                    
+                    // Toggle active class on clicked point
+                    this.classList.toggle('active');
+                });
+            });
+
+            // Close tooltip when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.intro-point')) {
+                    introPoints.forEach(point => point.classList.remove('active'));
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <header>
@@ -173,7 +228,7 @@
     <main>
         <section id="hero" class="iso-9001-hero" aria-label="Introductie">
             <div class="container">
-                <h1>ISO 9001 Kwaliteitsmanagement</h1>
+                <h1>ISO 9001<br>Kwaliteits&shy;management</h1>
                 <p>Verbeter uw bedrijfsprocessen, verhoog klanttevredenheid en versterk uw concurrentiepositie met ISO 9001 certificering</p>
                 <a href="contact.html" class="cta-button">VRAAG EEN GRATIS CONSULT AAN</a>
             </div>

@@ -7,6 +7,33 @@
 - Git voor versiebeheer
 - GitHub Pages voor hosting
 
+## Frontend Features
+
+### Bestaand
+- Vanilla HTML/CSS/JS
+- Component-gebaseerde structuur
+- Responsive design
+
+### Cookie Management Systeem
+- Vanilla JavaScript cookie consent manager
+- Modulair ontwerp
+- Configureerbare cookie types:
+  - Noodzakelijke cookies
+  - Analytische cookies (Google Analytics)
+  - Functionele cookies
+- Features:
+  - Consent opslag (1 jaar)
+  - Granulaire cookie controle
+  - Settings modal
+  - Responsive design
+  - Toegankelijkheid
+
+### Nieuwe Features (Gepland)
+- Dynamisch content laden
+- Client-side routing
+- Content caching
+- Lazy loading voor media
+
 ## Voorgestelde CMS Integratie
 
 ### Primaire Optie: Headless CMS
@@ -35,19 +62,6 @@ Voordelen:
    - Git-gebaseerd
    - Markdown files
    - Eenvoudige setup
-
-## Frontend Architectuur
-
-### Bestaand
-- Vanilla HTML/CSS/JS
-- Component-gebaseerde structuur
-- Responsive design
-
-### Nieuwe Features
-- Dynamisch content laden
-- Client-side routing
-- Content caching
-- Lazy loading voor media
 
 ## Backend Vereisten
 
@@ -82,6 +96,7 @@ Voordelen:
 - GitHub voor repository hosting
 
 ## Beveiliging
+- Cookie consent management
 - SSL certificaat
 - API authenticatie
 - CSRF bescherming

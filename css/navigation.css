@@ -85,9 +85,9 @@ header {
     padding: 0;
     height: 100%;
     align-items: center;
-    margin-left: auto; /* Push to the right */
-    margin-right: 0; /* Ensure no right margin */
-    gap: 0.5rem; /* Reduced spacing between all links */
+    margin-left: auto;
+    margin-right: 0;
+    gap: 0.5rem;
 }
 
 .nav-links li {
@@ -132,6 +132,7 @@ header {
     padding: var(--spacing-sm);
     margin: calc(-1 * var(--spacing-sm));
     height: 40px;
+    z-index: 1001;
 }
 
 .mobile-menu-toggle span {
@@ -140,6 +141,7 @@ header {
     height: 3px;
     background-color: var(--text-color-light);
     margin: 5px 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
 @media (max-width: 768px) {
@@ -152,36 +154,36 @@ header {
     }
 
     .nav-links {
-        display: none;
-        position: absolute;
+        position: fixed;
         top: 70px;
         left: 0;
         right: 0;
         background-color: var(--primary-color);
-        padding: 0;
-        max-height: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        height: 0;
         overflow: hidden;
-        margin-left: 0; /* Reset margin for mobile */
+        transition: height 0.3s ease-in-out;
+        margin: 0;
+        padding: 0;
     }
 
     .nav-links.active {
-        display: block;
-        max-height: 300px;
-        padding: var(--spacing-md);
+        height: auto;
+        padding: 1rem;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .nav-links li {
-        margin: 0;
+        width: 100%;
         height: auto;
+        margin: 0.5rem 0;
     }
 
-    .nav-links.active li {
-        margin-bottom: var(--spacing-md);
-    }
-
-    .nav-links li:last-child {
-        margin-bottom: 0;
+    .nav-links a {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        height: auto;
     }
 
     .mobile-menu-toggle {
@@ -198,5 +200,10 @@ header {
 
     .mobile-menu-toggle.active span:nth-child(3) {
         transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    /* Prevent body scroll when menu is open */
+    body.menu-open {
+        overflow: hidden;
     }
 }

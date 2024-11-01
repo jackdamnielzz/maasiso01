@@ -79,7 +79,8 @@
   - [x] Creëer meta tags (voor alle pagina's)
   - [x] Implementeer semantische HTML-structuur (voor alle pagina's)
   - [ ] Voeg alt teksten toe voor afbeeldingen
-- [ ] Zet basis beveiligingsmaatregelen op
+- [x] Zet basis beveiligingsmaatregelen op
+  - [x] Implementeer cookie consent management systeem
   - [ ] Verkrijg en installeer SSL-certificaat
 - [x] Standaardiseer JavaScript gebruik (main.js vs main.min.js)
 
@@ -157,3 +158,4 @@
 - [x] Creatie van images/ directory voor media assets
 - [x] Juridische pagina's voltooid (privacyverklaring.html, algemene-voorwaarden.html, cookiebeleid.html)
 - [x] JavaScript gebruik gestandaardiseerd (main.min.js)
+- [x] Cookie consent management systeem geïmplementeerd

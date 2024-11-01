@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.maasiso.nl/sitemap.xml
+
+# Prevent indexing of documentation
+Disallow: /cline_docs/
+
+# Prevent indexing of development assets
+Disallow: /*.css$
+Disallow: /*.js$
