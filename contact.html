@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
+<!-- Previous head content remains the same until the form section -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,7 +94,7 @@
             <div class="container">
                 <div class="contact-grid">
                     <div class="contact-form fade-in">
-                        <form id="contact-form" action="https://formsubmit.co/info@maasiso.nl" method="POST" aria-label="Contactformulier">
+                        <form action="https://formsubmit.co/info@maasiso.nl" method="POST">
                             <!-- FormSubmit configuration -->
                             <input type="hidden" name="_subject" value="Nieuw contactformulier bericht van MaasISO website">
                             <input type="hidden" name="_template" value="table">
@@ -103,52 +104,32 @@
                             
                             <div class="form-group">
                                 <label for="name">Naam:</label>
-                                <input type="text" id="name" name="name" required 
-                                    aria-required="true" 
-                                    minlength="2"
-                                    pattern="[A-Za-z\s\-]+"
-                                    autocomplete="name">
-                                <div class="error-message" aria-live="polite"></div>
+                                <input type="text" id="name" name="name" required>
                             </div>
                             <div class="form-group">
                                 <label for="email">E-mail:</label>
-                                <input type="email" id="email" name="email" required 
-                                    aria-required="true"
-                                    autocomplete="email">
-                                <div class="error-message" aria-live="polite"></div>
+                                <input type="email" id="email" name="email" required>
                             </div>
                             <div class="form-group">
                                 <label for="phone">Telefoonnummer:</label>
-                                <input type="tel" id="phone" name="phone"
-                                    autocomplete="tel"
-                                    pattern="[0-9\s\-\+\(\)]{10,}"
-                                    aria-describedby="phone-format">
+                                <input type="tel" id="phone" name="phone">
                                 <small id="phone-format">Formaat: +31 (0)20 1234567</small>
-                                <div class="error-message" aria-live="polite"></div>
                             </div>
                             <div class="form-group">
                                 <label for="subject">Onderwerp:</label>
-                                <select id="subject" name="subject" required aria-required="true">
+                                <select id="subject" name="subject" required>
                                     <option value="">Kies een onderwerp</option>
                                     <option value="ISO 9001">ISO 9001</option>
                                     <option value="ISO 27001">ISO 27001</option>
                                     <option value="AVG Compliance">AVG Compliance</option>
                                     <option value="Andere vraag">Andere vraag</option>
                                 </select>
-                                <div class="error-message" aria-live="polite"></div>
                             </div>
                             <div class="form-group">
                                 <label for="message">Bericht:</label>
-                                <textarea id="message" name="message" required 
-                                    aria-required="true"
-                                    minlength="10"
-                                    rows="5"></textarea>
-                                <div class="error-message" aria-live="polite"></div>
+                                <textarea id="message" name="message" required rows="5"></textarea>
                             </div>
-                            <button type="submit" class="cta-button">
-                                <span class="button-text">VERSTUUR</span>
-                                <span class="loading-indicator" aria-hidden="true"></span>
-                            </button>
+                            <button type="submit" class="cta-button">VERSTUUR</button>
                         </form>
                     </div>
                 </div>
@@ -204,6 +185,5 @@
     </footer>
 
     <script src="js/main.min.js"></script>
-    <script src="js/contact-form.js"></script>
 </body>
 </html>
