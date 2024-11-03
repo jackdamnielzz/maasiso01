@@ -20,6 +20,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             const formData = new FormData(form);
+            
+            // Debug log
+            console.log('Sending form to:', form.action);
+            console.log('Form data:', Object.fromEntries(formData));
+
             const response = await fetch(form.action, {
                 method: 'POST',
                 body: formData,
@@ -27,6 +32,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Accept': 'application/json'
                 }
             });
+
+            // Debug log
+            console.log('Response status:', response.status);
+            console.log('Response headers:', Object.fromEntries(response.headers));
+            
+            const responseData = await response.text();
+            console.log('Response data:', responseData);
 
             if (response.ok) {
                 // Update button to show success
@@ -47,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Disable the button permanently for this session
                 submitButton.disabled = true;
             } else {
-                throw new Error('Er is iets misgegaan');
+                throw new Error('Server responded with status: ' + response.status);
             }
         } catch (error) {
             console.error('Form submission error:', error);
