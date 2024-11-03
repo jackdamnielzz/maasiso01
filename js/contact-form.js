@@ -55,9 +55,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             // Log the request
-            console.log('Sending request to contact-handler.php...');
+            console.log('Sending request...');
             
-            const response = await fetch('contact-handler.php', {
+            // Get the full URL of the current page
+            const currentURL = window.location.href;
+            // Replace contact.html with contact-handler.php5
+            const handlerURL = currentURL.replace('contact.html', 'contact-handler.php5');
+            
+            console.log('Sending to:', handlerURL);
+
+            const response = await fetch(handlerURL, {
                 method: 'POST',
                 body: formData
             });
@@ -71,6 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let result;
             try {
                 result = JSON.parse(responseText);
+                console.log('Parsed response:', result);
             } catch (parseError) {
                 console.error('Failed to parse response as JSON:', parseError);
                 showMessage(
