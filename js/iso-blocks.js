@@ -18,24 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
             nextButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
             nextButton.setAttribute('aria-label', 'Volgende ISO bouwstenen');
 
-            // Create indicators
-            const indicatorsContainer = document.createElement('div');
-            indicatorsContainer.className = 'carousel-indicators';
-            const totalIndicators = blocks.length;
-            
-            for (let i = 0; i < totalIndicators; i++) {
-                const indicator = document.createElement('button');
-                indicator.className = 'carousel-indicator' + (i === 0 ? ' active' : '');
-                indicator.setAttribute('aria-label', `Ga naar bouwsteen ${i + 1}`);
-                indicator.addEventListener('click', () => goToSlide(i));
-                indicatorsContainer.appendChild(indicator);
-            }
-
             // Add elements to DOM
             const carouselWrapper = document.querySelector('.iso-blocks-carousel');
             carouselWrapper.appendChild(prevButton);
             carouselWrapper.appendChild(nextButton);
-            carouselWrapper.appendChild(indicatorsContainer);
 
             // Add event listeners
             prevButton.addEventListener('click', previousSlide);
@@ -51,10 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Remove navigation elements
             const carouselWrapper = document.querySelector('.iso-blocks-carousel');
             const navButtons = carouselWrapper.querySelectorAll('.carousel-nav');
-            const indicators = carouselWrapper.querySelector('.carousel-indicators');
-            
             navButtons.forEach(button => button.remove());
-            indicators?.remove();
 
             // Reset carousel position
             carousel.style.transform = '';
@@ -68,12 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const offset = -(currentIndex * 100);
         carousel.style.transform = `translateX(${offset}%)`;
-
-        // Update indicators
-        const indicators = document.querySelectorAll('.carousel-indicator');
-        indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index === currentIndex);
-        });
 
         // Update navigation buttons visibility
         const prevButton = document.querySelector('.carousel-prev');
@@ -96,11 +73,6 @@ document.addEventListener('DOMContentLoaded', function() {
             currentIndex--;
             updateCarousel();
         }
-    }
-
-    function goToSlide(index) {
-        currentIndex = index;
-        updateCarousel();
     }
 
     // Handle window resize

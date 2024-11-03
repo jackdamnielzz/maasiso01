@@ -48,7 +48,7 @@
 
 .iso-block-icon {
     font-size: 2.5rem;
-    color: #028759; /* Updated green color */
+    color: #028759;
     margin-bottom: 20px;
 }
 
@@ -75,30 +75,62 @@
 
 /* Mobile Styles */
 @media screen and (max-width: 768px) {
+    .iso-blocks-carousel {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        padding: 0;
+    }
+
     .iso-blocks-container {
         display: flex;
-        overflow-x: hidden;
-        scroll-behavior: smooth;
-        gap: 20px;
-        padding: 10px 0;
+        width: 100%;
+        transition: transform 0.3s ease-in-out;
+        gap: 0;
+        padding: 0;
     }
 
     .iso-block {
         flex: 0 0 100%;
-        margin-right: 20px;
+        width: 100%;
+        min-width: 100%;
+        height: auto;
+        min-height: 300px;
+        margin: 0;
+        padding: 25px;
+        box-sizing: border-box;
         transform: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
     }
 
     .iso-block:hover {
         transform: none;
     }
 
+    .iso-block h3 {
+        font-size: 1.4rem;
+        margin: 15px 0;
+    }
+
+    .iso-block-points {
+        margin: 10px 0;
+    }
+
+    .iso-block-points li {
+        margin: 8px 0;
+        font-size: 0.95rem;
+    }
+
     .carousel-nav {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        background: var(--primary-color);
+        background: rgba(2, 135, 89, 0.9);
         color: white;
         border: none;
         width: 40px;
@@ -106,6 +138,12 @@
         border-radius: 50%;
         cursor: pointer;
         z-index: 2;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .carousel-nav:hover {
+        background: rgba(2, 135, 89, 1);
     }
 
     .carousel-prev {
@@ -116,25 +154,8 @@
         right: 10px;
     }
 
-    .carousel-indicators {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin-top: 20px;
-    }
-
-    .carousel-indicator {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: #ccc;
-        border: none;
-        padding: 0;
-        cursor: pointer;
-    }
-
-    .carousel-indicator.active {
-        background: var(--primary-color);
+    .carousel-nav i {
+        font-size: 1.2rem;
     }
 }
 
