@@ -1,73 +1,80 @@
-# Current Task: Cookie Banner Implementation
+## Current Objective
+Implement backend functionality for the contact form
 
-## Objective
-Implement a cookie consent management system that aligns with our cookiebeleid.html requirements and privacy standards.
+## Context
+The website currently has a frontend contact form with the following fields:
+- Name
+- Email
+- Phone (optional)
+- Subject (dropdown)
+- Message
 
-## Implementation Details
+## Options Analysis
 
-### New Files Created
-1. css/cookie-banner.css
-   - Styling for cookie banner and settings modal
-   - Responsive design for all screen sizes
-   - Matches website's visual design
+### 1. Email Service Integration (Recommended for Simplicity)
+**Using Formspree:**
+- Pros:
+  - No backend code needed
+  - 50 free submissions per month
+  - Spam protection included
+  - GDPR compliant
+  - 5-minute setup
+- Implementation:
+  ```html
+  <form action="https://formspree.io/f/your-form-id" method="POST">
+  ```
 
-2. js/cookie-banner.js
-   - Cookie consent management functionality
-   - Settings modal for granular cookie control
-   - One-year consent storage
+**Using EmailJS:**
+- Pros:
+  - 200 free emails per month
+  - Custom email templates
+  - JavaScript-only solution
+- Implementation:
+  - Requires EmailJS account
+  - Client-side JavaScript integration
 
-### Cookie Types Implemented
-1. Noodzakelijke cookies (Required)
-   - Always enabled
-   - Session management
-   - Basic website functionality
+### 2. PHP Backend Solution
+- Pros:
+  - Full control over data handling
+  - No third-party dependencies
+  - Can store submissions in database
+- Requirements:
+  - PHP hosting
+  - SMTP server or mail service
+  - Database (optional)
+- Implementation:
+  - Create contact.php handler
+  - Use PHPMailer for reliable email sending
+  - Implement spam protection
+  - Add error handling
 
-2. Analytische cookies (Optional)
-   - Google Analytics integration
-   - Usage statistics
-   - Website improvement insights
+### 3. Serverless Function Solution
+- Pros:
+  - Modern architecture
+  - Scalable
+  - Pay per use
+  - No server management
+- Options:
+  - Vercel Functions
+  - AWS Lambda
+  - Netlify Functions
+- Implementation:
+  - Create API endpoint
+  - Handle form submission
+  - Send email using service like SendGrid
+  - Store data if needed
 
-3. Functionele cookies (Optional)
-   - User preferences
-   - Language settings
-   - Personalization features
-
-## Features
-- Initial cookie consent banner
-- Detailed cookie settings modal
-- Granular control over cookie types
-- One-year consent storage
-- Responsive design
-- Accessibility support
-- Clear documentation in cookiebeleid.html
-
-## Integration
-- Added to all website pages through main template
-- Consistent styling across the site
-- Proper consent management before setting cookies
+## Recommendation
+Given the requirement for the simplest solution, Option 1 (Email Service Integration) using Formspree is recommended because:
+1. Zero backend maintenance
+2. Quick implementation
+3. Built-in spam protection
+4. GDPR compliance
+5. Professional email handling
 
 ## Next Steps
-1. Monitor cookie consent behavior
-2. Gather user feedback on banner usability
-3. Consider adding more detailed analytics tracking
-4. Review and update cookie policy as needed
-
-## Reference Implementation
-```html
-<!-- Cookie Banner -->
-<div class="cookie-banner" id="cookieBanner">
-    <div class="cookie-banner__content">
-        <div class="cookie-banner__text">
-            <h3>Cookie-instellingen</h3>
-            <p>Wij gebruiken cookies om uw ervaring te verbeteren...</p>
-        </div>
-        <div class="cookie-banner__actions">
-            <button class="cookie-banner__button cookie-banner__button--accept">
-                Alle cookies accepteren
-            </button>
-            <button class="cookie-banner__button cookie-banner__button--settings">
-                Cookie-instellingen
-            </button>
-        </div>
-    </div>
-</div>
+1. Choose preferred solution
+2. Implement selected backend approach
+3. Add form validation
+4. Test submission flow
+5. Monitor and adjust as needed
