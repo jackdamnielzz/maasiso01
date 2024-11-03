@@ -5,13 +5,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const loadingIndicator = document.querySelector('.loading-indicator');
     const buttonText = document.querySelector('.button-text');
 
-    function showMessage(message, type) {
-        formMessage.textContent = message;
+    function showMessage(message, type, debug = null) {
+        let displayMessage = message;
+        if (debug && location.hostname === 'localhost') {
+            displayMessage += '<br><small>' + debug + '</small>';
+        }
+        formMessage.innerHTML = displayMessage;
         formMessage.className = `form-message ${type}`;
         formMessage.style.display = 'block';
-        setTimeout(() => {
-            formMessage.style.display = 'none';
-        }, 5000);
+        // Don't auto-hide error messages
+        if (type !== 'error') {
+            setTimeout(() => {
+                formMessage.style.display = 'none';
+            }, 5000);
+        }
     }
 
     function setLoading(isLoading) {
@@ -48,25 +55,38 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         setLoading(true);
+        formMessage.style.display = 'none';
 
         const formData = new FormData(form);
 
         try {
+            console.log('Sending form data to contact-handler.php...');
             const response = await fetch('contact-handler.php', {
                 method: 'POST',
                 body: formData
             });
 
+            console.log('Response received:', response.status);
             const result = await response.json();
+            console.log('Response data:', result);
 
             if (result.success) {
                 showMessage('Bedankt voor uw bericht. We nemen zo spoedig mogelijk contact met u op.', 'success');
                 form.reset();
             } else {
-                showMessage(result.message || 'Er is een fout opgetreden. Probeer het later opnieuw.', 'error');
+                showMessage(
+                    'Er is een fout opgetreden bij het verzenden van het bericht.',
+                    'error',
+                    result.message || 'Onbekende fout'
+                );
             }
         } catch (error) {
-            showMessage('Er is een fout opgetreden. Probeer het later opnieuw.', 'error');
+            console.error('Error:', error);
+            showMessage(
+                'Er is een fout opgetreden bij het verzenden van het bericht.',
+                'error',
+                'Technical details: ' + error.message
+            );
         } finally {
             setLoading(false);
         }

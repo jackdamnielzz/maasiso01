@@ -1,4 +1,10 @@
 <?php
+// Enable error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', 'error.log');
+
 header('Content-Type: application/json');
 
 function sanitizeInput($data) {
@@ -6,6 +12,9 @@ function sanitizeInput($data) {
 }
 
 try {
+    // Log incoming request
+    error_log("Form submission received: " . json_encode($_POST));
+
     // Validate required fields
     $requiredFields = ['name', 'email', 'subject', 'message'];
     foreach ($requiredFields as $field) {
@@ -45,6 +54,12 @@ try {
     <p>" . nl2br($message) . "</p>
     ";
 
+    // Log email attempt
+    error_log("Attempting to send email to info@maasiso.nl");
+    error_log("Headers: " . print_r($headers, true));
+    error_log("Subject: Nieuw contactformulier bericht: $subject");
+    error_log("Body: $emailBody");
+
     // Send email using PHP's mail function
     $mailSent = mail(
         'info@maasiso.nl',
@@ -52,6 +67,9 @@ try {
         $emailBody,
         implode("\r\n", $headers)
     );
+
+    // Log mail result
+    error_log("Mail send result: " . ($mailSent ? "Success" : "Failed"));
 
     if (!$mailSent) {
         throw new Exception('Er kon geen e-mail worden verzonden. Probeer het later opnieuw.');
@@ -64,6 +82,9 @@ try {
     ]);
 
 } catch (Exception $e) {
+    // Log the error
+    error_log("Error in contact form: " . $e->getMessage());
+    
     // Send error response
     echo json_encode([
         'success' => false,
