@@ -12,7 +12,7 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://formsubmit.co; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://formsubmit.co;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     
-    <!-- Rest of the head content remains the same -->
+    <!-- Meta tags -->
     <meta name="description" content="Neem contact op met MaasISO voor al uw vragen over ISO-certificering, compliance en onze diensten. We staan klaar om u te helpen.">
     <meta name="keywords" content="ISO consultancy, contact MaasISO, ISO certificering contact, ISO 9001 advies, ISO 27001 consultancy">
     <meta name="author" content="MaasISO">
@@ -93,20 +93,20 @@
             <div class="container">
                 <div class="contact-grid">
                     <div class="contact-form fade-in">
-                        <form id="contact-form" action="https://formsubmit.co/696e666f406d61617369736f2e6e6c" method="POST" aria-label="Contactformulier">
+                        <form id="contact-form" action="https://formsubmit.co/activate/info@maasiso.nl" method="POST" aria-label="Contactformulier">
                             <!-- FormSubmit configuration -->
                             <input type="hidden" name="_subject" value="Nieuw contactformulier bericht van MaasISO website">
                             <input type="hidden" name="_template" value="table">
                             <input type="hidden" name="_captcha" value="false">
-                            <input type="hidden" name="_next" value="https://maasiso.nl/contact.html">
-                            <input type="hidden" name="_replyto">
+                            <input type="hidden" name="_next" value="file:///d:/Programmeren/maasiso%20-%20Copy%20-%20Copy%20-%20Copy%20(2)/contact.html">
+                            <input type="text" name="_honey" style="display:none">
                             
                             <div class="form-group">
                                 <label for="name">Naam:</label>
                                 <input type="text" id="name" name="name" required 
                                     aria-required="true" 
                                     minlength="2"
-                                    pattern="[A-Za-zÀ-ÿ\s-]+"
+                                    pattern="[A-Za-z\s\-]+"
                                     autocomplete="name">
                                 <div class="error-message" aria-live="polite"></div>
                             </div>

@@ -2,9 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('contact-form');
     if (!form) return;
 
-    // First submission will be to FormSubmit for activation
-    let isActivated = false;
-
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
 
@@ -17,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const loadingIndicator = submitButton.querySelector('.loading-indicator');
 
         // Show loading state
-        buttonText.style.opacity = '0';
+        buttonText.textContent = 'Uw bericht wordt verzonden, een moment geduld alstublieft...';
         loadingIndicator.style.display = 'block';
         submitButton.disabled = true;
 
@@ -32,23 +29,79 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             if (response.ok) {
-                showMessage('Bedankt voor uw bericht! We nemen zo spoedig mogelijk contact met u op.');
+                // Update button to show success
+                buttonText.textContent = 'Uw bericht is succesvol verzonden. Wij nemen zo spoedig mogelijk contact met u op.';
+                buttonText.style.color = '#4CAF50';
+                loadingIndicator.style.display = 'none';
+                submitButton.style.backgroundColor = '#f8f9fa';
+                submitButton.style.borderColor = '#4CAF50';
+                submitButton.style.cursor = 'default';
+                submitButton.style.padding = '15px 30px';
+                submitButton.style.whiteSpace = 'normal';
+                submitButton.style.height = 'auto';
+                submitButton.style.lineHeight = '1.5';
+                
+                // Clear the form
                 form.reset();
-                if (!isActivated) {
-                    isActivated = true;
-                }
+                
+                // Disable the button permanently for this session
+                submitButton.disabled = true;
             } else {
                 throw new Error('Er is iets misgegaan');
             }
         } catch (error) {
-            showMessage('Er is een fout opgetreden bij het verzenden van uw bericht. Probeer het later opnieuw.', true);
-        } finally {
-            // Reset button state
-            buttonText.style.opacity = '1';
+            console.error('Form submission error:', error);
+            // Reset button state and show error
+            buttonText.textContent = 'VERSTUUR';
+            buttonText.style.color = '';
             loadingIndicator.style.display = 'none';
             submitButton.disabled = false;
+            submitButton.style.backgroundColor = '';
+            submitButton.style.borderColor = '';
+            submitButton.style.cursor = 'pointer';
+            submitButton.style.padding = '';
+            submitButton.style.whiteSpace = '';
+            submitButton.style.height = '';
+            submitButton.style.lineHeight = '';
+            
+            showMessage('Er is een fout opgetreden bij het verzenden van uw bericht. Controleer uw internetverbinding en probeer het later opnieuw.', true);
         }
     });
+
+    function validateForm(form) {
+        let isValid = true;
+        const inputs = form.querySelectorAll('input[required], textarea[required], select[required]');
+        
+        inputs.forEach(input => {
+            const errorDiv = input.nextElementSibling;
+            if (errorDiv && errorDiv.classList.contains('error-message')) {
+                if (!input.value.trim()) {
+                    errorDiv.textContent = 'Dit veld is verplicht';
+                    isValid = false;
+                } else if (input.type === 'email' && !isValidEmail(input.value)) {
+                    errorDiv.textContent = 'Voer een geldig e-mailadres in';
+                    isValid = false;
+                } else if (input.type === 'tel' && input.value && !isValidPhone(input.value)) {
+                    errorDiv.textContent = 'Voer een geldig telefoonnummer in';
+                    isValid = false;
+                } else {
+                    errorDiv.textContent = '';
+                }
+            }
+        });
+
+        return isValid;
+    }
+
+    function isValidEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    function isValidPhone(phone) {
+        const re = /^[0-9\s\-\+\(\)]{10,}$/;
+        return re.test(phone);
+    }
 
     function showMessage(message, isError = false) {
         const messageDiv = document.createElement('div');
