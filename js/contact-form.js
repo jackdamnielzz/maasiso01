@@ -1,21 +1,74 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('#contact-form');
+    const form = document.getElementById('contactForm');
+    const formMessage = document.querySelector('.form-message');
     const submitButton = form.querySelector('button[type="submit"]');
-    const originalButtonText = submitButton.textContent;
+    const loadingIndicator = document.querySelector('.loading-indicator');
+    const buttonText = document.querySelector('.button-text');
 
-    form.addEventListener('submit', function(e) {
+    function showMessage(message, type) {
+        formMessage.textContent = message;
+        formMessage.className = `form-message ${type}`;
+        formMessage.style.display = 'block';
+        setTimeout(() => {
+            formMessage.style.display = 'none';
+        }, 5000);
+    }
+
+    function setLoading(isLoading) {
+        submitButton.disabled = isLoading;
+        loadingIndicator.style.display = isLoading ? 'block' : 'none';
+        buttonText.style.opacity = isLoading ? '0' : '1';
+    }
+
+    function validateForm() {
+        const name = form.querySelector('#name').value.trim();
+        const email = form.querySelector('#email').value.trim();
+        const subject = form.querySelector('#subject').value.trim();
+        const message = form.querySelector('#message').value.trim();
+
+        if (!name || !email || !subject || !message) {
+            showMessage('Vul alle verplichte velden in.', 'error');
+            return false;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            showMessage('Voer een geldig e-mailadres in.', 'error');
+            return false;
+        }
+
+        return true;
+    }
+
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
-        
-        // Change button state
-        submitButton.disabled = true;
-        submitButton.textContent = 'VERZENDEN...';
 
-        // Show maintenance message
-        alert('Ons contactformulier is momenteel in onderhoud. Stuur ons een e-mail op info@maasiso.nl en we nemen zo spoedig mogelijk contact met u op.');
-        
-        // Reset form and button
-        form.reset();
-        submitButton.disabled = false;
-        submitButton.textContent = originalButtonText;
+        if (!validateForm()) {
+            return;
+        }
+
+        setLoading(true);
+
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch('contact-handler.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                showMessage('Bedankt voor uw bericht. We nemen zo spoedig mogelijk contact met u op.', 'success');
+                form.reset();
+            } else {
+                showMessage(result.message || 'Er is een fout opgetreden. Probeer het later opnieuw.', 'error');
+            }
+        } catch (error) {
+            showMessage('Er is een fout opgetreden. Probeer het later opnieuw.', 'error');
+        } finally {
+            setLoading(false);
+        }
     });
 });
