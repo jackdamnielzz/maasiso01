@@ -1,45 +1,46 @@
 <?php
-// Enable error reporting
+// Ensure all errors are caught
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-ini_set('log_errors', 1);
-ini_set('error_log', dirname(__FILE__) . '/mail_error.log');
 
-header('Content-Type: application/json');
-
-function sanitizeInput($data) {
-    return htmlspecialchars(strip_tags(trim($data)));
-}
+// Set error handler to catch all errors
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
+    throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+});
 
 try {
-    // Log incoming request
-    error_log("Form submission received: " . json_encode($_POST));
+    header('Content-Type: application/json');
+
+    // Log request data
+    $logData = "Request received: " . date('Y-m-d H:i:s') . "\n";
+    $logData .= "POST data: " . print_r($_POST, true) . "\n";
+    file_put_contents('debug.log', $logData, FILE_APPEND);
 
     // Validate required fields
     $requiredFields = ['name', 'email', 'subject', 'message'];
     foreach ($requiredFields as $field) {
         if (!isset($_POST[$field]) || empty(trim($_POST[$field]))) {
-            throw new Exception('Alle verplichte velden moeten worden ingevuld.');
+            throw new Exception("Veld '$field' is verplicht maar ontbreekt.");
         }
     }
 
     // Sanitize inputs
-    $name = sanitizeInput($_POST['name']);
-    $email = sanitizeInput($_POST['email']);
-    $phone = isset($_POST['phone']) ? sanitizeInput($_POST['phone']) : 'Niet opgegeven';
-    $subject = sanitizeInput($_POST['subject']);
-    $message = sanitizeInput($_POST['message']);
+    $name = htmlspecialchars(trim($_POST['name']));
+    $email = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+    $phone = isset($_POST['phone']) ? htmlspecialchars(trim($_POST['phone'])) : 'Niet opgegeven';
+    $subject = htmlspecialchars(trim($_POST['subject']));
+    $message = htmlspecialchars(trim($_POST['message']));
 
     // Validate email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         throw new Exception('Ongeldig e-mailadres.');
     }
 
-    // Additional headers for Cloud86
+    // Prepare headers
     $headers = array();
     $headers[] = 'MIME-Version: 1.0';
     $headers[] = 'Content-type: text/html; charset=UTF-8';
-    $headers[] = 'From: ' . $name . ' <' . $email . '>';  // Changed to use sender's email as From
+    $headers[] = 'From: ' . $name . ' <' . $email . '>';
     $headers[] = 'Reply-To: ' . $email;
     $headers[] = 'X-Mailer: PHP/' . phpversion();
 
@@ -58,15 +59,15 @@ try {
         <p><strong>Bericht:</strong></p>
         <p>" . nl2br($message) . "</p>
     </body>
-    </html>
-    ";
+    </html>";
 
     // Log email attempt
-    error_log("Attempting to send email to info@maasiso.nl");
-    error_log("Headers: " . print_r($headers, true));
-    error_log("Subject: Nieuw contactformulier bericht: $subject");
+    $logData = "Attempting to send email at " . date('Y-m-d H:i:s') . "\n";
+    $logData .= "To: info@maasiso.nl\n";
+    $logData .= "Headers: " . print_r($headers, true) . "\n";
+    file_put_contents('debug.log', $logData, FILE_APPEND);
 
-    // Send email using PHP's mail function with full headers
+    // Send email
     $mailSent = mail(
         'info@maasiso.nl',
         "Nieuw contactformulier bericht: $subject",
@@ -75,26 +76,32 @@ try {
     );
 
     // Log mail result
-    error_log("Mail send result: " . ($mailSent ? "Success" : "Failed"));
+    $logData = "Mail result: " . ($mailSent ? "Success" : "Failed") . "\n";
+    if (!$mailSent) {
+        $error = error_get_last();
+        $logData .= "Mail error: " . print_r($error, true) . "\n";
+    }
+    file_put_contents('debug.log', $logData, FILE_APPEND);
 
     if (!$mailSent) {
-        error_log("Mail error info: " . error_get_last()['message']);
-        throw new Exception('Er kon geen e-mail worden verzonden. Probeer het later opnieuw.');
+        throw new Exception('E-mail kon niet worden verzonden. Probeer het later opnieuw.');
     }
 
-    // Send success response
     echo json_encode([
         'success' => true,
         'message' => 'Bericht succesvol verzonden.'
     ]);
 
 } catch (Exception $e) {
-    // Log the error
-    error_log("Error in contact form: " . $e->getMessage());
-    
-    // Send error response
+    $errorMessage = $e->getMessage();
+    $logData = "Error occurred at " . date('Y-m-d H:i:s') . "\n";
+    $logData .= "Error: " . $errorMessage . "\n";
+    $logData .= "Stack trace: " . $e->getTraceAsString() . "\n";
+    file_put_contents('debug.log', $logData, FILE_APPEND);
+
     echo json_encode([
         'success' => false,
-        'message' => 'Er is een fout opgetreden: ' . $e->getMessage()
+        'message' => $errorMessage,
+        'debug' => 'Check debug.log for details'
     ]);
 }

@@ -7,18 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function showMessage(message, type, debug = null) {
         let displayMessage = message;
-        if (debug && location.hostname === 'localhost') {
-            displayMessage += '<br><small>' + debug + '</small>';
+        if (debug) {
+            displayMessage += '<br><small style="color: #666;">' + debug + '</small>';
         }
         formMessage.innerHTML = displayMessage;
         formMessage.className = `form-message ${type}`;
         formMessage.style.display = 'block';
-        // Don't auto-hide error messages
-        if (type !== 'error') {
-            setTimeout(() => {
-                formMessage.style.display = 'none';
-            }, 5000);
-        }
     }
 
     function setLoading(isLoading) {
@@ -60,15 +54,32 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData(form);
 
         try {
-            console.log('Sending form data to contact-handler.php...');
+            // Log the request
+            console.log('Sending request to contact-handler.php...');
+            
             const response = await fetch('contact-handler.php', {
                 method: 'POST',
                 body: formData
             });
 
-            console.log('Response received:', response.status);
-            const result = await response.json();
-            console.log('Response data:', result);
+            // Log the raw response
+            console.log('Response status:', response.status);
+            const responseText = await response.text();
+            console.log('Raw response:', responseText);
+
+            // Try to parse the response as JSON
+            let result;
+            try {
+                result = JSON.parse(responseText);
+            } catch (parseError) {
+                console.error('Failed to parse response as JSON:', parseError);
+                showMessage(
+                    'Er is een fout opgetreden bij het verwerken van de server response.',
+                    'error',
+                    'Server response: ' + responseText
+                );
+                return;
+            }
 
             if (result.success) {
                 showMessage('Bedankt voor uw bericht. We nemen zo spoedig mogelijk contact met u op.', 'success');
@@ -77,15 +88,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 showMessage(
                     'Er is een fout opgetreden bij het verzenden van het bericht.',
                     'error',
-                    result.message || 'Onbekende fout'
+                    result.message || 'Server gaf geen specifieke foutmelding.'
                 );
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Network or server error:', error);
             showMessage(
                 'Er is een fout opgetreden bij het verzenden van het bericht.',
                 'error',
-                'Technical details: ' + error.message
+                'Technische details: ' + error.message
             );
         } finally {
             setLoading(false);
