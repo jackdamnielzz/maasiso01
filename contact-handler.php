@@ -9,118 +9,62 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
-// Logging function with direct, visible output
+// Logging function
 function visibleLog($message, $level = 'INFO') {
     $timestamp = date('[Y-m-d H:i:s]');
     $log_entry = "{$timestamp} [{$level}] {$message}\n";
-    
-    // Log to a visible file in the web root
-    $log_path = dirname(__FILE__) . '/contact-form-log.txt';
-    
-    // Append log entry
-    file_put_contents($log_path, $log_entry, FILE_APPEND);
-    
-    // Also use error_log for system logging
     error_log($log_entry);
-}
-
-// Log request details
-visibleLog("Request received - Method: " . $_SERVER['REQUEST_METHOD']);
-visibleLog("Raw POST data: " . file_get_contents('php://input'));
-visibleLog("POST array: " . print_r($_POST, true));
-
-// Enhanced error handling and logging
-function handleContactFormSubmission() {
-    // Log incoming request details
-    visibleLog("Received contact form submission", 'INFO');
-    
-    // Log all incoming POST data (sanitized)
-    visibleLog("POST Data: " . print_r($_POST, true), 'DEBUG');
-
-    // Validate and process form
-    try {
-        // Input validation
-        $name = $_POST['name'] ?? '';
-        $email = filter_var($_POST['email'] ?? '', FILTER_SANITIZE_EMAIL);
-        $subject = $_POST['subject'] ?? '';
-        $phone = $_POST['phone'] ?? '';
-        $message = $_POST['message'] ?? '';
-
-        // Detailed validation logging
-        visibleLog("Validating form data...", 'INFO');
-        visibleLog("Name: $name", 'DEBUG');
-        visibleLog("Email: $email", 'DEBUG');
-        visibleLog("Subject: $subject", 'DEBUG');
-        visibleLog("Phone: $phone", 'DEBUG');
-
-        if (empty($name)) {
-            visibleLog("Validation Error: Name is empty", 'WARNING');
-            throw new Exception("Naam is verplicht");
-        }
-
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            visibleLog("Validation Error: Invalid email", 'WARNING');
-            throw new Exception("Ongeldig e-mailadres");
-        }
-
-        if (empty($subject)) {
-            visibleLog("Validation Error: Subject is empty", 'WARNING');
-            throw new Exception("Onderwerp is verplicht");
-        }
-
-        if (empty($message)) {
-            visibleLog("Validation Error: Message is empty", 'WARNING');
-            throw new Exception("Bericht is verplicht");
-        }
-
-        // Attempt to send email
-        $to = 'info@maasiso.nl';
-        $email_subject = "Nieuw contactformulier: $subject";
-        $email_body = "Naam: $name\n";
-        $email_body .= "E-mail: $email\n";
-        if (!empty($phone)) {
-            $email_body .= "Telefoon: $phone\n";
-        }
-        $email_body .= "Onderwerp: $subject\n\n";
-        $email_body .= "Bericht:\n$message";
-        
-        $headers = "From: $email\r\n";
-        $headers .= "Reply-To: $email\r\n";
-        $headers .= "X-Mailer: PHP/" . phpversion();
-
-        // Log email sending attempt
-        visibleLog("Attempting to send email to $to", 'INFO');
-        visibleLog("Email subject: $email_subject", 'DEBUG');
-        visibleLog("Email headers: $headers", 'DEBUG');
-        
-        // Send email and log result
-        $mail_sent = mail($to, $email_subject, $email_body, $headers);
-        
-        if ($mail_sent) {
-            visibleLog("Email sent successfully", 'SUCCESS');
-            return ['status' => 'success', 'message' => 'Bericht succesvol verzonden'];
-        } else {
-            visibleLog("Email sending failed", 'ERROR');
-            throw new Exception("Kon het bericht niet verzenden");
-        }
-    } catch (Exception $e) {
-        // Log any exceptions
-        visibleLog("Exception: " . $e->getMessage(), 'CRITICAL');
-        return ['status' => 'error', 'message' => $e->getMessage()];
-    }
 }
 
 // Main script execution
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Process form and return JSON response
-    $result = handleContactFormSubmission();
-    echo json_encode($result);
-    exit;
+    visibleLog("POST request received");
+    visibleLog("POST data: " . print_r($_POST, true));
+
+    // Get form data
+    $name = $_POST['name'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $phone = $_POST['phone'] ?? '';
+    $subject = $_POST['subject'] ?? '';
+    $message = $_POST['message'] ?? '';
+
+    // Validate data
+    if (empty($name) || empty($email) || empty($subject) || empty($message)) {
+        visibleLog("Validation failed - missing required fields");
+        echo json_encode(['status' => 'error', 'message' => 'Alle verplichte velden moeten ingevuld zijn']);
+        exit;
+    }
+
+    // Prepare email
+    $to = 'info@maasiso.nl';
+    $email_subject = "Nieuw contactformulier: $subject";
+    $email_body = "Naam: $name\n";
+    $email_body .= "E-mail: $email\n";
+    if (!empty($phone)) {
+        $email_body .= "Telefoon: $phone\n";
+    }
+    $email_body .= "Onderwerp: $subject\n\n";
+    $email_body .= "Bericht:\n$message";
+
+    $headers = "From: $email\r\n";
+    $headers .= "Reply-To: $email\r\n";
+    $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
+    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
+    // Send email
+    visibleLog("Attempting to send email");
+    $mail_sent = mail($to, $email_subject, $email_body, $headers);
+
+    if ($mail_sent) {
+        visibleLog("Email sent successfully");
+        echo json_encode(['status' => 'success', 'message' => 'Bericht succesvol verzonden']);
+    } else {
+        visibleLog("Failed to send email");
+        echo json_encode(['status' => 'error', 'message' => 'Kon het bericht niet verzenden']);
+    }
 } else {
-    // Log any non-POST requests
-    visibleLog("Non-POST request received", 'WARNING');
+    visibleLog("Invalid request method: " . $_SERVER['REQUEST_METHOD']);
     http_response_code(405);
     echo json_encode(['status' => 'error', 'message' => 'Method Not Allowed']);
-    exit;
 }
 ?>
