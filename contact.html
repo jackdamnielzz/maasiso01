@@ -9,7 +9,7 @@
     <link rel="icon" type="image/svg+xml" href="images/icons/favicon.svg">
     
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' *;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://maasiso.nl;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     
     <!-- Meta tags -->
@@ -178,89 +178,72 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM Content Loaded - Initializing form handling');
 
-            const contactForm = document.getElementById('contact-experiment-form');
+            const form = document.getElementById('contact-experiment-form');
             const formFeedback = document.getElementById('form-feedback');
 
-            if (!contactForm) {
-                console.error('Contact form not found! Check form ID');
+            if (!form) {
+                console.error('Contact form not found!');
                 return;
             }
-            console.log('Contact form found:', contactForm);
 
-            // Add input event listeners for all form fields
-            const formInputs = contactForm.querySelectorAll('input, textarea, select');
-            formInputs.forEach(input => {
+            console.log('Form found, setting up event listeners');
+
+            // Log form field changes
+            form.querySelectorAll('input, textarea, select').forEach(input => {
                 input.addEventListener('input', function(e) {
-                    console.log(`Input changed - ${e.target.name}:`, e.target.value);
+                    console.log(`Field ${e.target.name} changed:`, e.target.value);
                 });
             });
 
-            // Add specific checkbox listener
-            const privacyCheckbox = document.getElementById('privacy-consent');
-            if (privacyCheckbox) {
-                privacyCheckbox.addEventListener('change', function(e) {
-                    console.log('Privacy consent changed:', e.target.checked);
-                });
-            }
-
             // Handle form submission
-            contactForm.addEventListener('submit', function(e) {
+            form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 console.log('Form submitted - Starting submission process');
 
-                const submitButton = contactForm.querySelector('button[type="submit"]');
-                submitButton.textContent = 'Verzenden...';
+                const submitButton = form.querySelector('button[type="submit"]');
                 submitButton.disabled = true;
+                submitButton.textContent = 'Verzenden...';
 
-                // Get form data
-                const formData = new FormData(contactForm);
-                
-                // Log form data
+                const formData = new FormData(form);
+
+                // Log form data being sent
                 console.log('Form data collected:');
-                for (let pair of formData.entries()) {
-                    console.log(`${pair[0]}: ${pair[1]}`);
+                for (let [key, value] of formData.entries()) {
+                    console.log(`${key}: ${value}`);
                 }
 
-                // Send form data
                 console.log('Sending form data to server');
-                fetch(contactForm.action, {
+                fetch('https://maasiso.nl/contact-handler.php', {
                     method: 'POST',
                     body: formData
                 })
                 .then(response => {
-                    console.log('Response received:', response.status, response.statusText);
-                    return response.text();
-                })
-                .then(text => {
-                    console.log('Response text:', text);
-                    let data;
-                    try {
-                        data = JSON.parse(text);
-                        console.log('Parsed response:', data);
-                    } catch (error) {
-                        console.error('Failed to parse response:', error);
-                        throw new Error('Invalid server response');
+                    console.log('Server response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
                     }
-
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Server response data:', data);
                     if (data.status === 'success') {
                         console.log('Form submission successful');
                         formFeedback.textContent = 'Uw bericht is succesvol verzonden. Wij nemen zo spoedig mogelijk contact met u op.';
                         formFeedback.className = 'form-feedback success show';
-                        contactForm.reset();
+                        form.reset();
                     } else {
                         console.log('Form submission failed:', data.message);
-                        formFeedback.textContent = data.message || 'Er is een fout opgetreden bij het verzenden van uw bericht.';
-                        formFeedback.className = 'form-feedback error show';
+                        throw new Error(data.message || 'Er is een fout opgetreden');
                     }
                 })
                 .catch(error => {
                     console.error('Error during form submission:', error);
-                    formFeedback.textContent = 'Er is een technische fout opgetreden. Probeer het later opnieuw.';
+                    formFeedback.textContent = 'Er is een fout opgetreden bij het verzenden van uw bericht. Probeer het later opnieuw.';
                     formFeedback.className = 'form-feedback error show';
                 })
                 .finally(() => {
-                    submitButton.textContent = 'Verzenden';
                     submitButton.disabled = false;
+                    submitButton.textContent = 'Verzenden';
                     console.log('Form submission process completed');
                 });
             });
