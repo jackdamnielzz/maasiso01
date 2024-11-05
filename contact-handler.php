@@ -3,6 +3,12 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Set headers
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Content-Type');
+
 // Logging function with direct, visible output
 function visibleLog($message, $level = 'INFO') {
     $timestamp = date('[Y-m-d H:i:s]');
@@ -18,15 +24,15 @@ function visibleLog($message, $level = 'INFO') {
     error_log($log_entry);
 }
 
+// Log request details
+visibleLog("Request received - Method: " . $_SERVER['REQUEST_METHOD']);
+visibleLog("Raw POST data: " . file_get_contents('php://input'));
+visibleLog("POST array: " . print_r($_POST, true));
+
 // Enhanced error handling and logging
 function handleContactFormSubmission() {
     // Log incoming request details
     visibleLog("Received contact form submission", 'INFO');
-    visibleLog("Request Method: " . $_SERVER['REQUEST_METHOD'], 'DEBUG');
-    visibleLog("Content Type: " . $_SERVER['CONTENT_TYPE'], 'DEBUG');
-    
-    // Log raw POST data
-    visibleLog("Raw POST data: " . file_get_contents('php://input'), 'DEBUG');
     
     // Log all incoming POST data (sanitized)
     visibleLog("POST Data: " . print_r($_POST, true), 'DEBUG');
@@ -106,15 +112,6 @@ function handleContactFormSubmission() {
 
 // Main script execution
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Set headers
-    header('Content-Type: application/json');
-    header('Access-Control-Allow-Origin: *');
-    header('Access-Control-Allow-Methods: POST');
-    header('Access-Control-Allow-Headers: Content-Type');
-    
-    // Log request start
-    visibleLog("Starting form submission handling", 'INFO');
-    
     // Process form and return JSON response
     $result = handleContactFormSubmission();
     echo json_encode($result);

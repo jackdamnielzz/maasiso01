@@ -9,7 +9,7 @@
     <link rel="icon" type="image/svg+xml" href="images/icons/favicon.svg">
     
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' *;">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     
     <!-- Meta tags -->
@@ -204,37 +204,44 @@
                 });
             }
 
-            contactForm.addEventListener('submit', function(e) {
+            // Handle form submission
+            contactForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 console.log('Form submitted - Starting submission process');
 
-                // Get form data
-                const formData = new FormData(contactForm);
-                
-                // Log all form data
-                for (let pair of formData.entries()) {
-                    console.log('Form data:', pair[0], pair[1]);
-                }
-
-                // Add recipient
-                formData.append('recipient', 'info@maasiso.nl');
-                console.log('Added recipient to form data');
-
-                // Send form data
-                console.log('Sending form data to contact-handler.php');
-                fetch('contact-handler.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    console.log('Raw response:', response);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
+                try {
+                    // Get form data
+                    const formData = new FormData(contactForm);
+                    
+                    // Log all form data
+                    for (let pair of formData.entries()) {
+                        console.log('Form data:', pair[0], pair[1]);
                     }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Response data:', data);
+
+                    // Add recipient
+                    formData.append('recipient', 'info@maasiso.nl');
+                    console.log('Added recipient to form data');
+
+                    // Send form data
+                    console.log('Sending form data to contact-handler.php');
+                    const response = await fetch('contact-handler.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    console.log('Raw response:', response);
+                    const responseText = await response.text();
+                    console.log('Response text:', responseText);
+
+                    let data;
+                    try {
+                        data = JSON.parse(responseText);
+                        console.log('Parsed response data:', data);
+                    } catch (parseError) {
+                        console.error('Error parsing response:', parseError);
+                        throw new Error('Invalid response format');
+                    }
+
                     if (data.status === 'success') {
                         console.log('Form submission successful');
                         formFeedback.textContent = 'Uw bericht is succesvol verzonden. Wij nemen zo spoedig mogelijk contact met u op.';
@@ -245,12 +252,15 @@
                         formFeedback.textContent = data.message || 'Er is een fout opgetreden bij het verzenden van uw bericht.';
                         formFeedback.className = 'form-feedback error show';
                     }
-                })
-                .catch(error => {
+                } catch (error) {
                     console.error('Error during form submission:', error);
+                    console.error('Error details:', {
+                        message: error.message,
+                        stack: error.stack
+                    });
                     formFeedback.textContent = 'Er is een technische fout opgetreden. Probeer het later opnieuw.';
                     formFeedback.className = 'form-feedback error show';
-                });
+                }
             });
 
             console.log('Form handler initialization complete');
