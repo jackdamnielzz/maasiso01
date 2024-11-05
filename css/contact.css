@@ -61,24 +61,41 @@
 /* Popup Feedback Styling */
 .form-feedback {
     position: fixed;
+<<<<<<< HEAD
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 1.5rem 2.5rem;
+=======
+    top: 20px;
+    right: 20px;
+    padding: 1rem 2rem;
+>>>>>>> 0bf1dda87e0a3eabe464e0645c8052d77bfbc8aa
     border-radius: 8px;
     text-align: center;
     z-index: 1000;
     display: none;
+<<<<<<< HEAD
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     max-width: 400px;
     width: 90%;
     font-weight: 500;
     font-size: 1.1rem;
+=======
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+>>>>>>> 0bf1dda87e0a3eabe464e0645c8052d77bfbc8aa
 }
 
 .form-feedback.success {
     background-color: var(--button-primary-bg);
     color: var(--button-primary-text);
+<<<<<<< HEAD
+=======
+    border: 1px solid var(--button-primary-hover);
+>>>>>>> 0bf1dda87e0a3eabe464e0645c8052d77bfbc8aa
 }
 
 .form-feedback.error {
@@ -117,6 +134,39 @@
     }
 }
 
+.form-feedback.show {
+    display: block;
+    opacity: 1;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.form-feedback.hide {
+    opacity: 0;
+    animation: fadeOut 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
 @media (max-width: 768px) {
     .contact-form-container {
         padding: 1rem;
@@ -124,8 +174,14 @@
     }
     
     .form-feedback {
+<<<<<<< HEAD
         width: calc(100% - 40px);
         margin: 0 20px;
         padding: 1rem 1.5rem;
+=======
+        left: 20px;
+        right: 20px;
+        max-width: calc(100% - 40px);
+>>>>>>> 0bf1dda87e0a3eabe464e0645c8052d77bfbc8aa
     }
 }

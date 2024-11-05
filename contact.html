@@ -190,6 +190,7 @@
                     formFeedback.textContent = message;
                     formFeedback.classList.remove('success', 'error');
                     formFeedback.classList.add(type);
+<<<<<<< HEAD
 
                     // Show feedback with fade in
                     requestAnimationFrame(() => {
@@ -209,18 +210,72 @@
                     e.preventDefault();
                     console.log('Form submitted');
 
+=======
+
+                    // Show feedback with fade in
+                    formFeedback.style.display = 'block';
+                    setTimeout(() => {
+                        formFeedback.classList.add('show');
+                    }, 10);
+
+                    // Set timeout to hide feedback after 10 seconds
+                    feedbackTimeout = setTimeout(() => {
+                        formFeedback.classList.add('hide');
+                        setTimeout(() => {
+                            formFeedback.style.display = 'none';
+                            formFeedback.classList.remove('show', 'hide');
+                        }, 500);
+                    }, 10000);
+                }
+
+                function handleSubmit(e) {
+                    e.preventDefault();
+
+                    // Get form data
+                    const name = document.getElementById('name').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const subject = document.getElementById('subject').value;
+                    const message = document.getElementById('message').value.trim();
+                    const privacyConsent = document.getElementById('privacy-consent').checked;
+
+                    // Validate form
+                    if (!name || !email || !subject || !message) {
+                        showFeedback('Vul alstublieft alle verplichte velden in.', 'error');
+                        return;
+                    }
+
+                    if (!privacyConsent) {
+                        showFeedback('U moet akkoord gaan met de privacyverklaring.', 'error');
+                        return;
+                    }
+
+                    // Prepare form data
+>>>>>>> 0bf1dda87e0a3eabe464e0645c8052d77bfbc8aa
                     const formData = new FormData(contactForm);
 
+<<<<<<< HEAD
+=======
+                    // Send form data
+>>>>>>> 0bf1dda87e0a3eabe464e0645c8052d77bfbc8aa
                     fetch('contact-handler.php', {
                         method: 'POST',
                         body: formData
                     })
                     .then(response => {
+<<<<<<< HEAD
                         console.log('Response received:', response);
                         return response.json();
                     })
                     .then(data => {
                         console.log('Data:', data);
+=======
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+>>>>>>> 0bf1dda87e0a3eabe464e0645c8052d77bfbc8aa
                         if (data.status === 'success') {
                             showFeedback('Uw bericht is succesvol verzonden. Wij nemen zo spoedig mogelijk contact met u op.', 'success');
                             contactForm.reset();
@@ -229,10 +284,18 @@
                         }
                     })
                     .catch(error => {
+<<<<<<< HEAD
                         console.error('Error:', error);
                         showFeedback('Er is een technische fout opgetreden. Probeer het later opnieuw.', 'error');
                     });
                 });
+=======
+                        showFeedback('Er is een technische fout opgetreden. Probeer het later opnieuw.', 'error');
+                    });
+                }
+
+                contactForm.addEventListener('submit', handleSubmit);
+>>>>>>> 0bf1dda87e0a3eabe464e0645c8052d77bfbc8aa
             });
         })();
     </script>
