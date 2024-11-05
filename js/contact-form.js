@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle form submission
     contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
+        e.preventDefault(); // Prevent default form submission
         console.log('Form submitted - Starting submission process');
 
         const submitButton = contactForm.querySelector('button[type="submit"]');
@@ -46,9 +46,12 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(`${pair[0]}: ${pair[1]}`);
         }
 
+        // Get form action URL
+        const actionUrl = contactForm.getAttribute('action');
+        console.log('Sending form data to:', actionUrl);
+
         // Send form data
-        console.log('Sending form data to server');
-        fetch('https://maasiso.nl/contact-handler.php', {
+        fetch(actionUrl, {
             method: 'POST',
             body: formData,
             headers: {
@@ -56,11 +59,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .then(response => {
-            console.log('Response received:', response.status, response.statusText);
+            console.log('Response status:', response.status);
+            console.log('Response headers:', response.headers);
             return response.text();
         })
         .then(text => {
-            console.log('Response text:', text);
+            console.log('Raw response:', text);
             let data;
             try {
                 data = JSON.parse(text);
