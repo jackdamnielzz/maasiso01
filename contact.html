@@ -190,27 +190,6 @@
                     formFeedback.textContent = message;
                     formFeedback.classList.remove('success', 'error');
                     formFeedback.classList.add(type);
-<<<<<<< HEAD
-
-                    // Show feedback with fade in
-                    requestAnimationFrame(() => {
-                        formFeedback.classList.add('show');
-                    });
-
-                    // Set timeout to hide feedback after 10 seconds
-                    feedbackTimeout = setTimeout(() => {
-                        formFeedback.classList.add('hide');
-                        setTimeout(() => {
-                            formFeedback.classList.remove('show', 'hide');
-                        }, 500);
-                    }, 10000);
-                }
-
-                contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    console.log('Form submitted');
-
-=======
 
                     // Show feedback with fade in
                     formFeedback.style.display = 'block';
@@ -230,6 +209,7 @@
 
                 function handleSubmit(e) {
                     e.preventDefault();
+                    console.log('Form submitted');
 
                     // Get form data
                     const name = document.getElementById('name').value.trim();
@@ -250,32 +230,23 @@
                     }
 
                     // Prepare form data
->>>>>>> 0bf1dda87e0a3eabe464e0645c8052d77bfbc8aa
                     const formData = new FormData(contactForm);
+                    formData.append('recipient', 'info@maasiso.nl');
 
-<<<<<<< HEAD
-=======
                     // Send form data
->>>>>>> 0bf1dda87e0a3eabe464e0645c8052d77bfbc8aa
                     fetch('contact-handler.php', {
                         method: 'POST',
                         body: formData
                     })
                     .then(response => {
-<<<<<<< HEAD
                         console.log('Response received:', response);
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Data:', data);
-=======
                         if (!response.ok) {
                             throw new Error(`HTTP error! status: ${response.status}`);
                         }
                         return response.json();
                     })
                     .then(data => {
->>>>>>> 0bf1dda87e0a3eabe464e0645c8052d77bfbc8aa
+                        console.log('Data:', data);
                         if (data.status === 'success') {
                             showFeedback('Uw bericht is succesvol verzonden. Wij nemen zo spoedig mogelijk contact met u op.', 'success');
                             contactForm.reset();
@@ -284,18 +255,12 @@
                         }
                     })
                     .catch(error => {
-<<<<<<< HEAD
                         console.error('Error:', error);
-                        showFeedback('Er is een technische fout opgetreden. Probeer het later opnieuw.', 'error');
-                    });
-                });
-=======
                         showFeedback('Er is een technische fout opgetreden. Probeer het later opnieuw.', 'error');
                     });
                 }
 
                 contactForm.addEventListener('submit', handleSubmit);
->>>>>>> 0bf1dda87e0a3eabe464e0645c8052d77bfbc8aa
             });
         })();
     </script>
