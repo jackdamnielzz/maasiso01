@@ -1,58 +1,77 @@
 <?php
-// Enable comprehensive error reporting
+// Enable comprehensive error reporting and logging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
-// Ensure logging is enabled with maximum detail
 ini_set('log_errors', 1);
-ini_set('error_log', '/var/log/php_errors.log');
 
-header('Content-Type: application/json');
-
-// Enhanced logging function with system error capture
-function logDetailedError($message, $level = 'ERROR') {
-    $logFile = '/var/log/contact-form-detailed-errors.log';
+// Logging function with multiple logging methods
+function advancedLog($message, $level = 'INFO') {
+    // Log levels: DEBUG, INFO, WARNING, ERROR, CRITICAL
     $timestamp = date('[Y-m-d H:i:s]');
-    
-    // Capture system error details
-    $last_error = error_get_last();
-    $error_details = $last_error ? print_r($last_error, true) : 'No additional system error';
-    
-    $logMessage = "{$timestamp} [{$level}] {$message}\n";
-    $logMessage .= "System Error Details:\n{$error_details}\n";
-    $logMessage .= "Server Variables:\n" . print_r($_SERVER, true) . "\n";
-    $logMessage .= "POST Data (sanitized):\n" . print_r(array_map('htmlspecialchars', $_POST), true) . "\n";
-    $logMessage .= "----------------------------\n";
-    
-    // Use error_log for system logging with full details
-    error_log($logMessage, 3, $logFile);
+    $log_message = "{$timestamp} [{$level}] {$message}\n";
+
+    // Multiple logging methods
+    $log_paths = [
+        '/var/log/contact-form-debug.log',     // Standard Linux log path
+        dirname(__FILE__) . '/contact-form-debug.log', // Current directory
+        sys_get_temp_dir() . '/contact-form-debug.log' // Temporary directory
+    ];
+
+    // Try to write to writable log paths
+    foreach ($log_paths as $log_path) {
+        $dir = dirname($log_path);
+        if (is_dir($dir) && is_writable($dir)) {
+            file_put_contents($log_path, $log_message, FILE_APPEND);
+            break;
+        }
+    }
+
+    // System error log as fallback
+    error_log($log_message);
 }
 
-// Advanced email sending function with comprehensive error tracking
-function send_detailed_email($to, $subject, $message, $headers) {
-    // Attempt to send email and capture detailed information
-    $mail_sent = mail($to, $subject, $message, $headers);
+// Enhanced mail sending function with detailed logging
+function sendEnhancedEmail($to, $subject, $message, $headers) {
+    // Log email sending attempt
+    advancedLog("Attempting to send email to: {$to}", 'INFO');
+    advancedLog("Email Subject: {$subject}", 'DEBUG');
     
+    // Log headers
+    advancedLog("Email Headers: " . print_r($headers, true), 'DEBUG');
+
+    // Capture system configuration details
+    advancedLog("PHP Mail Configuration:", 'DEBUG');
+    advancedLog("sendmail_path: " . ini_get('sendmail_path'), 'DEBUG');
+    advancedLog("SMTP settings: " . print_r(ini_get_all('smtp'), true), 'DEBUG');
+
+    // Attempt to send email
+    $mail_sent = mail($to, $subject, $message, $headers);
+
     if ($mail_sent) {
-        logDetailedError("Email apparently sent successfully to {$to}", 'INFO');
+        advancedLog("Email sent successfully to {$to}", 'INFO');
         return true;
     } else {
-        // Capture and log detailed error information
-        $error_message = "Email sending failed. Detailed investigation needed.";
-        logDetailedError($error_message, 'CRITICAL');
+        // Capture potential errors
+        $error = error_get_last();
+        advancedLog("Email sending failed to {$to}", 'ERROR');
+        advancedLog("Error Details: " . print_r($error, true), 'ERROR');
         
-        // Additional system error logging
-        $last_error = error_get_last();
-        if ($last_error) {
-            logDetailedError("System Error Details: " . print_r($last_error, true), 'SYSTEM_ERROR');
+        // Additional system error investigation
+        if (function_exists('error_get_last')) {
+            $last_error = error_get_last();
+            advancedLog("Last Error: " . print_r($last_error, true), 'CRITICAL');
         }
-        
+
         return false;
     }
 }
 
 // Main form handling
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Log incoming request details
+    advancedLog("Received POST request", 'INFO');
+    advancedLog("POST Data: " . print_r($_POST, true), 'DEBUG');
+
     // Sanitize input
     $name = htmlspecialchars($_POST['name'] ?? '');
     $email = filter_var($_POST['email'] ?? '', FILTER_SANITIZE_EMAIL);
@@ -63,64 +82,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validation
     $errors = [];
-    if (empty($name)) $errors[] = "Naam is verplicht.";
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "Ongeldig e-mailadres.";
-    if (empty($subject)) $errors[] = "Onderwerp is verplicht.";
-    if (empty($message)) $errors[] = "Bericht is verplicht.";
+    if (empty($name)) $errors[] = "Name is required";
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "Invalid email";
+    if (empty($subject)) $errors[] = "Subject is required";
+    if (empty($message)) $errors[] = "Message is required";
 
     if (empty($errors)) {
         // Construct email
-        $email_subject = "Nieuw contactformulier bericht: " . $subject;
-        $email_body = "Contactformulier details:\n\n";
-        $email_body .= "Naam: {$name}\n";
-        $email_body .= "E-mail: {$email}\n";
-        $email_body .= "Telefoon: {$phone}\n";
-        $email_body .= "Onderwerp: {$subject}\n\n";
-        $email_body .= "Bericht:\n{$message}";
+        $email_subject = "New Contact Form Submission: " . $subject;
+        $email_body = "Contact Form Details:\n\n";
+        $email_body .= "Name: {$name}\n";
+        $email_body .= "Email: {$email}\n";
+        $email_body .= "Phone: {$phone}\n";
+        $email_body .= "Subject: {$subject}\n\n";
+        $email_body .= "Message:\n{$message}";
 
-        // Email headers with additional diagnostics
+        // Enhanced email headers
         $headers = "From: {$email}\r\n";
         $headers .= "Reply-To: {$email}\r\n";
         $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
-        $headers .= "X-Contact-Form-Timestamp: " . time() . "\r\n";
         $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
-        // Attempt email sending with detailed logging
-        try {
-            // Use advanced email sending with comprehensive error tracking
-            $mail_result = send_detailed_email($recipient, $email_subject, $email_body, $headers);
-            
-            if ($mail_result) {
-                echo json_encode([
-                    'status' => 'success', 
-                    'message' => 'Uw bericht is succesvol verzonden.',
-                    'debug' => 'Email sending function returned true'
-                ]);
-            } else {
-                echo json_encode([
-                    'status' => 'error', 
-                    'message' => 'Verzenden van e-mail is mislukt. Onze technische ondersteuning is geïnformeerd.',
-                    'debug' => 'Email sending function returned false'
-                ]);
-            }
-        } catch (Exception $e) {
-            logDetailedError("Email exception: " . $e->getMessage(), 'EXCEPTION');
+        // Send email with enhanced logging
+        $mail_result = sendEnhancedEmail($recipient, $email_subject, $email_body, $headers);
+
+        if ($mail_result) {
+            advancedLog("Form submission processed successfully", 'INFO');
+            echo json_encode([
+                'status' => 'success', 
+                'message' => 'Your message has been sent successfully.'
+            ]);
+        } else {
+            advancedLog("Form submission failed", 'ERROR');
             echo json_encode([
                 'status' => 'error', 
-                'message' => 'Er is een technische fout opgetreden.',
-                'debug' => $e->getMessage()
+                'message' => 'Failed to send message. Please try again later.',
+                'debug_info' => 'Check contact-form-debug.log for details'
             ]);
         }
     } else {
+        advancedLog("Form validation failed: " . implode(", ", $errors), 'WARNING');
         echo json_encode([
             'status' => 'error', 
             'message' => implode(" ", $errors)
         ]);
     }
 } else {
+    advancedLog("Invalid request method", 'WARNING');
     echo json_encode([
         'status' => 'error', 
-        'message' => 'Ongeldige aanvraag.'
+        'message' => 'Invalid request method'
     ]);
 }
 exit();

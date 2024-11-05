@@ -1,0 +1,97 @@
+/* Mobile Styles */
+@media screen and (max-width: 900px) {
+    /* Container adjustments */
+    #diensten .container {
+        padding: 0 20px !important;
+    }
+
+    /* Grid adjustments */
+    .diensten-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px !important; /* Reduced gap for more compact layout */
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Individual tile styling */
+    .dienst {
+        width: 100% !important;
+        padding: 15px !important; /* Reduced padding for more compact layout */
+        margin: 0 !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        background-color: #f8f9fa !important;
+        border-radius: 8px !important;
+        height: auto !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+        transform: none !important; /* Prevent any transform animations */
+        transition: none !important; /* Prevent any transitions */
+    }
+
+    /* Content styling */
+    .dienst-icon {
+        font-size: 1.8rem !important; /* Slightly smaller icon */
+        margin-bottom: 10px !important; /* Reduced margin */
+        flex-shrink: 0 !important;
+    }
+
+    .dienst h3 {
+        font-size: 1.1rem !important; /* Slightly smaller heading */
+        margin: 0 0 8px 0 !important; /* Reduced margin */
+        width: 100% !important;
+        word-wrap: break-word !important;
+        line-height: 1.3 !important;
+    }
+
+    .dienst p {
+        font-size: 0.95rem !important; /* Slightly smaller text */
+        line-height: 1.4 !important;
+        margin: 0 0 15px 0 !important;
+        width: 100% !important;
+        word-wrap: break-word !important;
+        flex-grow: 1 !important;
+    }
+
+    .dienst .lees-meer {
+        margin-top: auto !important;
+        flex-shrink: 0 !important;
+        padding: 8px 16px !important; /* Slightly smaller button */
+        font-size: 0.9rem !important;
+        width: 100% !important; /* Make button full width on mobile */
+        text-align: center !important;
+    }
+
+    /* Remove hover effects on mobile */
+    .dienst:hover {
+        transform: none !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* Section spacing */
+    #diensten {
+        padding-top: 30px !important;
+        padding-bottom: 30px !important;
+    }
+
+    .section-title {
+        margin-bottom: 20px !important;
+    }
+}
+
+/* Desktop styles */
+@media screen and (min-width: 901px) {
+    .diensten-grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 30px !important;
+    }
+
+    .dienst {
+        width: auto !important;
+        margin: 0 !important;
+    }
+}

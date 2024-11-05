@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="nl">
+<!-- Head section remains unchanged -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISO 9001 Kwaliteitsmanagement - MaasISO</title>
+    <meta name="description" content="Verbeter uw bedrijfsprocessen en verhoog klanttevredenheid met onze ISO 9001 implementatie en certificeringsbegeleiding. Ontdek de voordelen van kwaliteitsmanagement.">
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/grid.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="css/hero.css">
+    <link rel="stylesheet" href="css/sections.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/over-ons.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="css/iso-27001-process.css">
+    <link rel="stylesheet" href="css/utilities.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive-global.css">
+    <link rel="stylesheet" href="css/responsive-navigation.css">
+    <link rel="stylesheet" href="css/responsive-layout.css">
+    <link rel="stylesheet" href="css/responsive-components.css">
+    <link rel="stylesheet" href="css/mobile-iso.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        .intro-section {
+            padding: 3rem 0;
+        }
+        .intro-section h2 {
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+        .intro-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            max-width: 800px;
+        }
+        .intro-points {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .intro-point {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            position: relative;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .intro-point:hover {
+            transform: translateX(10px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        .intro-point i.icon {
+            color: #00875A;
+            font-size: 1.2rem;
+            min-width: 24px;
+            text-align: center;
+        }
+        .intro-point i.chevron {
+            color: #00875A;
+            margin-left: auto;
+            transition: transform 0.3s ease;
+            font-size: 1rem;
+        }
+        .intro-point:hover i.chevron {
+            transform: translateX(5px);
+        }
+        .tooltip {
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translate(100%, -50%);
+            background: #00875A;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            max-width: 300px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .tooltip::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-style: solid;
+            border-width: 6px 6px 6px 0;
+            border-color: transparent #00875A transparent transparent;
+        }
+        .intro-point:hover .tooltip {
+            opacity: 1;
+            visibility: visible;
+            right: -20px;
+        }
+        .highlighted-text {
+            background-color: rgba(0, 135, 90, 0.05);
+            border: 2px solid #00875A;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 0 15px rgba(0, 135, 90, 0.2);
+        }
+        .highlighted-text p {
+            margin-bottom: 0;
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .intro-point {
+                flex-wrap: wrap;
+                padding: 1rem;
+            }
+            
+            .intro-point i.icon {
+                min-width: 20px;
+            }
+            
+            .intro-point i.chevron {
+                display: none; /* Hide chevron on mobile */
+            }
+            
+            .tooltip {
+                position: static;
+                transform: none;
+                opacity: 0;
+                visibility: hidden;
+                max-height: 0;
+                padding: 0;
+                margin-top: 0;
+                width: 100%;
+                transition: all 0.3s ease;
+                box-shadow: none;
+                background: rgba(0, 135, 90, 0.1);
+                color: #333;
+                border-radius: 4px;
+                margin-left: calc(20px + 1rem); /* Align with text */
+            }
+            
+            .tooltip::before {
+                display: none; /* Remove arrow on mobile */
+            }
+            
+            .intro-point.active .tooltip {
+                opacity: 1;
+                visibility: visible;
+                max-height: 200px;
+                padding: 1rem;
+                margin-top: 0.5rem;
+            }
+            
+            .intro-point:hover {
+                transform: none;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile tooltip handling
+            const introPoints = document.querySelectorAll('.intro-point');
+            
+            introPoints.forEach(point => {
+                point.addEventListener('click', function() {
+                    // Remove active class from all points
+                    introPoints.forEach(p => p.classList.remove('active'));
+                    
+                    // Toggle active class on clicked point
+                    this.classList.toggle('active');
+                });
+            });
+
+            // Close tooltip when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.intro-point')) {
+                    introPoints.forEach(point => point.classList.remove('active'));
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="main-nav" aria-label="Hoofdnavigatie">
+            <div class="container">
+                <a href="index.html" class="logo" aria-label="MaasISO homepage">MaasISO</a>
+                <button class="mobile-menu-toggle" aria-label="Menu openen" aria-expanded="false" aria-controls="nav-links">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="diensten.html">Diensten</a></li>
+                    <li><a href="waarom-maasiso.html">Waarom MaasISO</a></li>
+                    <li><a href="over-ons.html">Over Ons</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="iso-9001-hero" aria-label="Introductie">
+            <div class="container">
+                <h1>ISO 9001<br>Kwaliteits&shy;management</h1>
+                <p>Verbeter uw bedrijfsprocessen, verhoog klanttevredenheid en versterk uw concurrentiepositie met ISO 9001 certificering</p>
+                <a href="contact.html" class="cta-button">VRAAG EEN GRATIS CONSULT AAN</a>
+            </div>
+        </section>
+
+        <section id="iso-9001-intro" class="intro-section" aria-label="Wat is ISO 9001">
+            <div class="container">
+                <h2>Wat is ISO 9001?</h2>
+                <div class="highlighted-text">
+                    <p>ISO 9001 is de internationale standaard voor kwaliteitsmanagement (QMS). Deze norm biedt een kader voor organisaties om een effectief kwaliteitsmanagementsysteem op te zetten en te onderhouden. Door ISO 9001 te implementeren, toont u aan dat uw organisatie:</p>
+                </div>
+                <div class="intro-points">
+                    <div class="intro-point">
+                        <i class="fas fa-check-circle icon"></i>
+                        <div>Consistent producten en diensten levert die voldoen aan klant- en wettelijke eisen</div>
+                        <i class="fas fa-chevron-right chevron"></i>
+                        <div class="tooltip">Waarborg consistente kwaliteit in uw producten en diensten, en voldoe aan alle relevante wet- en regelgeving</div>
+                    </div>
+                    <div class="intro-point">
+                        <i class="fas fa-smile icon"></i>
+                        <div>Klanttevredenheid verhoogt door effectieve toepassing van het systeem</div>
+                        <i class="fas fa-chevron-right chevron"></i>
+                        <div class="tooltip">Verbeter uw dienstverlening en verhoog klanttevredenheid door systematische kwaliteitsborging</div>
+                    </div>
+                    <div class="intro-point">
+                        <i class="fas fa-sync-alt icon"></i>
+                        <div>Continu processen verbetert en risico's en kansen aanpakt</div>
+                        <i class="fas fa-chevron-right chevron"></i>
+                        <div class="tooltip">Optimaliseer bedrijfsprocessen en benut kansen voor verbetering door systematische evaluatie</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="iso-9001-process" class="section-padding bg-light" aria-label="Het ISO 9001 Certificeringsproces">
+            <div class="container">
+                <h2 class="section-title">Het ISO 9001 Certificeringsproces</h2>
+                <p class="section-intro">Bij MaasISO begeleiden we u door het hele ISO 9001 certificeringsproces:</p>
+                <div class="aanpak-stappen">
+                    <div class="aanpak-stap">
+                        <div class="stap-nummer">1</div>
+                        <div class="stap-inhoud">
+                            <h3>Initiële Beoordeling</h3>
+                            <p>We analyseren uw huidige kwaliteitsmanagementpraktijken en -systemen om de uitgangssituatie vast te stellen.</p>
+                        </div>
+                    </div>
+                    <div class="aanpak-stap">
+                        <div class="stap-nummer">2</div>
+                        <div class="stap-inhoud">
+                            <h3>Gap-analyse</h3>
+                            <p>We identificeren de verschillen tussen uw huidige situatie en de eisen van ISO 9001.</p>
+                        </div>
+                    </div>
+                    <div class="aanpak-stap">
+                        <div class="stap-nummer">3</div>
+                        <div class="stap-inhoud">
+                            <h3>Ontwikkeling QMS</h3>
+                            <p>We ontwikkelen een op maat gemaakt kwaliteitsmanagementsysteem dat past bij uw organisatie.</p>
+                        </div>
+                    </div>
+                    <div class="aanpak-stap">
+                        <div class="stap-nummer">4</div>
+                        <div class="stap-inhoud">
+                            <h3>Implementatie</h3>
+                            <p>We begeleiden u bij de implementatie van het nieuwe systeem in uw dagelijkse bedrijfsvoering.</p>
+                        </div>
+                    </div>
+                    <div class="aanpak-stap">
+                        <div class="stap-nummer">5</div>
+                        <div class="stap-inhoud">
+                            <h3>Training</h3>
+                            <p>We zorgen ervoor dat uw medewerkers volledig begrijpen hoe ze het nieuwe systeem moeten gebruiken en het belang van kwaliteitsmanagement.</p>
+                        </div>
+                    </div>
+                    <div class="aanpak-stap">
+                        <div class="stap-nummer">6</div>
+                        <div class="stap-inhoud">
+                            <h3>Interne Audit</h3>
+                            <p>We voeren een interne audit uit om de effectiviteit van het geïmplementeerde systeem te beoordelen.</p>
+                        </div>
+                    </div>
+                    <div class="aanpak-stap">
+                        <div class="stap-nummer">7</div>
+                        <div class="stap-inhoud">
+                            <h3>Certificeringsaudit</h3>
+                            <p>We begeleiden u tijdens de externe audit door een geaccrediteerde certificerende instantie.</p>
+                        </div>
+                    </div>
+                    <div class="aanpak-stap">
+                        <div class="stap-nummer">8</div>
+                        <div class="stap-inhoud">
+                            <h3>Continue Ondersteuning</h3>
+                            <p>Na certificering blijven we u ondersteunen bij het onderhouden en verbeteren van uw QMS.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="iso-9001-industries" class="section-padding bg-light" aria-label="ISO 9001 Toegepast in Uw Sector">
+            <div class="container">
+                <h2 class="section-title">ISO 9001 Toegepast in Uw Sector</h2>
+                <div class="voordelen-grid">
+                    <div class="voordeel">
+                        <i class="fas fa-cogs" aria-hidden="true" loading="lazy"></i>
+                        <h3>Productie</h3>
+                        <p>Verbeter productkwaliteit, verminder afval en optimaliseer supply chain management.</p>
+                    </div>
+                    <div class="voordeel">
+                        <i class="fas fa-handshake" aria-hidden="true" loading="lazy"></i>
+                        <h3>Dienstverlening</h3>
+                        <p>Verhoog klanttevredenheid, standaardiseer servicelevering en verbeter klantcommunicatie.</p>
+                    </div>
+                    <div class="voordeel">
+                        <i class="fas fa-laptop-code" aria-hidden="true" loading="lazy"></i>
+                        <h3>IT en Software</h3>
+                        <p>Verbeter projectmanagement, verhoog softwarekwaliteit en versterk informatiebeveiligingsprocessen.</p>
+                    </div>
+                    <div class="voordeel">
+                        <i class="fas fa-heartbeat" aria-hidden="true" loading="lazy"></i>
+                        <h3>Gezondheidszorg</h3>
+                        <p>Verbeter patiëntveiligheid, optimaliseer zorgprocessen en verhoog efficiëntie in administratieve taken.</p>
+                    </div>
+                    <div class="voordeel">
+                        <i class="fas fa-hard-hat" aria-hidden="true" loading="lazy"></i>
+                        <h3>Bouw</h3>
+                        <p>Verbeter projectplanning, verhoog veiligheid op de werkplek en optimaliseer leveranciersmanagement.</p>
+                    </div>
+                    <div class="voordeel">
+                        <i class="fas fa-truck" aria-hidden="true" loading="lazy"></i>
+                        <h3>Logistiek</h3>
+                        <p>Optimaliseer transportprocessen, verbeter voorraadmanagement en verhoog leverbetrouwbaarheid.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta" class="section-padding bg-primary" aria-label="Contact Oproep">
+            <div class="container">
+                <h2>Klaar om uw kwaliteitsmanagement naar het volgende niveau te tillen?</h2>
+                <p>Neem contact met ons op voor een gratis consult en ontdek hoe wij u kunnen helpen bij het behalen van uw ISO 9001 certificering.</p>
+                <a href="contact.html" class="cta-button">Start Uw ISO 9001 Reis</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-section company-info">
+                <h4>MaasISO</h4>
+            </div>
+            <div class="footer-section contact">
+                <h4>Contact</h4>
+                <p>Email: info@maasiso.nl</p>
+                <p><a href="contact.html">Neem contact op</a></p>
+            </div>
+            <div class="footer-section quick-links">
+                <h4>Snelle Links</h4>
+                <nav aria-label="Snelle navigatie">
+                    <a href="index.html">Home</a>
+                    <a href="over-ons.html">Over Ons</a>
+                    <a href="diensten.html">Diensten</a>
+                </nav>
+            </div>
+            <div class="footer-section services">
+                <h4>Onze Diensten</h4>
+                <nav aria-label="Diensten navigatie">
+                    <a href="iso-9001.html">ISO 9001 Consultancy</a>
+                    <a href="iso-27001.html">ISO 27001 Consultancy</a>
+                    <a href="avg-compliance.html">AVG/GDPR Compliance</a>
+                </nav>
+            </div>
+        </div>
+        <div class="sub-footer">
+            <div class="container">
+                <div class="social-media">
+                    <a href="https://www.linkedin.com/company/maasiso" target="_blank" rel="noopener noreferrer" aria-label="MaasISO LinkedIn">
+                        <i class="fab fa-linkedin" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://twitter.com/maasiso" target="_blank" rel="noopener noreferrer" aria-label="MaasISO Twitter">
+                        <i class="fab fa-twitter" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="legal-links">
+                    <a href="privacyverklaring.html">Privacyverklaring</a>
+                    <a href="algemene-voorwaarden.html">Algemene Voorwaarden</a>
+                    <a href="cookiebeleid.html">Cookiebeleid</a>
+                </div>
+                <p>&copy; 2024 MaasISO. Alle rechten voorbehouden.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.min.js"></script>
+</body>
+</html>
