@@ -76,7 +76,7 @@
             <div class="container">
                 <div class="contact-form-container fade-in">
                     <h2>Neem Contact Op</h2>
-                    <form id="contact-form" class="contact-form">
+                    <form id="contact-experiment-form" class="contact-form">
                         <div class="form-group">
                             <label for="name">Naam</label>
                             <input type="text" id="name" name="name" required placeholder="Uw volledige naam">
@@ -171,7 +171,13 @@
         </div>
     </footer>
 
+    <script>
+        console.log('Initial script test - Before loading contact-form.js');
+    </script>
     <script src="js/main.min.js"></script>
     <script src="js/contact-form.js"></script>
+    <script>
+        console.log('After loading contact-form.js - Testing if script is loaded');
+    </script>
 </body>
 </html>
