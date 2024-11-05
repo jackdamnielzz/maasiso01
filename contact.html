@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="nl">
-<!-- Previous head content remains the same until the script section -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +9,7 @@
     <link rel="icon" type="image/svg+xml" href="images/icons/favicon.svg">
     
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://maasiso.nl;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self';">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     
     <!-- Meta tags -->
@@ -76,7 +75,8 @@
         <section id="contact-content" class="section-padding" aria-label="Contactformulier">
             <div class="container">
                 <div class="contact-form-container fade-in">
-                    <form id="contact-experiment-form" class="contact-form" method="POST" action="contact-handler.php">
+                    <h2>Neem Contact Op</h2>
+                    <form id="contact-experiment-form" class="contact-form">
                         <div class="form-group">
                             <label for="name">Naam</label>
                             <input type="text" id="name" name="name" required placeholder="Uw volledige naam">
@@ -114,16 +114,15 @@
                         </div>
                         
                         <div class="form-group submit-group">
-                            <button type="submit" class="cta-button">Verzenden</button>
+                            <button type="submit" class="btn btn-primary">Verzenden</button>
                         </div>
                     </form>
+                    
+                    <div id="form-feedback" class="form-feedback" aria-live="polite"></div>
                 </div>
             </div>
         </section>
     </main>
-
-    <!-- Popup Feedback Container -->
-    <div id="form-feedback" class="form-feedback" aria-live="polite"></div>
 
     <footer>
         <div class="container">
@@ -172,85 +171,157 @@
         </div>
     </footer>
 
+    <script>
+        console.log('Initial script test - Before loading contact-form.js');
+    </script>
     <script src="js/main.min.js"></script>
     <script>
-        console.log('Contact form script starting...');
+        console.log('After loading contact-form.js - Testing if script is loaded');
+        
+        // Immediate console log to verify script execution
+        console.log('Contact form script loaded and executing');
 
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM Content Loaded - Initializing form handling');
+        // Wrap everything in an IIFE to avoid global scope pollution
+        (function() {
+            // Log when script starts executing
+            console.log('Contact form script IIFE started');
 
-            const form = document.getElementById('contact-experiment-form');
-            const formFeedback = document.getElementById('form-feedback');
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('DOM Content Loaded - Initializing form handling');
 
-            if (!form) {
-                console.error('Contact form not found!');
-                return;
-            }
+                // Get form elements
+                const contactForm = document.getElementById('contact-experiment-form');
+                const formFeedback = document.getElementById('form-feedback');
 
-            console.log('Form found, setting up event listeners');
+                // Log if form is found
+                if (!contactForm) {
+                    console.error('Contact form not found! Check form ID');
+                    return;
+                }
+                console.log('Contact form found:', contactForm);
 
-            // Log form field changes
-            form.querySelectorAll('input, textarea, select').forEach(input => {
-                input.addEventListener('input', function(e) {
-                    console.log(`Field ${e.target.name} changed:`, e.target.value);
+                // Add input event listeners
+                const formInputs = contactForm.querySelectorAll('input, textarea, select');
+                formInputs.forEach(input => {
+                    input.addEventListener('input', function(e) {
+                        console.log(`Input changed - ${e.target.name}:`, e.target.value);
+                    });
                 });
-            });
 
-            // Handle form submission
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                console.log('Form submitted - Starting submission process');
-
-                const submitButton = form.querySelector('button[type="submit"]');
-                submitButton.disabled = true;
-                submitButton.textContent = 'Verzenden...';
-
-                const formData = new FormData(form);
-
-                // Log form data being sent
-                console.log('Form data collected:');
-                for (let [key, value] of formData.entries()) {
-                    console.log(`${key}: ${value}`);
+                // Add specific checkbox listener
+                const privacyCheckbox = document.getElementById('privacy-consent');
+                if (privacyCheckbox) {
+                    privacyCheckbox.addEventListener('change', function(e) {
+                        console.log('Privacy consent changed:', e.target.checked);
+                    });
                 }
 
-                console.log('Sending form data to server');
-                fetch(form.action, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    console.log('Server response status:', response.status);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
+                function showFeedback(message, type) {
+                    console.log(`Showing feedback: ${message} (${type})`);
+                    if (formFeedback) {
+                        formFeedback.textContent = message;
+                        formFeedback.classList.remove('success', 'error');
+                        formFeedback.classList.add(type);
                     }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Server response data:', data);
-                    if (data.status === 'success') {
-                        console.log('Form submission successful');
-                        formFeedback.textContent = 'Uw bericht is succesvol verzonden. Wij nemen zo spoedig mogelijk contact met u op.';
-                        formFeedback.className = 'form-feedback success show';
-                        form.reset();
-                    } else {
-                        console.log('Form submission failed:', data.message);
-                        throw new Error(data.message || 'Er is een fout opgetreden');
+                }
+
+                // Add submit button click handler
+                const submitButton = contactForm.querySelector('button[type="submit"]');
+                if (submitButton) {
+                    submitButton.addEventListener('click', function(e) {
+                        console.log('Submit button clicked - Manually handling submission');
+                        e.preventDefault();
+                        handleSubmit(e);
+                    });
+                }
+
+                function handleSubmit(e) {
+                    console.log('Starting form submission handling');
+                    if (e) e.preventDefault();
+                    console.log('Default form submission prevented');
+
+                    // Get form data
+                    const name = document.getElementById('name').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const subject = document.getElementById('subject').value;
+                    const message = document.getElementById('message').value.trim();
+                    const privacyConsent = document.getElementById('privacy-consent').checked;
+
+                    // Log collected form data
+                    console.log('Form data collected:', {
+                        name,
+                        email,
+                        subject,
+                        message,
+                        privacyConsent
+                    });
+
+                    // Validate form
+                    if (!name || !email || !subject || !message) {
+                        console.log('Validation failed: Missing required fields');
+                        showFeedback('Vul alstublieft alle verplichte velden in.', 'error');
+                        return;
                     }
-                })
-                .catch(error => {
-                    console.error('Error during form submission:', error);
-                    formFeedback.textContent = 'Er is een fout opgetreden bij het verzenden van uw bericht. Probeer het later opnieuw.';
-                    formFeedback.className = 'form-feedback error show';
-                })
-                .finally(() => {
-                    submitButton.disabled = false;
-                    submitButton.textContent = 'Verzenden';
-                    console.log('Form submission process completed');
-                });
+
+                    if (!privacyConsent) {
+                        console.log('Validation failed: Privacy consent not checked');
+                        showFeedback('U moet akkoord gaan met de privacyverklaring.', 'error');
+                        return;
+                    }
+
+                    console.log('Form validation passed, preparing to send');
+
+                    // Prepare form data
+                    const formData = new FormData(contactForm);
+                    formData.append('recipient', 'info@maasiso.nl');
+
+                    // Log FormData contents
+                    for (let pair of formData.entries()) {
+                        console.log('FormData field:', pair[0], pair[1]);
+                    }
+
+                    console.log('Sending form data to server...');
+
+                    // Send form data
+                    fetch('contact-handler.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => {
+                        console.log('Raw server response:', response);
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Parsed response data:', data);
+                        if (data.status === 'success') {
+                            showFeedback(data.message, 'success');
+                            contactForm.reset();
+                        } else {
+                            showFeedback(data.message || 'Er is een fout opgetreden.', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error);
+                        console.error('Error details:', {
+                            message: error.message,
+                            stack: error.stack
+                        });
+                        showFeedback('Er is een technische fout opgetreden. Probeer het later opnieuw.', 'error');
+                    });
+                }
+
+                console.log('Form handler initialization complete');
             });
 
-            console.log('Form handler initialization complete');
-        });
+            // Log when IIFE completes
+            console.log('Contact form script IIFE completed');
+        })();
+
+        // Log after IIFE
+        console.log('Contact form script execution completed');
     </script>
 </body>
 </html>
