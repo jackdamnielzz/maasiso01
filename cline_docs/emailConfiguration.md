@@ -1,44 +1,58 @@
-# Email Configuration Guide for MaasISO Contact Form
+# Comprehensive Email Configuration Troubleshooting Guide
 
-## Plesk PHP Configuration Insights
+## Detailed Diagnostic Approach
 
-### Key PHP Settings to Note
-- PHP Version: 8.2.24
-- Run as: FastCGI application
-- Error Reporting: E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED
-- Display Errors: On
-- Log Errors: On
+### Email Sending Diagnostics
+1. Check Detailed Logs
+   - Location: /var/log/contact-form-detailed-errors.log
+   - Contains:
+     * Timestamp of error
+     * Specific error messages
+     * Server variables
+     * Sanitized POST data
 
-### Email Sending Configuration
+2. Verify PHP Mail Configuration
+   - Confirm mail() function is enabled
+   - Check sendmail_path in php.ini
+   - Validate mail server settings
 
-#### Recommended Actions
-1. Verify mail.force_extra_parameters setting
-2. Check open_basedir restrictions
-3. Ensure file_uploads is enabled
+### Potential Issues to Investigate
+- Incorrect SMTP configuration
+- Firewall blocking outgoing emails
+- Incorrect sender domain authentication
+- SPF/DKIM/DMARC record issues
 
-#### Potential Email Sending Improvements
-- Use `-f` parameter to set sender email
-- Implement robust error logging
-- Add detailed error tracking
+### Recommended Debugging Steps
+```bash
+# Check PHP mail configuration
+php -i | grep sendmail
+php -i | grep mail
 
-### Troubleshooting Checklist
-- Confirm PHP mail() function is working
-- Check server's mail configuration
-- Verify email routing settings
-- Test with different email clients
-
-### Logging Locations
-- PHP Errors: /var/log/php_errors.log
-- Contact Form Errors: /var/log/contact-form-errors.log
-
-### Advanced Configuration Options
-```php
-// Example of setting sender email
-mail($to, $subject, $body, $headers, "-f info@maasiso.nl");
+# Test mail function directly
+php -r "var_dump(mail('test@example.com', 'Test', 'Test message'));"
 ```
 
-## Next Steps
-1. Review server-side email configuration
-2. Test email sending through PHP
-3. Monitor error logs
-4. Consider SMTP alternative if issues persist
+### Alternative Email Sending Methods
+1. PHPMailer Library
+2. SMTP Configuration
+3. Third-party Email Services
+   - SendGrid
+   - Mailgun
+   - Amazon SES
+
+### Server-Side Checks
+- Verify postfix/sendmail is running
+- Check mail queue
+- Review system logs (/var/log/mail.log)
+
+### Hosting-Specific Recommendations
+1. Contact Clou86 support
+2. Request:
+   - Confirmation of mail() function availability
+   - SMTP server details
+   - Email sending restrictions
+
+## Next Immediate Actions
+1. Review /var/log/contact-form-detailed-errors.log
+2. Perform PHP mail function test
+3. Consult hosting provider
