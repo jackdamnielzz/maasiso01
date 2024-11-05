@@ -296,6 +296,32 @@
                     submitButton.disabled = !(allFieldsFilled && privacyCheckbox.checked);
                 }
 
+                function showFeedback(message, type) {
+                    console.log(`Showing feedback: ${message} (${type})`);
+                    if (formFeedback) {
+                        formFeedback.textContent = message;
+                        formFeedback.classList.remove('success', 'error', 'visible', 'fade-in', 'fade-out');
+                        formFeedback.classList.add(type);
+                        
+                        // Force reflow
+                        void formFeedback.offsetWidth;
+                        
+                        // Add visible and fade-in classes
+                        formFeedback.classList.add('visible', 'fade-in');
+
+                        // Set timeout for fade out
+                        setTimeout(() => {
+                            formFeedback.classList.remove('fade-in');
+                            formFeedback.classList.add('fade-out');
+                            
+                            // Remove classes after animation
+                            setTimeout(() => {
+                                formFeedback.classList.remove('visible', 'fade-out');
+                            }, 500);
+                        }, 10000);
+                    }
+                }
+
                 // Initial validation
                 validateForm();
 
@@ -305,15 +331,6 @@
                     e.preventDefault();
                     handleSubmit(e);
                 });
-
-                function showFeedback(message, type) {
-                    console.log(`Showing feedback: ${message} (${type})`);
-                    if (formFeedback) {
-                        formFeedback.textContent = message;
-                        formFeedback.classList.remove('success', 'error');
-                        formFeedback.classList.add(type);
-                    }
-                }
 
                 function handleSubmit(e) {
                     console.log('Starting form submission handling');
@@ -379,6 +396,7 @@
                         if (data.status === 'success') {
                             showFeedback(data.message, 'success');
                             contactForm.reset();
+                            validateForm(); // Re-validate to disable submit button
                         } else {
                             showFeedback(data.message || 'Er is een fout opgetreden.', 'error');
                         }

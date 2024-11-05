@@ -69,7 +69,7 @@
     text-align: center;
     z-index: 1000;
     opacity: 0;
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    transition: all 0.5s ease-in-out;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     max-width: 400px;
     width: 90%;
@@ -78,25 +78,79 @@
 }
 
 .form-feedback.success {
-    background-color: var(--button-primary-bg);
-    color: var(--button-primary-text);
+    background-color: var(--primary-color);
+    color: white;
+    border: 2px solid var(--primary-color-dark);
 }
 
 .form-feedback.error {
-    background-color: #f8d7da;
-    color: #721c24;
+    background-color: var(--error-color, #dc3545);
+    color: white;
+    border: 2px solid var(--error-color-dark, #bd2130);
 }
 
-.form-feedback.show {
+.form-feedback.visible {
     opacity: 1;
     transform: translate(-50%, 0);
 }
 
-.form-feedback.hide {
-    opacity: 0;
-    transform: translate(-50%, -100%);
+/* Button States */
+.cta-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
+.cta-button:not(:disabled) {
+    opacity: 1;
+    cursor: pointer;
+}
+
+/* Form Validation Styles */
+.form-group input:invalid,
+.form-group select:invalid,
+.form-group textarea:invalid {
+    border-color: var(--error-color, #dc3545);
+}
+
+.form-group input:valid,
+.form-group select:valid,
+.form-group textarea:valid {
+    border-color: var(--success-color, #28a745);
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -100%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+    to {
+        opacity: 0;
+        transform: translate(-50%, -100%);
+    }
+}
+
+/* Animation Classes */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.fade-out {
+    animation: fadeOut 0.5s ease-in-out forwards;
+}
+
+/* Responsive Styles */
 @media (max-width: 768px) {
     .contact-form-container {
         padding: 1rem;
