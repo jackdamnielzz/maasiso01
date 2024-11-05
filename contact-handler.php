@@ -9,33 +9,54 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
-// Logging function
-function visibleLog($message, $level = 'INFO') {
+// Configure local logging
+$log_file = __DIR__ . '/contact-form.log';
+
+function logMessage($message, $level = 'INFO') {
+    global $log_file;
     $timestamp = date('[Y-m-d H:i:s]');
     $log_entry = "{$timestamp} [{$level}] {$message}\n";
-    error_log($log_entry);
+    file_put_contents($log_file, $log_entry, FILE_APPEND);
 }
 
 // Main script execution
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    visibleLog("POST request received");
-    visibleLog("POST data: " . print_r($_POST, true));
-
-    // Get form data
-    $name = $_POST['name'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $phone = $_POST['phone'] ?? '';
-    $subject = $_POST['subject'] ?? '';
-    $message = $_POST['message'] ?? '';
-
-    // Validate data
+    logMessage("POST request received");
+    
+    // Log raw request data
+    logMessage("Raw POST data: " . print_r($_POST, true));
+    logMessage("Content Type: " . $_SERVER['CONTENT_TYPE']);
+    
+    // Get form data from FormData
+    $formData = $_POST;
+    
+    // Extract form fields
+    $name = $formData['name'] ?? '';
+    $email = $formData['email'] ?? '';
+    $phone = $formData['phone'] ?? '';
+    $subject = $formData['subject'] ?? '';
+    $message = $formData['message'] ?? '';
+    
+    // Log received data
+    logMessage("Extracted form data:");
+    logMessage("Name: $name");
+    logMessage("Email: $email");
+    logMessage("Phone: $phone");
+    logMessage("Subject: $subject");
+    logMessage("Message: $message");
+    
+    // Validate required fields
     if (empty($name) || empty($email) || empty($subject) || empty($message)) {
-        visibleLog("Validation failed - missing required fields");
-        echo json_encode(['status' => 'error', 'message' => 'Alle verplichte velden moeten ingevuld zijn']);
+        logMessage("Validation failed - missing required fields", "ERROR");
+        http_response_code(400);
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Alle verplichte velden moeten ingevuld zijn'
+        ]);
         exit;
     }
 
-    // Prepare email
+    // Prepare email content
     $to = 'info@maasiso.nl';
     $email_subject = "Nieuw contactformulier: $subject";
     $email_body = "Naam: $name\n";
@@ -46,25 +67,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email_body .= "Onderwerp: $subject\n\n";
     $email_body .= "Bericht:\n$message";
 
-    $headers = "From: $email\r\n";
-    $headers .= "Reply-To: $email\r\n";
-    $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
-    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+    // Set email headers
+    $headers = [];
+    $headers[] = "From: $email";
+    $headers[] = "Reply-To: $email";
+    $headers[] = "MIME-Version: 1.0";
+    $headers[] = "Content-Type: text/plain; charset=UTF-8";
+    $headers[] = "X-Mailer: PHP/" . phpversion();
 
-    // Send email
-    visibleLog("Attempting to send email");
-    $mail_sent = mail($to, $email_subject, $email_body, $headers);
+    $headers_string = implode("\r\n", $headers);
+
+    // Log email attempt details
+    logMessage("Attempting to send email");
+    logMessage("To: $to");
+    logMessage("Subject: $email_subject");
+    logMessage("Headers: " . print_r($headers, true));
+
+    // Get PHP mail configuration
+    $mail_config = [
+        'SMTP' => ini_get('SMTP'),
+        'smtp_port' => ini_get('smtp_port'),
+        'sendmail_path' => ini_get('sendmail_path')
+    ];
+    logMessage("PHP Mail Configuration: " . print_r($mail_config, true));
+
+    // Attempt to send email
+    $mail_sent = mail($to, $email_subject, $email_body, $headers_string);
 
     if ($mail_sent) {
-        visibleLog("Email sent successfully");
-        echo json_encode(['status' => 'success', 'message' => 'Bericht succesvol verzonden']);
+        logMessage("Email sent successfully");
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'Uw bericht is succesvol verzonden'
+        ]);
     } else {
-        visibleLog("Failed to send email");
-        echo json_encode(['status' => 'error', 'message' => 'Kon het bericht niet verzenden']);
+        logMessage("Failed to send email", "ERROR");
+        $error = error_get_last();
+        logMessage("Last error: " . print_r($error, true), "ERROR");
+        
+        http_response_code(500);
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Er is een probleem opgetreden bij het verzenden van uw bericht',
+            'debug_info' => [
+                'last_error' => $error,
+                'php_version' => phpversion(),
+                'mail_config' => $mail_config
+            ]
+        ]);
     }
 } else {
-    visibleLog("Invalid request method: " . $_SERVER['REQUEST_METHOD']);
+    logMessage("Invalid request method: " . $_SERVER['REQUEST_METHOD'], "ERROR");
     http_response_code(405);
-    echo json_encode(['status' => 'error', 'message' => 'Method Not Allowed']);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Method Not Allowed'
+    ]);
 }
 ?>

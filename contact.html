@@ -75,7 +75,7 @@
         <section id="contact-content" class="section-padding" aria-label="Contactformulier">
             <div class="container">
                 <div class="contact-form-container fade-in">
-                    <form id="contact-experiment-form" class="contact-form">
+                    <form id="contact-form" class="contact-form">
                         <div class="form-group">
                             <label for="name">Naam</label>
                             <input type="text" id="name" name="name" required placeholder="Uw volledige naam">
@@ -172,107 +172,6 @@
     </footer>
 
     <script src="js/main.min.js"></script>
-    <script>
-        console.log('Contact form script starting...');
-
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM Content Loaded - Initializing form handling');
-
-            const contactForm = document.getElementById('contact-experiment-form');
-            const formFeedback = document.getElementById('form-feedback');
-
-            // Log if form is found
-            if (!contactForm) {
-                console.error('Contact form not found! Check form ID');
-                return;
-            }
-            console.log('Contact form found:', contactForm);
-
-            // Add input event listeners for all form fields
-            const formInputs = contactForm.querySelectorAll('input, textarea, select');
-            formInputs.forEach(input => {
-                input.addEventListener('input', function(e) {
-                    console.log(`Input changed - ${e.target.name}:`, e.target.value);
-                });
-            });
-
-            // Add specific checkbox listener
-            const privacyCheckbox = document.getElementById('privacy-consent');
-            if (privacyCheckbox) {
-                privacyCheckbox.addEventListener('change', function(e) {
-                    console.log('Privacy consent changed:', e.target.checked);
-                });
-            }
-
-            // Handle form submission
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                console.log('Form submitted - Starting submission process');
-
-                const submitButton = contactForm.querySelector('button[type="submit"]');
-                submitButton.textContent = 'Verzenden...';
-                submitButton.disabled = true;
-
-                // Get form data
-                const formData = new FormData();
-                formData.append('name', document.getElementById('name').value);
-                formData.append('email', document.getElementById('email').value);
-                formData.append('phone', document.getElementById('phone').value);
-                formData.append('subject', document.getElementById('subject').value);
-                formData.append('message', document.getElementById('message').value);
-                formData.append('privacy-consent', document.getElementById('privacy-consent').checked);
-                
-                // Log form data
-                console.log('Form data collected:');
-                for (let pair of formData.entries()) {
-                    console.log(`${pair[0]}: ${pair[1]}`);
-                }
-
-                // Send form data
-                console.log('Sending form data to contact-handler.php');
-                fetch('contact-handler.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    console.log('Response received:', response.status, response.statusText);
-                    return response.text();
-                })
-                .then(text => {
-                    console.log('Response text:', text);
-                    let data;
-                    try {
-                        data = JSON.parse(text);
-                        console.log('Parsed response:', data);
-                    } catch (error) {
-                        console.error('Failed to parse response:', error);
-                        throw new Error('Invalid server response');
-                    }
-
-                    if (data.status === 'success') {
-                        console.log('Form submission successful');
-                        formFeedback.textContent = 'Uw bericht is succesvol verzonden. Wij nemen zo spoedig mogelijk contact met u op.';
-                        formFeedback.className = 'form-feedback success show';
-                        contactForm.reset();
-                    } else {
-                        console.log('Form submission failed:', data.message);
-                        formFeedback.textContent = data.message || 'Er is een fout opgetreden bij het verzenden van uw bericht.';
-                        formFeedback.className = 'form-feedback error show';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error during form submission:', error);
-                    formFeedback.textContent = 'Er is een technische fout opgetreden. Probeer het later opnieuw.';
-                    formFeedback.className = 'form-feedback error show';
-                })
-                .finally(() => {
-                    submitButton.textContent = 'Verzenden';
-                    submitButton.disabled = false;
-                });
-            });
-
-            console.log('Form handler initialization complete');
-        });
-    </script>
+    <script src="js/contact-form.js"></script>
 </body>
 </html>
