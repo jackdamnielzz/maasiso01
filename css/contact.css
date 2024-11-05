@@ -63,35 +63,43 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) translateY(-100vh);
-    padding: 1.5rem 2.5rem;
+    transform: translate(-50%, -50%);
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px 40px;
     border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
     text-align: center;
-    z-index: 1000;
-    opacity: 0;
-    transition: all 0.5s ease-in-out;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    max-width: 400px;
-    width: 90%;
-    font-weight: 500;
     font-size: 1.1rem;
+    font-weight: 500;
+    min-width: 300px;
+    max-width: 90%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .form-feedback.success {
     background-color: var(--primary-color);
-    color: white;
     border: 2px solid var(--primary-color-dark);
 }
 
 .form-feedback.error {
     background-color: var(--error-color, #dc3545);
-    color: white;
     border: 2px solid var(--error-color-dark, #bd2130);
 }
 
-.form-feedback.visible {
+.form-feedback.show {
     opacity: 1;
-    transform: translate(-50%, -50%);
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.form-feedback.hide {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -50%) scale(0.9);
 }
 
 /* Button States */
@@ -118,38 +126,6 @@
     border-color: var(--success-color, #28a745);
 }
 
-/* Animation Keyframes */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translate(-50%, -50%) translateY(-100vh);
-    }
-    to {
-        opacity: 1;
-        transform: translate(-50%, -50%);
-    }
-}
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-        transform: translate(-50%, -50%);
-    }
-    to {
-        opacity: 0;
-        transform: translate(-50%, -50%) translateY(-100vh);
-    }
-}
-
-/* Animation Classes */
-.fade-in {
-    animation: fadeIn 0.5s ease-in-out forwards;
-}
-
-.fade-out {
-    animation: fadeOut 0.5s ease-in-out forwards;
-}
-
 /* Responsive Styles */
 @media (max-width: 768px) {
     .contact-form-container {
@@ -160,6 +136,7 @@
     .form-feedback {
         width: calc(100% - 40px);
         margin: 0 20px;
-        padding: 1.5rem;
+        padding: 15px 20px;
+        min-width: auto;
     }
 }

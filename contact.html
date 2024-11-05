@@ -121,8 +121,8 @@
         </section>
     </main>
 
-    <!-- Feedback popup moved outside main for proper positioning -->
-    <div id="form-feedback" class="form-feedback" aria-live="polite" role="alert"></div>
+    <!-- Feedback popup -->
+    <div id="form-feedback" class="form-feedback" role="alert" aria-live="polite"></div>
 
     <footer>
         <div class="container">
@@ -300,24 +300,21 @@
                 function showFeedback(message, type) {
                     console.log(`Showing feedback: ${message} (${type})`);
                     if (formFeedback) {
+                        // Reset the feedback element
+                        formFeedback.className = 'form-feedback';
                         formFeedback.textContent = message;
-                        formFeedback.classList.remove('success', 'error', 'visible', 'fade-in', 'fade-out');
-                        formFeedback.classList.add(type);
                         
-                        // Force reflow for animation
-                        void formFeedback.offsetWidth;
+                        // Add type class and show
+                        formFeedback.classList.add(type, 'show');
                         
-                        // Show feedback with animation
-                        formFeedback.classList.add('visible', 'fade-in');
-
-                        // Set timeout for fade out
+                        // Set timeout to hide
                         setTimeout(() => {
-                            formFeedback.classList.remove('fade-in');
-                            formFeedback.classList.add('fade-out');
+                            formFeedback.classList.remove('show');
+                            formFeedback.classList.add('hide');
                             
                             // Clean up after animation
                             setTimeout(() => {
-                                formFeedback.classList.remove('visible', 'fade-out', type);
+                                formFeedback.className = 'form-feedback';
                                 formFeedback.textContent = '';
                             }, 500);
                         }, 10000);
