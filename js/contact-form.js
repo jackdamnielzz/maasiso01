@@ -9,30 +9,50 @@ document.addEventListener('DOMContentLoaded', function() {
     const formFeedback = document.getElementById('form-feedback');
 
     // Log if form is found
-    if (contactForm) {
-        console.log('Contact form found:', contactForm);
-    } else {
+    if (!contactForm) {
         console.error('Contact form not found! Check form ID');
         return;
     }
+    console.log('Contact form found:', contactForm);
 
-    // Log if feedback element is found
-    if (formFeedback) {
-        console.log('Feedback element found:', formFeedback);
-    } else {
-        console.error('Feedback element not found! Check element ID');
+    // Add input event listeners
+    const formInputs = contactForm.querySelectorAll('input, textarea, select');
+    formInputs.forEach(input => {
+        input.addEventListener('input', function(e) {
+            console.log(`Input changed - ${e.target.name}:`, e.target.value);
+        });
+    });
+
+    // Add specific checkbox listener
+    const privacyCheckbox = document.getElementById('privacy-consent');
+    if (privacyCheckbox) {
+        privacyCheckbox.addEventListener('change', function(e) {
+            console.log('Privacy consent changed:', e.target.checked);
+        });
     }
 
     function showFeedback(message, type) {
         console.log(`Showing feedback: ${message} (${type})`);
-        formFeedback.textContent = message;
-        formFeedback.classList.remove('success', 'error');
-        formFeedback.classList.add(type);
+        if (formFeedback) {
+            formFeedback.textContent = message;
+            formFeedback.classList.remove('success', 'error');
+            formFeedback.classList.add(type);
+        }
     }
 
-    // Add form submit handler
+    // Add submit event listener using both methods
+    contactForm.onsubmit = function(e) {
+        console.log('Form submit triggered (onsubmit)');
+        handleSubmit(e);
+    };
+
     contactForm.addEventListener('submit', function(e) {
-        console.log('Form submit event triggered');
+        console.log('Form submit triggered (addEventListener)');
+        handleSubmit(e);
+    });
+
+    function handleSubmit(e) {
+        console.log('Starting form submission handling');
         e.preventDefault();
         console.log('Default form submission prevented');
 
@@ -51,10 +71,6 @@ document.addEventListener('DOMContentLoaded', function() {
             message,
             privacyConsent
         });
-
-        // Reset previous feedback
-        formFeedback.textContent = '';
-        formFeedback.classList.remove('success', 'error');
 
         // Validate form
         if (!name || !email || !subject || !message) {
@@ -103,8 +119,23 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             showFeedback('Er is een technische fout opgetreden. Probeer het later opnieuw.', 'error');
         });
-    });
+    }
 
-    // Log that initialization is complete
+    // Add a test button click handler
+    const submitButton = contactForm.querySelector('button[type="submit"]');
+    if (submitButton) {
+        submitButton.addEventListener('click', function(e) {
+            console.log('Submit button clicked');
+        });
+    }
+
     console.log('Form handler initialization complete');
 });
+
+// Add window error handler
+window.onerror = function(msg, url, line) {
+    console.error('JavaScript error:', msg);
+    console.error('Script URL:', url);
+    console.error('Line number:', line);
+    return false;
+};
