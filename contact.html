@@ -116,12 +116,13 @@
                             <button type="submit" id="submit-button" class="cta-button" disabled>Verzenden</button>
                         </div>
                     </form>
-                    
-                    <div id="form-feedback" class="form-feedback" aria-live="polite"></div>
                 </div>
             </div>
         </section>
     </main>
+
+    <!-- Feedback popup moved outside main for proper positioning -->
+    <div id="form-feedback" class="form-feedback" aria-live="polite" role="alert"></div>
 
     <footer>
         <div class="container">
@@ -303,10 +304,10 @@
                         formFeedback.classList.remove('success', 'error', 'visible', 'fade-in', 'fade-out');
                         formFeedback.classList.add(type);
                         
-                        // Force reflow
+                        // Force reflow for animation
                         void formFeedback.offsetWidth;
                         
-                        // Add visible and fade-in classes
+                        // Show feedback with animation
                         formFeedback.classList.add('visible', 'fade-in');
 
                         // Set timeout for fade out
@@ -314,9 +315,10 @@
                             formFeedback.classList.remove('fade-in');
                             formFeedback.classList.add('fade-out');
                             
-                            // Remove classes after animation
+                            // Clean up after animation
                             setTimeout(() => {
-                                formFeedback.classList.remove('visible', 'fade-out');
+                                formFeedback.classList.remove('visible', 'fade-out', type);
+                                formFeedback.textContent = '';
                             }, 500);
                         }, 10000);
                     }
@@ -394,7 +396,7 @@
                     .then(data => {
                         console.log('Parsed response data:', data);
                         if (data.status === 'success') {
-                            showFeedback(data.message, 'success');
+                            showFeedback('Uw bericht is succesvol verzonden!', 'success');
                             contactForm.reset();
                             validateForm(); // Re-validate to disable submit button
                         } else {

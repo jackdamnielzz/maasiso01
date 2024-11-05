@@ -61,10 +61,10 @@
 /* Popup Feedback Styling */
 .form-feedback {
     position: fixed;
-    top: 20px;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%, -100%);
-    padding: 1rem 2rem;
+    transform: translate(-50%, -50%) translateY(-100vh);
+    padding: 1.5rem 2.5rem;
     border-radius: 8px;
     text-align: center;
     z-index: 1000;
@@ -91,7 +91,7 @@
 
 .form-feedback.visible {
     opacity: 1;
-    transform: translate(-50%, 0);
+    transform: translate(-50%, -50%);
 }
 
 /* Button States */
@@ -122,22 +122,22 @@
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translate(-50%, -100%);
+        transform: translate(-50%, -50%) translateY(-100vh);
     }
     to {
         opacity: 1;
-        transform: translate(-50%, 0);
+        transform: translate(-50%, -50%);
     }
 }
 
 @keyframes fadeOut {
     from {
         opacity: 1;
-        transform: translate(-50%, 0);
+        transform: translate(-50%, -50%);
     }
     to {
         opacity: 0;
-        transform: translate(-50%, -100%);
+        transform: translate(-50%, -50%) translateY(-100vh);
     }
 }
 
@@ -160,6 +160,6 @@
     .form-feedback {
         width: calc(100% - 40px);
         margin: 0 20px;
-        padding: 1rem 1.5rem;
+        padding: 1.5rem;
     }
 }
