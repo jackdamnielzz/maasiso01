@@ -9,7 +9,7 @@
     <link rel="icon" type="image/svg+xml" href="images/icons/favicon.svg">
     
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self';">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     
     <!-- Meta tags -->
@@ -78,7 +78,7 @@
             <div class="container">
                 <div class="contact-form-container fade-in">
                     <h2>Neem Contact Op</h2>
-                    <form id="contact-experiment-form" class="contact-form" action="contact-handler.php" method="POST">
+                    <form id="contact-experiment-form" class="contact-form">
                         <div class="form-group">
                             <label for="name">Naam</label>
                             <input type="text" id="name" name="name" required placeholder="Uw volledige naam">
@@ -173,6 +173,9 @@
         </div>
     </footer>
 
+    <script>
+        console.log('Page loaded - Initial script test');
+    </script>
     <script src="js/main.min.js"></script>
     <script src="js/contact-form.js"></script>
 </body>
