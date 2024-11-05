@@ -171,33 +171,72 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const privacyCheckbox = document.getElementById('privacy-consent');
-            const submitButton = document.getElementById('submit-button');
-            const requiredFields = document.querySelectorAll('input[required], select[required], textarea[required]');
+        console.log('Initial script test - Before loading contact-form.js');
+    </script>
+    <script src="js/main.min.js"></script>
+    <script>
+        console.log('After loading contact-form.js - Testing if script is loaded');
+        
+        // Wrap everything in an IIFE to avoid global scope pollution
+        (function() {
+            // Log when script starts executing
+            console.log('Contact form script loaded and executing');
+            console.log('Contact form script IIFE started');
 
-            function validateForm() {
-                let allFieldsFilled = true;
-                requiredFields.forEach(field => {
-                    if (!field.value.trim()) {
-                        allFieldsFilled = false;
-                    }
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('DOM Content Loaded - Initializing form handling');
+
+                // Get form elements
+                const contactForm = document.getElementById('contact-experiment-form');
+                const formFeedback = document.getElementById('form-feedback');
+                const submitButton = document.getElementById('submit-button');
+                const privacyCheckbox = document.getElementById('privacy-consent');
+                const requiredFields = document.querySelectorAll('input[required], select[required], textarea[required]');
+
+                // Log if form is found
+                if (!contactForm) {
+                    console.error('Contact form not found! Check form ID');
+                    return;
+                }
+                console.log('Contact form found:', contactForm);
+
+                // Add input event listeners to required fields
+                requiredFields.forEach(input => {
+                    input.addEventListener('input', function(e) {
+                        console.log(`Input changed - ${e.target.name}:`, e.target.value);
+                        validateForm();
+                    });
                 });
 
-                submitButton.disabled = !(allFieldsFilled && privacyCheckbox.checked);
-            }
+                // Add change event listener to privacy checkbox
+                privacyCheckbox.addEventListener('change', function(e) {
+                    console.log('Privacy consent changed:', e.target.checked);
+                    validateForm();
+                });
 
-            // Add input event listeners to required fields
-            requiredFields.forEach(field => {
-                field.addEventListener('input', validateForm);
+                function validateForm() {
+                    let allFieldsFilled = true;
+                    requiredFields.forEach(field => {
+                        if (!field.value.trim()) {
+                            allFieldsFilled = false;
+                        }
+                    });
+
+                    submitButton.disabled = !(allFieldsFilled && privacyCheckbox.checked);
+                }
+
+                // Initial validation
+                validateForm();
+
+                console.log('Form handler initialization complete');
             });
 
-            // Add change event listener to privacy checkbox
-            privacyCheckbox.addEventListener('change', validateForm);
+            // Log when IIFE completes
+            console.log('Contact form script IIFE completed');
+        })();
 
-            // Initial validation
-            validateForm();
-        });
+        // Log after IIFE
+        console.log('Contact form script execution completed');
     </script>
 </body>
 </html>
