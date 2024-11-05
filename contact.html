@@ -121,9 +121,6 @@
         </section>
     </main>
 
-    <!-- Feedback popup -->
-    <div id="form-feedback" class="form-feedback" role="alert" aria-live="polite"></div>
-
     <footer>
         <div class="container">
             <div class="footer-section company-info">
@@ -260,7 +257,6 @@
 
                 // Get form elements
                 const contactForm = document.getElementById('contact-experiment-form');
-                const formFeedback = document.getElementById('form-feedback');
                 const submitButton = document.getElementById('submit-button');
                 const privacyCheckbox = document.getElementById('privacy-consent');
                 const requiredFields = document.querySelectorAll('input[required], select[required], textarea[required]');
@@ -297,36 +293,6 @@
                     submitButton.disabled = !(allFieldsFilled && privacyCheckbox.checked);
                 }
 
-                function showFeedback(message, type) {
-                    console.log(`Showing feedback: ${message} (${type})`);
-                    if (formFeedback) {
-                        // Reset the feedback element
-                        formFeedback.style.display = 'none';
-                        formFeedback.className = '';
-                        formFeedback.textContent = message;
-                        
-                        // Force reflow
-                        void formFeedback.offsetWidth;
-                        
-                        // Add classes for styling and animation
-                        formFeedback.className = 'form-feedback ' + type + ' show';
-                        formFeedback.style.display = 'block';
-                        
-                        // Set timeout to hide
-                        setTimeout(() => {
-                            formFeedback.classList.remove('show');
-                            formFeedback.classList.add('hide');
-                            
-                            // Clean up after animation
-                            setTimeout(() => {
-                                formFeedback.style.display = 'none';
-                                formFeedback.className = '';
-                                formFeedback.textContent = '';
-                            }, 500);
-                        }, 10000);
-                    }
-                }
-
                 // Initial validation
                 validateForm();
 
@@ -361,13 +327,11 @@
                     // Validate form
                     if (!name || !email || !subject || !message) {
                         console.log('Validation failed: Missing required fields');
-                        showFeedback('Vul alstublieft alle verplichte velden in.', 'error');
                         return;
                     }
 
                     if (!privacyConsent) {
                         console.log('Validation failed: Privacy consent not checked');
-                        showFeedback('U moet akkoord gaan met de privacyverklaring.', 'error');
                         return;
                     }
 
@@ -399,11 +363,10 @@
                     .then(data => {
                         console.log('Parsed response data:', data);
                         if (data.status === 'success') {
-                            showFeedback('Uw bericht is succesvol verzonden!', 'success');
-                            contactForm.reset();
-                            validateForm(); // Re-validate to disable submit button
+                            console.log('Form submitted successfully, redirecting to success page');
+                            window.location.href = 'contact-success.html';
                         } else {
-                            showFeedback(data.message || 'Er is een fout opgetreden.', 'error');
+                            console.log('Form submission failed:', data.message);
                         }
                     })
                     .catch(error => {
@@ -412,7 +375,6 @@
                             message: error.message,
                             stack: error.stack
                         });
-                        showFeedback('Er is een technische fout opgetreden. Probeer het later opnieuw.', 'error');
                     });
                 }
 
