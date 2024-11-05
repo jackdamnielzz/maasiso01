@@ -1,6 +1,6 @@
 <?php
-// Enable error reporting for debugging
-error_reporting(E_ALL);
+// Enable error reporting based on server settings
+error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
 ini_set('display_errors', 1);
 
 // Set headers for CORS and JSON response
@@ -18,11 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 // Main script execution
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get form data
-    $name = $_POST['name'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $phone = $_POST['phone'] ?? '';
-    $subject = $_POST['subject'] ?? '';
-    $message = $_POST['message'] ?? '';
+    $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
+    $subject = filter_input(INPUT_POST, 'subject', FILTER_SANITIZE_STRING);
+    $message = filter_input(INPUT_POST, 'message', FILTER_SANITIZE_STRING);
     
     // Validate required fields
     if (empty($name) || empty($email) || empty($subject) || empty($message)) {
@@ -34,28 +34,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // Validate email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        http_response_code(400);
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Ongeldig e-mailadres'
+        ]);
+        exit;
+    }
+
     // Prepare email content
     $to = 'info@maasiso.nl';
-    $email_subject = "Nieuw contactformulier: $subject";
-    $email_body = "Naam: $name\n";
-    $email_body .= "E-mail: $email\n";
+    $email_subject = "Nieuw contactformulier: " . $subject;
+    
+    // Create email body
+    $email_body = "Nieuw bericht via het contactformulier:\n\n";
+    $email_body .= "Naam: " . $name . "\n";
+    $email_body .= "E-mail: " . $email . "\n";
     if (!empty($phone)) {
-        $email_body .= "Telefoon: $phone\n";
+        $email_body .= "Telefoon: " . $phone . "\n";
     }
-    $email_body .= "Onderwerp: $subject\n\n";
-    $email_body .= "Bericht:\n$message";
+    $email_body .= "Onderwerp: " . $subject . "\n\n";
+    $email_body .= "Bericht:\n" . $message . "\n";
 
     // Set email headers
-    $headers = [
-        "From: website@maasiso.nl",
-        "Reply-To: $email",
-        "MIME-Version: 1.0",
-        "Content-Type: text/plain; charset=UTF-8",
-        "X-Mailer: PHP/" . phpversion()
-    ];
+    $headers = array(
+        'From: website@maasiso.nl',
+        'Reply-To: ' . $email,
+        'X-Mailer: PHP/' . phpversion(),
+        'Content-Type: text/plain; charset=UTF-8',
+        'MIME-Version: 1.0'
+    );
+
+    // Convert headers array to string
+    $headers_string = implode("\r\n", $headers);
 
     // Attempt to send email
-    $mail_sent = mail($to, $email_subject, $email_body, implode("\r\n", $headers));
+    $mail_sent = mail($to, $email_subject, $email_body, $headers_string);
 
     if ($mail_sent) {
         echo json_encode([
@@ -63,6 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'message' => 'Uw bericht is succesvol verzonden'
         ]);
     } else {
+        error_log("Failed to send email from contact form. From: $email, Subject: $email_subject");
         http_response_code(500);
         echo json_encode([
             'status' => 'error',

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
+<!-- Previous head content remains the same until the script section -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,7 +76,7 @@
         <section id="contact-content" class="section-padding" aria-label="Contactformulier">
             <div class="container">
                 <div class="contact-form-container fade-in">
-                    <form id="contact-experiment-form" class="contact-form" method="POST" action="https://maasiso.nl/contact-handler.php">
+                    <form id="contact-experiment-form" class="contact-form" method="POST" action="contact-handler.php">
                         <div class="form-group">
                             <label for="name">Naam</label>
                             <input type="text" id="name" name="name" required placeholder="Uw volledige naam">
@@ -213,7 +214,7 @@
                 }
 
                 console.log('Sending form data to server');
-                fetch('https://maasiso.nl/contact-handler.php', {
+                fetch(form.action, {
                     method: 'POST',
                     body: formData
                 })
