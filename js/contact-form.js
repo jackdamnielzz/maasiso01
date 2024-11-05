@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Handle form submission
-    contactForm.addEventListener('submit', async function(e) {
+    contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         console.log('Form submitted - Starting submission process');
 
@@ -37,27 +37,30 @@ document.addEventListener('DOMContentLoaded', function() {
         submitButton.textContent = 'Verzenden...';
         submitButton.disabled = true;
 
-        try {
-            // Get form data
-            const formData = new FormData(contactForm);
-            
-            // Log form data
-            console.log('Form data collected:');
-            for (let pair of formData.entries()) {
-                console.log(`${pair[0]}: ${pair[1]}`);
+        // Get form data
+        const formData = new FormData(contactForm);
+        
+        // Log form data
+        console.log('Form data collected:');
+        for (let pair of formData.entries()) {
+            console.log(`${pair[0]}: ${pair[1]}`);
+        }
+
+        // Send form data
+        console.log('Sending form data to server');
+        fetch('https://maasiso.nl/contact-handler.php', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
             }
-
-            // Send form data
-            console.log('Sending form data to server');
-            const response = await fetch('https://maasiso.nl/contact-handler.php', {
-                method: 'POST',
-                body: formData
-            });
-
+        })
+        .then(response => {
             console.log('Response received:', response.status, response.statusText);
-            const text = await response.text();
+            return response.text();
+        })
+        .then(text => {
             console.log('Response text:', text);
-
             let data;
             try {
                 data = JSON.parse(text);
@@ -77,14 +80,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 formFeedback.textContent = data.message || 'Er is een fout opgetreden bij het verzenden van uw bericht.';
                 formFeedback.className = 'form-feedback error show';
             }
-        } catch (error) {
+        })
+        .catch(error => {
             console.error('Error during form submission:', error);
             formFeedback.textContent = 'Er is een technische fout opgetreden. Probeer het later opnieuw.';
             formFeedback.className = 'form-feedback error show';
-        } finally {
+        })
+        .finally(() => {
             submitButton.textContent = 'Verzenden';
             submitButton.disabled = false;
-        }
+            console.log('Form submission process completed');
+        });
     });
 
     console.log('Form handler initialization complete');
