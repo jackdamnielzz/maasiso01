@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM Content Loaded - Initializing form handling');
 
     // Get form elements
-    const contactForm = document.getElementById('contact-experiment-form');
+    const contactForm = document.getElementById('contact-form');
     const formFeedback = document.getElementById('form-feedback');
 
     // Log if form is found
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Add submit button click handler that manually triggers form submission
+    // Add submit button click handler
     const submitButton = contactForm.querySelector('button[type="submit"]');
     if (submitButton) {
         submitButton.addEventListener('click', function(e) {
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         console.log('Sending form data to server...');
 
-        // Send form data with detailed error handling
+        // Send form data
         fetch('contact-handler.php', {
             method: 'POST',
             body: formData
