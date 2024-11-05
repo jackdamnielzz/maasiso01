@@ -40,20 +40,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Add submit event listener using both methods
-    contactForm.onsubmit = function(e) {
-        console.log('Form submit triggered (onsubmit)');
-        handleSubmit(e);
-    };
-
-    contactForm.addEventListener('submit', function(e) {
-        console.log('Form submit triggered (addEventListener)');
-        handleSubmit(e);
-    });
+    // Add submit button click handler that manually triggers form submission
+    const submitButton = contactForm.querySelector('button[type="submit"]');
+    if (submitButton) {
+        submitButton.addEventListener('click', function(e) {
+            console.log('Submit button clicked - Manually handling submission');
+            e.preventDefault();
+            handleSubmit(e);
+        });
+    }
 
     function handleSubmit(e) {
         console.log('Starting form submission handling');
-        e.preventDefault();
+        if (e) e.preventDefault();
         console.log('Default form submission prevented');
 
         // Get form data
@@ -91,15 +90,23 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData(contactForm);
         formData.append('recipient', 'info@maasiso.nl');
 
+        // Log FormData contents
+        for (let pair of formData.entries()) {
+            console.log('FormData field:', pair[0], pair[1]);
+        }
+
         console.log('Sending form data to server...');
 
-        // Send form data
+        // Send form data with detailed error handling
         fetch('contact-handler.php', {
             method: 'POST',
             body: formData
         })
         .then(response => {
-            console.log('Server response received:', response);
+            console.log('Raw server response:', response);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             return response.json();
         })
         .then(data => {
@@ -108,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 showFeedback(data.message, 'success');
                 contactForm.reset();
             } else {
-                showFeedback(data.message, 'error');
+                showFeedback(data.message || 'Er is een fout opgetreden.', 'error');
             }
         })
         .catch(error => {
@@ -118,14 +125,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 stack: error.stack
             });
             showFeedback('Er is een technische fout opgetreden. Probeer het later opnieuw.', 'error');
-        });
-    }
-
-    // Add a test button click handler
-    const submitButton = contactForm.querySelector('button[type="submit"]');
-    if (submitButton) {
-        submitButton.addEventListener('click', function(e) {
-            console.log('Submit button clicked');
         });
     }
 
