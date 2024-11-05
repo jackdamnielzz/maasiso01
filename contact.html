@@ -173,96 +173,88 @@
 
     <script src="js/main.min.js"></script>
     <script>
-        (function() {
-            document.addEventListener('DOMContentLoaded', function() {
-                const contactForm = document.getElementById('contact-experiment-form');
-                const formFeedback = document.getElementById('form-feedback');
-                let feedbackTimeout;
+        console.log('Contact form script starting...');
 
-                function showFeedback(message, type) {
-                    // Clear any existing timeout
-                    if (feedbackTimeout) {
-                        clearTimeout(feedbackTimeout);
-                        formFeedback.classList.remove('show', 'hide');
-                    }
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Content Loaded - Initializing form handling');
 
-                    // Set feedback message and type
-                    formFeedback.textContent = message;
-                    formFeedback.classList.remove('success', 'error');
-                    formFeedback.classList.add(type);
+            const contactForm = document.getElementById('contact-experiment-form');
+            const formFeedback = document.getElementById('form-feedback');
 
-                    // Show feedback with fade in
-                    formFeedback.style.display = 'block';
-                    setTimeout(() => {
-                        formFeedback.classList.add('show');
-                    }, 10);
+            // Log if form is found
+            if (!contactForm) {
+                console.error('Contact form not found! Check form ID');
+                return;
+            }
+            console.log('Contact form found:', contactForm);
 
-                    // Set timeout to hide feedback after 10 seconds
-                    feedbackTimeout = setTimeout(() => {
-                        formFeedback.classList.add('hide');
-                        setTimeout(() => {
-                            formFeedback.style.display = 'none';
-                            formFeedback.classList.remove('show', 'hide');
-                        }, 500);
-                    }, 10000);
-                }
-
-                function handleSubmit(e) {
-                    e.preventDefault();
-                    console.log('Form submitted');
-
-                    // Get form data
-                    const name = document.getElementById('name').value.trim();
-                    const email = document.getElementById('email').value.trim();
-                    const subject = document.getElementById('subject').value;
-                    const message = document.getElementById('message').value.trim();
-                    const privacyConsent = document.getElementById('privacy-consent').checked;
-
-                    // Validate form
-                    if (!name || !email || !subject || !message) {
-                        showFeedback('Vul alstublieft alle verplichte velden in.', 'error');
-                        return;
-                    }
-
-                    if (!privacyConsent) {
-                        showFeedback('U moet akkoord gaan met de privacyverklaring.', 'error');
-                        return;
-                    }
-
-                    // Prepare form data
-                    const formData = new FormData(contactForm);
-                    formData.append('recipient', 'info@maasiso.nl');
-
-                    // Send form data
-                    fetch('contact-handler.php', {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => {
-                        console.log('Response received:', response);
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Data:', data);
-                        if (data.status === 'success') {
-                            showFeedback('Uw bericht is succesvol verzonden. Wij nemen zo spoedig mogelijk contact met u op.', 'success');
-                            contactForm.reset();
-                        } else {
-                            showFeedback(data.message || 'Er is een fout opgetreden bij het verzenden van uw bericht.', 'error');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        showFeedback('Er is een technische fout opgetreden. Probeer het later opnieuw.', 'error');
-                    });
-                }
-
-                contactForm.addEventListener('submit', handleSubmit);
+            // Add input event listeners for all form fields
+            const formInputs = contactForm.querySelectorAll('input, textarea, select');
+            formInputs.forEach(input => {
+                input.addEventListener('input', function(e) {
+                    console.log(`Input changed - ${e.target.name}:`, e.target.value);
+                });
             });
-        })();
+
+            // Add specific checkbox listener
+            const privacyCheckbox = document.getElementById('privacy-consent');
+            if (privacyCheckbox) {
+                privacyCheckbox.addEventListener('change', function(e) {
+                    console.log('Privacy consent changed:', e.target.checked);
+                });
+            }
+
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                console.log('Form submitted - Starting submission process');
+
+                // Get form data
+                const formData = new FormData(contactForm);
+                
+                // Log all form data
+                for (let pair of formData.entries()) {
+                    console.log('Form data:', pair[0], pair[1]);
+                }
+
+                // Add recipient
+                formData.append('recipient', 'info@maasiso.nl');
+                console.log('Added recipient to form data');
+
+                // Send form data
+                console.log('Sending form data to contact-handler.php');
+                fetch('contact-handler.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    console.log('Raw response:', response);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Response data:', data);
+                    if (data.status === 'success') {
+                        console.log('Form submission successful');
+                        formFeedback.textContent = 'Uw bericht is succesvol verzonden. Wij nemen zo spoedig mogelijk contact met u op.';
+                        formFeedback.className = 'form-feedback success show';
+                        contactForm.reset();
+                    } else {
+                        console.log('Form submission failed:', data.message);
+                        formFeedback.textContent = data.message || 'Er is een fout opgetreden bij het verzenden van uw bericht.';
+                        formFeedback.className = 'form-feedback error show';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error during form submission:', error);
+                    formFeedback.textContent = 'Er is een technische fout opgetreden. Probeer het later opnieuw.';
+                    formFeedback.className = 'form-feedback error show';
+                });
+            });
+
+            console.log('Form handler initialization complete');
+        });
     </script>
 </body>
 </html>
