@@ -301,11 +301,16 @@
                     console.log(`Showing feedback: ${message} (${type})`);
                     if (formFeedback) {
                         // Reset the feedback element
-                        formFeedback.className = 'form-feedback';
+                        formFeedback.style.display = 'none';
+                        formFeedback.className = '';
                         formFeedback.textContent = message;
                         
-                        // Add type class and show
-                        formFeedback.classList.add(type, 'show');
+                        // Force reflow
+                        void formFeedback.offsetWidth;
+                        
+                        // Add classes for styling and animation
+                        formFeedback.className = 'form-feedback ' + type + ' show';
+                        formFeedback.style.display = 'block';
                         
                         // Set timeout to hide
                         setTimeout(() => {
@@ -314,7 +319,8 @@
                             
                             // Clean up after animation
                             setTimeout(() => {
-                                formFeedback.className = 'form-feedback';
+                                formFeedback.style.display = 'none';
+                                formFeedback.className = '';
                                 formFeedback.textContent = '';
                             }, 500);
                         }, 10000);
