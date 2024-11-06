@@ -116,6 +116,7 @@
                             <button type="submit" id="submit-button" class="cta-button" disabled>Verzenden</button>
                         </div>
                     </form>
+                    <div id="form-feedback" class="form-feedback" aria-live="polite"></div>
                 </div>
             </div>
         </section>
@@ -256,6 +257,7 @@
 
                 // Get form elements
                 const contactForm = document.getElementById('contact-experiment-form');
+                const formFeedback = document.getElementById('form-feedback');
                 const submitButton = document.getElementById('submit-button');
                 const privacyCheckbox = document.getElementById('privacy-consent');
                 const requiredFields = contactForm.querySelectorAll('input[required], select[required], textarea[required]');
@@ -296,8 +298,8 @@
                 validateForm();
 
                 // Add submit button click handler
-                contactForm.addEventListener('submit', function(e) {
-                    console.log('Form submitted - Manually handling submission');
+                submitButton.addEventListener('click', function(e) {
+                    console.log('Submit button clicked - Manually handling submission');
                     e.preventDefault();
                     handleSubmit(e);
                 });
@@ -326,11 +328,13 @@
                     // Validate form
                     if (!name || !email || !subject || !message) {
                         console.log('Validation failed: Missing required fields');
+                        formFeedback.textContent = 'Vul alle verplichte velden in.';
                         return;
                     }
 
                     if (!privacyConsent) {
                         console.log('Validation failed: Privacy consent not checked');
+                        formFeedback.textContent = 'Accepteer de privacyverklaring om door te gaan.';
                         return;
                     }
 
@@ -366,6 +370,7 @@
                             window.location.href = 'contact-success.html';
                         } else {
                             console.log('Form submission failed:', data.message);
+                            formFeedback.textContent = data.message || 'Er is een fout opgetreden bij het verzenden van het formulier.';
                         }
                     })
                     .catch(error => {
@@ -374,6 +379,7 @@
                             message: error.message,
                             stack: error.stack
                         });
+                        formFeedback.textContent = 'Er is een fout opgetreden bij het verzenden van het formulier.';
                     });
                 }
 
