@@ -15,7 +15,7 @@ error_log("POST data: " . print_r($_POST, true));
 // Main script execution
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verify reCAPTCHA first
-    $recaptcha_secret = "6LcOU3cqAAAAAOsqPrfREcysegipXCsuMt_zZufn";
+    $recaptcha_secret = "6LcPXHcqAAAAAEfVNQFB-5FwXYnH2pnCPiFYwBx";
     $recaptcha_response = $_POST['g-recaptcha-response'];
     
     error_log("Verifying reCAPTCHA response");
