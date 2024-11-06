@@ -39,18 +39,6 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <!-- reCAPTCHA -->
-    <script>
-        // Callback when reCAPTCHA API is ready
-        function onRecaptchaLoad() {
-            console.log('reCAPTCHA API loaded');
-            if (window.validateForm) {
-                window.validateForm();
-            }
-        }
-    </script>
-    <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
 </head>
 <body>
     <!-- Skip Link for Keyboard Users -->
@@ -126,7 +114,7 @@
 
                         <!-- reCAPTCHA -->
                         <div class="form-group">
-                            <div id="recaptcha-container"></div>
+                            <div class="g-recaptcha" data-sitekey="6LcOU3cqAAAAAAPZVl1jceE5Um_EN_AtOAKD4rtZ" data-callback="recaptchaCallback" data-expired-callback="recaptchaExpiredCallback"></div>
                         </div>
                         
                         <div class="form-group submit-group">
@@ -184,6 +172,9 @@
             </div>
         </div>
     </footer>
+
+    <!-- reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <!-- KRITIEKE CONTACT FORMULIER DOCUMENTATIE -->
     <script type="text/plain" id="contact-form-documentation">
@@ -263,66 +254,58 @@
     <script>
         console.log('After loading contact-form.js - Testing if script is loaded');
         
+        // Define reCAPTCHA callbacks in global scope
+        window.recaptchaCallback = function() {
+            console.log('reCAPTCHA validated successfully');
+            validateForm();
+        };
+
+        window.recaptchaExpiredCallback = function() {
+            console.log('reCAPTCHA expired');
+            validateForm();
+        };
+
         // Wrap everything in an IIFE to avoid global scope pollution
         (function() {
-            // Log when script starts executing
             console.log('Contact form script loaded and executing');
             console.log('Contact form script IIFE started');
 
-            let recaptchaWidget = null;
+            // Make validateForm globally accessible
+            window.validateForm = function() {
+                const contactForm = document.getElementById('contact-experiment-form');
+                const submitButton = document.getElementById('submit-button');
+                const privacyCheckbox = document.getElementById('privacy-consent');
+                const requiredFields = contactForm.querySelectorAll('input[required], select[required], textarea[required]');
 
-            // Function to get reCAPTCHA response safely
-            function getRecaptchaResponse() {
-                try {
-                    return grecaptcha && recaptchaWidget !== null ? grecaptcha.getResponse(recaptchaWidget) : '';
-                } catch (e) {
-                    console.log('Error getting reCAPTCHA response:', e);
-                    return '';
-                }
-            }
-
-            // Define reCAPTCHA callback functions in global scope
-            window.onRecaptchaSuccess = function() {
-                console.log('reCAPTCHA validated successfully');
-                validateForm();
-            };
-
-            window.onRecaptchaExpired = function() {
-                console.log('reCAPTCHA expired');
-                validateForm();
-            };
-
-            // Initialize reCAPTCHA widget
-            function initRecaptcha() {
-                if (typeof grecaptcha !== 'undefined' && grecaptcha.render) {
-                    console.log('Initializing reCAPTCHA widget');
-                    try {
-                        recaptchaWidget = grecaptcha.render('recaptcha-container', {
-                            'sitekey': '6LcOU3cqAAAAAAPZVl1jceE5Um_EN_AtOAKD4rtZ',
-                            'callback': 'onRecaptchaSuccess',
-                            'expired-callback': 'onRecaptchaExpired'
-                        });
-                        console.log('reCAPTCHA widget initialized');
-                    } catch (e) {
-                        console.error('Error initializing reCAPTCHA:', e);
+                let allFieldsFilled = true;
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        allFieldsFilled = false;
                     }
-                } else {
-                    console.log('grecaptcha not ready, waiting...');
-                    setTimeout(initRecaptcha, 100);
+                });
+
+                // Check reCAPTCHA
+                let recaptchaResponse = '';
+                try {
+                    if (typeof grecaptcha !== 'undefined' && grecaptcha !== null) {
+                        recaptchaResponse = grecaptcha.getResponse();
+                        console.log('reCAPTCHA response:', recaptchaResponse ? 'present' : 'missing');
+                    }
+                } catch (e) {
+                    console.log('reCAPTCHA not ready yet');
                 }
-            }
+
+                submitButton.disabled = !(allFieldsFilled && privacyCheckbox.checked && recaptchaResponse);
+            };
 
             document.addEventListener('DOMContentLoaded', function() {
                 console.log('DOM Content Loaded - Initializing form handling');
-
-                // Initialize reCAPTCHA
-                initRecaptcha();
 
                 // Get form elements
                 const contactForm = document.getElementById('contact-experiment-form');
                 const submitButton = document.getElementById('submit-button');
                 const privacyCheckbox = document.getElementById('privacy-consent');
-                const requiredFields = document.querySelectorAll('input[required], select[required], textarea[required]');
+                const requiredFields = contactForm.querySelectorAll('input[required], select[required], textarea[required]');
 
                 // Log if form is found
                 if (!contactForm) {
@@ -345,27 +328,12 @@
                     validateForm();
                 });
 
-                // Make validateForm available globally
-                window.validateForm = function() {
-                    let allFieldsFilled = true;
-                    requiredFields.forEach(field => {
-                        if (!field.value.trim()) {
-                            allFieldsFilled = false;
-                        }
-                    });
-
-                    const recaptchaResponse = getRecaptchaResponse();
-                    console.log('reCAPTCHA response:', recaptchaResponse ? 'present' : 'missing');
-
-                    submitButton.disabled = !(allFieldsFilled && privacyCheckbox.checked && recaptchaResponse);
-                };
-
                 // Initial validation
                 validateForm();
 
                 // Add submit button click handler
-                submitButton.addEventListener('click', function(e) {
-                    console.log('Submit button clicked - Manually handling submission');
+                contactForm.addEventListener('submit', function(e) {
+                    console.log('Form submitted - Manually handling submission');
                     e.preventDefault();
                     handleSubmit(e);
                 });
@@ -381,7 +349,7 @@
                     const subject = document.getElementById('subject').value;
                     const message = document.getElementById('message').value.trim();
                     const privacyConsent = document.getElementById('privacy-consent').checked;
-                    const recaptchaResponse = getRecaptchaResponse();
+                    const recaptchaResponse = grecaptcha.getResponse();
 
                     // Log collected form data
                     console.log('Form data collected:', {
@@ -456,11 +424,9 @@
                 console.log('Form handler initialization complete');
             });
 
-            // Log when IIFE completes
             console.log('Contact form script IIFE completed');
         })();
 
-        // Log after IIFE
         console.log('Contact form script execution completed');
     </script>
 </body>
