@@ -41,7 +41,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <!-- reCAPTCHA -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        // Callback when reCAPTCHA API is ready
+        function onRecaptchaLoad() {
+            console.log('reCAPTCHA API loaded');
+            if (window.validateForm) {
+                window.validateForm();
+            }
+        }
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=onRecaptchaLoad&render=explicit" async defer></script>
 </head>
 <body>
     <!-- Skip Link for Keyboard Users -->
@@ -117,7 +126,7 @@
 
                         <!-- reCAPTCHA -->
                         <div class="form-group">
-                            <div class="g-recaptcha" data-sitekey="6LcOU3cqAAAAAAPZVl1jceE5Um_EN_AtOAKD4rtZ"></div>
+                            <div id="recaptcha-container"></div>
                         </div>
                         
                         <div class="form-group submit-group">
@@ -260,8 +269,54 @@
             console.log('Contact form script loaded and executing');
             console.log('Contact form script IIFE started');
 
+            let recaptchaWidget = null;
+
+            // Function to get reCAPTCHA response safely
+            function getRecaptchaResponse() {
+                try {
+                    return grecaptcha && recaptchaWidget !== null ? grecaptcha.getResponse(recaptchaWidget) : '';
+                } catch (e) {
+                    console.log('Error getting reCAPTCHA response:', e);
+                    return '';
+                }
+            }
+
+            // Define reCAPTCHA callback functions in global scope
+            window.onRecaptchaSuccess = function() {
+                console.log('reCAPTCHA validated successfully');
+                validateForm();
+            };
+
+            window.onRecaptchaExpired = function() {
+                console.log('reCAPTCHA expired');
+                validateForm();
+            };
+
+            // Initialize reCAPTCHA widget
+            function initRecaptcha() {
+                if (typeof grecaptcha !== 'undefined' && grecaptcha.render) {
+                    console.log('Initializing reCAPTCHA widget');
+                    try {
+                        recaptchaWidget = grecaptcha.render('recaptcha-container', {
+                            'sitekey': '6LcOU3cqAAAAAAPZVl1jceE5Um_EN_AtOAKD4rtZ',
+                            'callback': 'onRecaptchaSuccess',
+                            'expired-callback': 'onRecaptchaExpired'
+                        });
+                        console.log('reCAPTCHA widget initialized');
+                    } catch (e) {
+                        console.error('Error initializing reCAPTCHA:', e);
+                    }
+                } else {
+                    console.log('grecaptcha not ready, waiting...');
+                    setTimeout(initRecaptcha, 100);
+                }
+            }
+
             document.addEventListener('DOMContentLoaded', function() {
                 console.log('DOM Content Loaded - Initializing form handling');
+
+                // Initialize reCAPTCHA
+                initRecaptcha();
 
                 // Get form elements
                 const contactForm = document.getElementById('contact-experiment-form');
@@ -290,7 +345,8 @@
                     validateForm();
                 });
 
-                function validateForm() {
+                // Make validateForm available globally
+                window.validateForm = function() {
                     let allFieldsFilled = true;
                     requiredFields.forEach(field => {
                         if (!field.value.trim()) {
@@ -298,21 +354,10 @@
                         }
                     });
 
-                    const recaptchaResponse = grecaptcha.getResponse();
+                    const recaptchaResponse = getRecaptchaResponse();
                     console.log('reCAPTCHA response:', recaptchaResponse ? 'present' : 'missing');
 
                     submitButton.disabled = !(allFieldsFilled && privacyCheckbox.checked && recaptchaResponse);
-                }
-
-                // Add reCAPTCHA callback
-                window.onRecaptchaSuccess = function() {
-                    console.log('reCAPTCHA validated successfully');
-                    validateForm();
-                };
-
-                window.onRecaptchaExpired = function() {
-                    console.log('reCAPTCHA expired');
-                    validateForm();
                 };
 
                 // Initial validation
@@ -336,7 +381,7 @@
                     const subject = document.getElementById('subject').value;
                     const message = document.getElementById('message').value.trim();
                     const privacyConsent = document.getElementById('privacy-consent').checked;
-                    const recaptchaResponse = grecaptcha.getResponse();
+                    const recaptchaResponse = getRecaptchaResponse();
 
                     // Log collected form data
                     console.log('Form data collected:', {
