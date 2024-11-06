@@ -14,54 +14,6 @@ error_log("POST data: " . print_r($_POST, true));
 
 // Main script execution
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Verify reCAPTCHA first
-    $recaptcha_secret = "6LcPXHcqAAAAAEfVNQFB-5FwXYnH2pnCPiFYwBx";
-    $recaptcha_response = $_POST['g-recaptcha-response'];
-    
-    error_log("Verifying reCAPTCHA response");
-    
-    if (empty($recaptcha_response)) {
-        error_log("reCAPTCHA validation failed - no response token");
-        http_response_code(400);
-        echo json_encode([
-            'status' => 'error',
-            'message' => 'reCAPTCHA verificatie is vereist'
-        ]);
-        exit;
-    }
-    
-    // Verify the reCAPTCHA response
-    $verify_url = "https://www.google.com/recaptcha/api/siteverify";
-    $data = [
-        'secret' => $recaptcha_secret,
-        'response' => $recaptcha_response,
-        'remoteip' => $_SERVER['REMOTE_ADDR']
-    ];
-    
-    $options = [
-        'http' => [
-            'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-            'method' => 'POST',
-            'content' => http_build_query($data)
-        ]
-    ];
-    
-    $context = stream_context_create($options);
-    $verify_response = file_get_contents($verify_url, false, $context);
-    $captcha_success = json_decode($verify_response);
-    
-    if (!$captcha_success->success) {
-        error_log("reCAPTCHA validation failed - invalid token");
-        http_response_code(400);
-        echo json_encode([
-            'status' => 'error',
-            'message' => 'reCAPTCHA verificatie mislukt'
-        ]);
-        exit;
-    }
-    
-    error_log("reCAPTCHA validation successful");
-
     // Get and sanitize form data
     $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);

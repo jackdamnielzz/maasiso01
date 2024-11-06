@@ -9,7 +9,7 @@
     <link rel="icon" type="image/svg+xml" href="images/icons/favicon.svg">
     
     <!-- Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; frame-src https://www.google.com/recaptcha/; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdnjs.cloudflare.com 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self';">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     
     <!-- Meta tags -->
@@ -39,9 +39,6 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <!-- reCAPTCHA -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <!-- Skip Link for Keyboard Users -->
@@ -113,11 +110,6 @@
                         <div class="form-group checkbox-group">
                             <input type="checkbox" id="privacy-consent" name="privacy-consent" required>
                             <label for="privacy-consent">Ik ga akkoord met de <a href="privacyverklaring.html" target="_blank">privacyverklaring</a></label>
-                        </div>
-
-                        <!-- reCAPTCHA -->
-                        <div class="form-group">
-                            <div class="g-recaptcha" data-sitekey="6LcPXHcqAAAADuSh-d59fHAhykHCcdB1YUboL"></div>
                         </div>
                         
                         <div class="form-group submit-group">
@@ -297,18 +289,7 @@
                         }
                     });
 
-                    // Check reCAPTCHA
-                    let recaptchaResponse = '';
-                    try {
-                        if (typeof grecaptcha !== 'undefined' && grecaptcha !== null) {
-                            recaptchaResponse = grecaptcha.getResponse();
-                            console.log('reCAPTCHA response:', recaptchaResponse ? 'present' : 'missing');
-                        }
-                    } catch (e) {
-                        console.log('reCAPTCHA not ready yet');
-                    }
-
-                    submitButton.disabled = !(allFieldsFilled && privacyCheckbox.checked && recaptchaResponse);
+                    submitButton.disabled = !(allFieldsFilled && privacyCheckbox.checked);
                 }
 
                 // Initial validation
@@ -332,7 +313,6 @@
                     const subject = document.getElementById('subject').value;
                     const message = document.getElementById('message').value.trim();
                     const privacyConsent = document.getElementById('privacy-consent').checked;
-                    const recaptchaResponse = grecaptcha.getResponse();
 
                     // Log collected form data
                     console.log('Form data collected:', {
@@ -340,8 +320,7 @@
                         email,
                         subject,
                         message,
-                        privacyConsent,
-                        recaptchaResponse: recaptchaResponse ? 'present' : 'missing'
+                        privacyConsent
                     });
 
                     // Validate form
@@ -355,17 +334,11 @@
                         return;
                     }
 
-                    if (!recaptchaResponse) {
-                        console.log('Validation failed: reCAPTCHA not completed');
-                        return;
-                    }
-
                     console.log('Form validation passed, preparing to send');
 
                     // Prepare form data
                     const formData = new FormData(contactForm);
                     formData.append('recipient', 'info@maasiso.nl');
-                    formData.append('g-recaptcha-response', recaptchaResponse);
 
                     // Log FormData contents
                     for (let pair of formData.entries()) {
