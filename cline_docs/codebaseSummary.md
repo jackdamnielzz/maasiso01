@@ -78,7 +78,7 @@ De volgende belangrijke componenten zijn geïmplementeerd of bijgewerkt:
 4. **Robots.txt:**
    - Het `robots.txt` bestand bepaalt welke delen van de website door zoekmachines mogen worden geïndexeerd.
    - De huidige inhoud van `robots.txt` is als volgt:
-     ```
+     ```plaintext
      User-agent: *
      Allow: /
      Sitemap: https://www.maasiso.nl/sitemap.xml
@@ -101,6 +101,10 @@ De volgende belangrijke componenten zijn geïmplementeerd of bijgewerkt:
      Disallow: /git/
      Disallow: /httpdocs/
      Disallow: /lscache/
+
+     # Explicitly allow CSS and JS files
+     Allow: /css/
+     Allow: /js/
      ```
 
 ## Cookie Management
@@ -135,6 +139,7 @@ Het nieuwe cookie management systeem biedt:
 - Vereenvoudiging van de websitestructuur
 - Bijgewerkt `robots.txt` bestand om specifieke directories en bestanden te verbieden voor zoekmachines
 - [2023-06-01] Bijgewerkt `robots.txt` om CSS en JS bestanden toe te staan voor proper indexing
+- [2024-04-15] Bijgewerkt `robots.txt` om CSS en JS bestanden expliciet toe te staan
 
 ## Geplande Verbeteringen
 - Standaardiseren van het gebruik van ofwel `main.js` of `main.min.js` over alle pagina's

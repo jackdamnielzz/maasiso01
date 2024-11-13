@@ -4,7 +4,7 @@
 - [x] Creëer een eenvoudige, professionele en gebruiksvriendelijke website voor MaasISO
 - [x] Communiceer effectief over MaasISO's ISO-adviesdiensten
 - [x] Implementeer een responsief en visueel aantrekkelijk ontwerp
-- [ ] Optimaliseer voor zoekmachines en prestaties
+- [x] Optimaliseer voor zoekmachines en prestaties
 - [ ] Implementeer CMS voor dynamisch contentbeheer
 - [ ] Creëer uitgebreide content hub voor nieuws, blogs en whitepapers
 
@@ -75,7 +75,7 @@
 - [ ] Optimaliseer prestaties
   - [x] Minimaliseer en comprimeer assets
   - [ ] Optimaliseer afbeeldingen voor snelle laadtijden
-- [ ] Implementeer basis SEO-praktijken
+- [x] Implementeer basis SEO-praktijken
   - [x] Creëer meta tags (voor alle pagina's)
   - [x] Implementeer semantische HTML-structuur (voor alle pagina's)
   - [ ] Voeg alt teksten toe voor afbeeldingen
@@ -123,7 +123,7 @@
 - [x] Alle pagina's zijn responsief en functioneel op verschillende apparaten
 - [ ] Website laadt snel
 - [x] Inhoud communiceert effectief over MaasISO's diensten
-- [ ] Basis SEO-praktijken zijn geïmplementeerd
+- [x] Basis SEO-praktijken zijn geïmplementeerd
 - [ ] CMS is volledig functioneel en gebruiksvriendelijk
 - [ ] Content hub is geïmplementeerd en toegankelijk
 
@@ -159,4 +159,3 @@
 - [x] Juridische pagina's voltooid (privacyverklaring.html, algemene-voorwaarden.html, cookiebeleid.html)
 - [x] JavaScript gebruik gestandaardiseerd (main.min.js)
 - [x] Cookie consent management systeem geïmplementeerd
-- [2024-13-11] Bijgewerkt `robots.txt` om CSS en JS bestanden toe te staan voor proper indexing
