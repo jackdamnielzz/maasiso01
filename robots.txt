@@ -1,19 +1,2 @@
 User-agent: *
-Allow: /
-Disallow: /cline_docs/
-Disallow: /contact-test.html
-Disallow: /mail-test.html
-Disallow: /mail-test.php
-Disallow: /contact-handler.php5
-Disallow: /composer.json
-Disallow: /install-php.bat
-Disallow: /add-php-to-path.bat
-Disallow: /components/
-Disallow: /error_docs/
-Disallow: /git/
-Disallow: /httpdocs/
-Disallow: /lscache/
-
-# Explicitly allow CSS and JS files
-Allow: /css/
-Allow: /js/
+Disallow:
