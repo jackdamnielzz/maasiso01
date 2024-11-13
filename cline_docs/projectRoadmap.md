@@ -159,3 +159,4 @@
 - [x] Juridische pagina's voltooid (privacyverklaring.html, algemene-voorwaarden.html, cookiebeleid.html)
 - [x] JavaScript gebruik gestandaardiseerd (main.min.js)
 - [x] Cookie consent management systeem geïmplementeerd
+- [2024-13-11] Bijgewerkt `robots.txt` om CSS en JS bestanden toe te staan voor proper indexing

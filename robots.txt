@@ -5,10 +5,6 @@ Sitemap: https://www.maasiso.nl/sitemap.xml
 # Prevent indexing of documentation
 Disallow: /cline_docs/
 
-# Prevent indexing of development assets
-Disallow: /*.css$
-Disallow: /*.js$
-
 # Prevent indexing of development and testing files
 Disallow: /contact-test.html
 Disallow: /mail-test.html

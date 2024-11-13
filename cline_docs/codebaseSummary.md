@@ -86,10 +86,6 @@ De volgende belangrijke componenten zijn geïmplementeerd of bijgewerkt:
      # Prevent indexing of documentation
      Disallow: /cline_docs/
 
-     # Prevent indexing of development assets
-     Disallow: /*.css$
-     Disallow: /*.js$
-
      # Prevent indexing of development and testing files
      Disallow: /contact-test.html
      Disallow: /mail-test.html
@@ -138,6 +134,7 @@ Het nieuwe cookie management systeem biedt:
 - Bijwerking van de footer met placeholder informatie
 - Vereenvoudiging van de websitestructuur
 - Bijgewerkt `robots.txt` bestand om specifieke directories en bestanden te verbieden voor zoekmachines
+- [2023-06-01] Bijgewerkt `robots.txt` om CSS en JS bestanden toe te staan voor proper indexing
 
 ## Geplande Verbeteringen
 - Standaardiseren van het gebruik van ofwel `main.js` of `main.min.js` over alle pagina's
