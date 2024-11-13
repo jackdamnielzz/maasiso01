@@ -8,3 +8,19 @@ Disallow: /cline_docs/
 # Prevent indexing of development assets
 Disallow: /*.css$
 Disallow: /*.js$
+
+# Prevent indexing of development and testing files
+Disallow: /contact-test.html
+Disallow: /mail-test.html
+Disallow: /mail-test.php
+Disallow: /contact-handler.php5
+Disallow: /composer.json
+Disallow: /install-php.bat
+Disallow: /add-php-to-path.bat
+
+# Prevent indexing of internal and development directories
+Disallow: /components/
+Disallow: /error_docs/
+Disallow: /git/
+Disallow: /httpdocs/
+Disallow: /lscache/

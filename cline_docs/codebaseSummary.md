@@ -53,27 +53,59 @@ maasiso/
 ## Belangrijkste Componenten
 De volgende belangrijke componenten zijn geïmplementeerd of bijgewerkt:
 
-1. HTML-structuur:
+1. **HTML-structuur:**
    - Alle HTML-bestanden zijn bijgewerkt met een consistente structuur voor het linken van CSS-bestanden.
-   - index.html: Hoofdpagina van de website, nu met verbeterde toegankelijkheid en lazy loading
-   - waarom-maasiso.html: Bijgewerkt met een nieuwe structuur en styling die overeenkomt met index.html
-   - cookiebeleid.html: Gedetailleerd cookiebeleid met informatie over alle gebruikte cookies
+   - `index.html`: Hoofdpagina van de website, nu met verbeterde toegankelijkheid en lazy loading
+   - `waarom-maasiso.html`: Bijgewerkt met een nieuwe structuur en styling die overeenkomt met `index.html`
+   - `cookiebeleid.html`: Gedetailleerd cookiebeleid met informatie over alle gebruikte cookies
 
-2. CSS-stijlen:
+2. **CSS-stijlen:**
    - De CSS is nu opgedeeld in meerdere bestanden voor betere modulariteit en onderhoud.
    - Elk CSS-bestand is verantwoordelijk voor een specifiek onderdeel van de styling.
-   - cookie-banner.css: Styling voor cookie consent banner en instellingen modal
-   - responsive-*.css bestanden bevatten de responsieve stijlen voor verschillende componenten.
+   - `cookie-banner.css`: Styling voor cookie consent banner en instellingen modal
+   - `responsive-*.css` bestanden bevatten de responsieve stijlen voor verschillende componenten.
 
-3. JavaScript:
-   - js/main.js: Bevat de hoofdfunctionaliteit voor de website
-   - js/main.min.js: Geminifieerde versie van main.js
-   - js/cookie-banner.js: Cookie consent management systeem met de volgende features:
+3. **JavaScript:**
+   - `js/main.js`: Bevat de hoofdfunctionaliteit voor de website
+   - `js/main.min.js`: Geminifieerde versie van `main.js`
+   - `js/cookie-banner.js`: Cookie consent management systeem met de volgende features:
      * Cookie banner voor eerste bezoekers
      * Instellingen modal voor granulaire cookie controle
      * Ondersteuning voor verschillende cookie types (noodzakelijk, analytisch, functioneel)
      * Consent opslag voor 1 jaar
      * Integratie met Google Analytics
+
+4. **Robots.txt:**
+   - Het `robots.txt` bestand bepaalt welke delen van de website door zoekmachines mogen worden geïndexeerd.
+   - De huidige inhoud van `robots.txt` is als volgt:
+     ```
+     User-agent: *
+     Allow: /
+     Sitemap: https://www.maasiso.nl/sitemap.xml
+
+     # Prevent indexing of documentation
+     Disallow: /cline_docs/
+
+     # Prevent indexing of development assets
+     Disallow: /*.css$
+     Disallow: /*.js$
+
+     # Prevent indexing of development and testing files
+     Disallow: /contact-test.html
+     Disallow: /mail-test.html
+     Disallow: /mail-test.php
+     Disallow: /contact-handler.php5
+     Disallow: /composer.json
+     Disallow: /install-php.bat
+     Disallow: /add-php-to-path.bat
+
+     # Prevent indexing of internal and development directories
+     Disallow: /components/
+     Disallow: /error_docs/
+     Disallow: /git/
+     Disallow: /httpdocs/
+     Disallow: /lscache/
+     ```
 
 ## Cookie Management
 Het nieuwe cookie management systeem biedt:
@@ -98,16 +130,17 @@ Het nieuwe cookie management systeem biedt:
 
 ## Recente Belangrijke Wijzigingen
 - Implementatie van cookie consent management systeem
-- Toevoeging van cookie-banner.css en cookie-banner.js
+- Toevoeging van `cookie-banner.css` en `cookie-banner.js`
 - Herstructurering van CSS: Opgesplitst in meerdere bestanden voor betere modulariteit
 - Standaardisatie van CSS-linking in alle HTML-bestanden
 - Verbetering van de laadprestaties
 - Verbeterde toegankelijkheid
 - Bijwerking van de footer met placeholder informatie
 - Vereenvoudiging van de websitestructuur
+- Bijgewerkt `robots.txt` bestand om specifieke directories en bestanden te verbieden voor zoekmachines
 
 ## Geplande Verbeteringen
-- Standaardiseren van het gebruik van ofwel main.js of main.min.js over alle pagina's
+- Standaardiseren van het gebruik van ofwel `main.js` of `main.min.js` over alle pagina's
 - Verdere optimalisatie van de laadsnelheid van de website
 - Implementeren van geavanceerde SEO-praktijken op alle pagina's
 - Toevoegen van relevante afbeeldingen en optimaliseren voor snelle laadtijden
