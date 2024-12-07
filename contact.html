@@ -81,51 +81,83 @@
             </div>
         </section>
 
-        <section id="contact-content" class="section-padding" aria-label="Contactformulier">
+        <section id="contact-content" class="section-padding" aria-label="Contact Informatie">
             <div class="container">
-                <div class="contact-form-container fade-in">
-                    <form id="contact-experiment-form" class="contact-form">
-                        <div class="form-group">
-                            <label for="name">Naam</label>
-                            <input type="text" id="name" name="name" required placeholder="Uw volledige naam">
+                <div class="contact-grid">
+                    <!-- Contact Form Section -->
+                    <div class="contact-form-container fade-in">
+                        <h2>Stuur ons een bericht</h2>
+                        <form id="contact-experiment-form" class="contact-form">
+                            <div class="form-group">
+                                <label for="name">Naam</label>
+                                <input type="text" id="name" name="name" required placeholder="Uw volledige naam">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">E-mail</label>
+                                <input type="email" id="email" name="email" required placeholder="uw.email@voorbeeld.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Telefoonnummer (optioneel)</label>
+                                <input type="tel" id="phone" name="phone" placeholder="06-12345678">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="subject">Onderwerp</label>
+                                <select id="subject" name="subject" required>
+                                    <option value="">Selecteer een onderwerp</option>
+                                    <option value="iso-9001">ISO 9001 Advies</option>
+                                    <option value="iso-27001">ISO 27001 Advies</option>
+                                    <option value="avg-compliance">AVG Compliance</option>
+                                    <option value="andere">Andere vraag</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">Uw Bericht</label>
+                                <textarea id="message" name="message" rows="5" required placeholder="Typ hier uw bericht..."></textarea>
+                            </div>
+                            
+                            <div class="form-group checkbox-group">
+                                <input type="checkbox" id="privacy-consent" name="privacy-consent" required>
+                                <label for="privacy-consent">Ik ga akkoord met de <a href="privacyverklaring.html" target="_blank">privacyverklaring</a></label>
+                            </div>
+                            
+                            <div class="form-group submit-group">
+                                <button type="submit" id="submit-button" class="cta-button">Verzenden</button>
+                            </div>
+                        </form>
+                        <div id="form-feedback" class="form-feedback" aria-live="polite"></div>
+                    </div>
+
+                    <!-- Contact Information Section -->
+                    <div class="contact-info-container fade-in">
+                        <div class="contact-info-box">
+                            <h2>Neem Contact Op</h2>
+                            <p>U kunt ons op verschillende manieren bereiken:</p>
+                            
+                            <div class="contact-method">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <h3>E-mail</h3>
+                                    <p><a href="mailto:info@maasiso.nl">info@maasiso.nl</a></p>
+                                </div>
+                            </div>
+
+                            <div class="contact-method">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <h3>Telefoon</h3>
+                                    <p><a href="tel:06-23578344">06-23578344</a></p>
+                                </div>
+                            </div>
+
+                            <div class="contact-note">
+                                <p>Wij streven ernaar om binnen 24 uur te reageren op uw bericht. Voor dringende zaken raden wij aan om telefonisch contact op te nemen.</p>
+                            </div>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="email">E-mail</label>
-                            <input type="email" id="email" name="email" required placeholder="uw.email@voorbeeld.com">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="phone">Telefoonnummer (optioneel)</label>
-                            <input type="tel" id="phone" name="phone" placeholder="06-12345678">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="subject">Onderwerp</label>
-                            <select id="subject" name="subject" required>
-                                <option value="">Selecteer een onderwerp</option>
-                                <option value="iso-9001">ISO 9001 Advies</option>
-                                <option value="iso-27001">ISO 27001 Advies</option>
-                                <option value="avg-compliance">AVG Compliance</option>
-                                <option value="andere">Andere vraag</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message">Uw Bericht</label>
-                            <textarea id="message" name="message" rows="5" required placeholder="Typ hier uw bericht..."></textarea>
-                        </div>
-                        
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="privacy-consent" name="privacy-consent" required>
-                            <label for="privacy-consent">Ik ga akkoord met de <a href="privacyverklaring.html" target="_blank">privacyverklaring</a></label>
-                        </div>
-                        
-                        <div class="form-group submit-group">
-                            <button type="submit" id="submit-button" class="cta-button" disabled>Verzenden</button>
-                        </div>
-                    </form>
-                    <div id="form-feedback" class="form-feedback" aria-live="polite"></div>
+                    </div>
                 </div>
             </div>
         </section>
