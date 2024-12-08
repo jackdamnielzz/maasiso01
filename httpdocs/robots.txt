@@ -1,8 +1,10 @@
 # Global rules for all web crawlers
 User-agent: *
 Allow: /
-Allow: /*.css$
-Allow: /*.js$
+Allow: /css/
+Allow: /js/
+Allow: *.css
+Allow: *.js
 Sitemap: https://www.maasiso.nl/sitemap.xml
 
 # Prevent access to admin and system directories
@@ -13,14 +15,14 @@ Disallow: /temp/
 Disallow: /cache/
 
 # Prevent indexing of development and system files
-Disallow: /*.json$
-Disallow: /*.yml$
-Disallow: /*.yaml$
-Disallow: /*.env$
-Disallow: /*.config$
-Disallow: /*.log$
-Disallow: /*.sql$
-Disallow: /*.md$
+Disallow: /*.json
+Disallow: /*.yml
+Disallow: /*.yaml
+Disallow: /*.env
+Disallow: /*.config
+Disallow: /*.log
+Disallow: /*.sql
+Disallow: /*.md
 Disallow: /README
 Disallow: /LICENSE
 
