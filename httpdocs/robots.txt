@@ -1,54 +1,15 @@
-# Global rules for all web crawlers
 User-agent: *
 Allow: /
-Allow: /css/
-Allow: /js/
-Allow: *.css
-Allow: *.js
-Sitemap: https://www.maasiso.nl/sitemap.xml
-
-# Prevent access to admin and system directories
-Disallow: /admin/
 Disallow: /cline_docs/
-Disallow: /includes/
-Disallow: /temp/
-Disallow: /cache/
+Disallow: /components/
+Disallow: /.git/
+Disallow: /contact-handler.php
 
-# Prevent indexing of development and system files
-Disallow: /*.json
-Disallow: /*.yml
-Disallow: /*.yaml
-Disallow: /*.env
-Disallow: /*.config
-Disallow: /*.log
-Disallow: /*.sql
-Disallow: /*.md
-Disallow: /README
-Disallow: /LICENSE
-
-# Prevent indexing of query parameters
-Disallow: /*?*
-
-# Prevent indexing of printer-friendly pages
-Disallow: /print/
-Disallow: /*print=*
-
-# Crawl delay to prevent server overload
-Crawl-delay: 10
-
-# Additional rules for specific bots
+# Block AI crawlers
 User-agent: GPTBot
 Disallow: /
 
 User-agent: ChatGPT-User
 Disallow: /
 
-User-agent: AdsBot-Google
-Allow: /
-
-# Rate limiting for specific crawlers
-User-agent: Googlebot
-Crawl-delay: 5
-
-User-agent: bingbot
-Crawl-delay: 10
+Sitemap: https://www.maasiso.nl/sitemap.xml
