@@ -11,8 +11,6 @@ Disallow: /temp/
 Disallow: /cache/
 
 # Prevent indexing of development and system files
-Disallow: /*.css$
-Disallow: /*.js$
 Disallow: /*.json$
 Disallow: /*.txt$
 Disallow: /*.xml$
