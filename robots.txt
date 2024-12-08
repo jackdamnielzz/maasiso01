@@ -1,2 +1,14 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /cline_docs/
+Disallow: /components/
+Disallow: /error_docs/
+Disallow: /.git/
+Disallow: /css/
+Disallow: /js/
+Disallow: /contact-handler.php
+Disallow: /mail-test.*
+Disallow: /contact-test.*
+Disallow: /contact-experiment.*
+
+Sitemap: https://www.maasiso.nl/sitemap.xml
