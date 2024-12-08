@@ -7,6 +7,9 @@ RewriteRule ^(.*)$ https://www.maasiso.nl/$1 [L,R=301]
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+# Redirect downloads.html to homepage
+Redirect 301 /downloads.html https://www.maasiso.nl/
+
 # Prevent directory browsing
 Options -Indexes
 
