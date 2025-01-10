@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_blocks_images",
+  "info": {
+    "displayName": "Image",
+    "description": "Image block with caption and alt text"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"]
+    },
+    "altText": {
+      "type": "string",
+      "required": true,
+      "description": "Alternative text for accessibility"
+    },
+    "caption": {
+      "type": "string"
+    },
+    "fullWidth": {
+      "type": "boolean",
+      "default": false
+    },
+    "maxWidth": {
+      "type": "string",
+      "regex": "^\\d+(%|px|rem|em|vw)$",
+      "default": "100%"
+    }
+  }
+}

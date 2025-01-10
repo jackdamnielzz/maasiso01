@@ -1,0 +1,50 @@
+{
+  "collectionName": "components_metadata_seos",
+  "info": {
+    "displayName": "SEO",
+    "description": "Search Engine Optimization metadata"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "metaTitle": {
+      "type": "string",
+      "required": true,
+      "maxLength": 60,
+      "description": "Title tag for SEO (max 60 characters)"
+    },
+    "metaDescription": {
+      "type": "text",
+      "required": true,
+      "maxLength": 160,
+      "description": "Meta description for SEO (max 160 characters)"
+    },
+    "metaImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"],
+      "description": "Open Graph image"
+    },
+    "metaRobots": {
+      "type": "enumeration",
+      "enum": [
+        "index,follow",
+        "noindex,follow",
+        "index,nofollow",
+        "noindex,nofollow"
+      ],
+      "default": "index,follow",
+      "required": true
+    },
+    "canonicalURL": {
+      "type": "string",
+      "format": "uri",
+      "description": "Canonical URL if different from current page URL"
+    },
+    "structuredData": {
+      "type": "json",
+      "description": "JSON-LD structured data"
+    }
+  }
+}
